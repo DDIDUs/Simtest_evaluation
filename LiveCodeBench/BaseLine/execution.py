@@ -2,16 +2,13 @@
 
 import argparse
 import json
-from collections import defaultdict
 
-from compute_code_generation_metrics import evaluate_generations  # 위 코드가 들어있는 모듈 이름으로 수정
+from compute_code_generation_metrics import evaluate_generations
 from datasets import load_dataset
 
-import json
 import pickle
 import zlib
 import base64
-from datasets import load_dataset
 
 
 def decode_private_test_cases(s: str):
@@ -48,7 +45,6 @@ def build_evaluation_sample(row):
     metadata = json.loads(meta_raw) if isinstance(meta_raw, str) else meta_raw
     fn_name = metadata.get("func_name", None)
 
-    # 질문에서 준 get_evaluation_sample 포맷
     eval_sample = {
         "input_output": json.dumps(
             {
@@ -61,88 +57,80 @@ def build_evaluation_sample(row):
     }
     return eval_sample
 
+
 def load_samples_from_json(json_path: str):
+    """
+    입력 JSON의 question_id를 기준으로:
+      - LCB 데이터셋에서 같은 question_id 가진 row → 테스트 샘플 생성
+      - JSON의 code_list → generations_by_qid[qid] 저장
+    """
 
     with open(json_path, "r", encoding="utf-8") as f:
         data = json.load(f)
 
-    samples_list = []
-    generations_list = []
-    
+    # LiveCodeBench 테스트셋 로드
     lcb_codegen = load_dataset(
         "livecodebench/code_generation_lite",
         split="test",
         version_tag="release_latest",
     )
-    
-    for row in lcb_codegen:
-        samples_list.append(build_evaluation_sample(row))
-    for item in data:
-        generations_list.append(item["code_list"])
 
-    return samples_list, generations_list
+    # LCB row를 qid로 빠르게 찾기 위한 dict
+    lcb_by_qid = {row["question_id"]: row for row in lcb_codegen}
+
+    samples_list = []
+    generations_by_qid = {}
+
+    # JSON 기준으로 qid 매칭
+    for item in data:
+        qid = str(item["question_id"])
+        code_list = item["code_list"]
+
+        if qid not in lcb_by_qid:
+            raise ValueError(f"LiveCodeBench 데이터셋에 question_id {qid} 없음")
+
+        row = lcb_by_qid[qid]
+        sample = build_evaluation_sample(row)
+
+        # safety
+        sample["question_id"] = qid
+
+        samples_list.append(sample)
+        generations_by_qid[qid] = code_list
+
+    return samples_list, generations_by_qid, data
 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--input_json",
-        type=str,
-        required=True,
-        help="문제 및 코드가 들어있는 입력 JSON 파일 경로",
-    )
-    parser.add_argument(
-        "--output_json",
-        type=str,
-        required=True,
-        help="테스트 결과를 저장할 JSON 파일 경로",
-    )
-    parser.add_argument(
-        "--timeout",
-        type=int,
-        default=6,
-        help="각 코드 샘플에 대한 테스트 타임아웃(초)",
-    )
-    parser.add_argument(
-        "--num_process_evaluate",
-        type=int,
-        default=16,
-        help="테스트 수행 시 사용할 프로세스 개수",
-    )
-    parser.add_argument(
-        "--debug",
-        action="store_true",
-        help="debug 출력 여부",
-    )
-
+    parser.add_argument("--input_json", type=str, required=True)
+    parser.add_argument("--output_json", type=str, required=True)
+    parser.add_argument("--timeout", type=int, default=6)
+    parser.add_argument("--num_process_evaluate", type=int, default=16)
+    parser.add_argument("--debug", action="store_true")
     args = parser.parse_args()
 
-    # 1) JSON에서 samples / generations 생성
-    samples_list, generations_list = load_samples_from_json(args.input_json)
+    # JSON 로드: samples_list + generations_by_qid + 원본 data
+    samples_list, generations_by_qid, data = load_samples_from_json(args.input_json)
 
-    # 2) 기존 평가 함수 호출 (run_test 체인 사용)
+    # 평가 수행 (qid 기반)
     results, metadatas = evaluate_generations(
-        samples_list,
-        generations_list,
+        samples_list=samples_list,
+        generations_by_qid=generations_by_qid,
         debug=args.debug,
         num_process_evaluate=args.num_process_evaluate,
         timeout=args.timeout,
     )
 
-    # 3) JSON 직렬화 (dict key 를 문자열로)
-    results_json = {str(k): v for k, v in results.items()}
-    metadatas_json = {str(k): v for k, v in metadatas.items()}
+    # 평가 결과를 원본 JSON에 병합
+    for item in data:
+        qid = str(item["question_id"])
+        item["eval_result"] = results.get(qid)
+        item["eval_metadata"] = metadatas.get(qid)
 
+    # 저장
     with open(args.output_json, "w", encoding="utf-8") as f:
-        json.dump(
-            {
-                "results": results_json,
-                "metadata": metadatas_json,
-            },
-            f,
-            ensure_ascii=False,
-            indent=2,
-        )
+        json.dump(data, f, ensure_ascii=False, indent=2)
 
 
 if __name__ == "__main__":

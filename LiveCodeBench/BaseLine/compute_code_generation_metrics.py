@@ -1,6 +1,3 @@
-# borrowed and extended from
-# https://github.com/Naman-ntc/codescratch/blob/main/evaluation/bigcode-evaluation-harness/lm_eval/tasks/custom_metrics/apps_custom_metrics/utils.py
-
 import os
 import sys
 
@@ -9,7 +6,6 @@ sys.set_int_max_str_digits(50000)
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 import json
 import multiprocessing
-from collections import defaultdict
 from concurrent.futures import ProcessPoolExecutor, as_completed
 
 import numpy as np
@@ -25,15 +21,6 @@ def _temp_run(sample, generation, debug, result, metadata_list, timeout):
 
 
 def check_correctness(sample, generation, timeout, debug=True):
-    """
-    sample["input_output"] 는 다음 형태의 JSON string 이라고 가정:
-      {
-        "inputs": [...],
-        "outputs": [...],
-        "fn_name": "..."
-      }
-    """
-
     manager = multiprocessing.Manager()
     result = manager.list()
     metadata_list = manager.list()
@@ -68,6 +55,12 @@ def check_correctness(sample, generation, timeout, debug=True):
 
 
 def evaluate_generations_by_problem(args):
+    """
+    문제 하나(qid 하나)에 대해 여러 generation을 평가.
+    반환값:
+      - res: 각 generation에 대한 테스트 결과 리스트 (list[list[bool/int]])
+      - metadata: 각 generation에 대한 메타데이터 리스트 (list[dict])
+    """
     problem_generations: list[str] = args[0]
     sample = args[1]
     debug: bool = args[2]
@@ -107,6 +100,7 @@ def evaluate_generations_by_problem(args):
             assert isinstance(curr_metadata, dict), curr_metadata
             res.append(curr_res)
             metadata.append(curr_metadata)
+
     if debug:
         for i, r in enumerate(problem_generations):
             print("Sample\n")
@@ -115,72 +109,61 @@ def evaluate_generations_by_problem(args):
             print("Result\n")
             print(res[i])
             print("*" * 30 + "\n\n")
+
     return res, metadata
 
 
 def evaluate_generations(
     samples_list: list,
-    generations_list: list[list[str]],
+    generations_by_qid: dict,   # 변경: list[list[str]] → dict[qid -> list[str]]
     debug: bool = False,
     num_process_evaluate: int = 16,
     timeout=6,
 ):
-    """
-    samples_list 의 각 sample 과 generations_list 의 각 코드에 대해
-    테스트를 수행하고, 각 generation 에 대해 모든 테스트 결과를 수집한다.
 
-    반환 형식:
-      results = {
-        "<index>_<fn_name>": [[...], [...], ...],   # 문제별 여러 generation 결과
-        ...
-      }
-      metadata = {
-        "<index>_<fn_name>": [ {...}, {...}, ... ],
-        ...
-      }
-    """
+    # qid -> sample 매핑
+    samples_by_qid = {}
+    for sample in samples_list:
+        qid = sample.get("question_id")
+        if qid is None:
+            # 필요하면 여기서 에러로 바꿔도 됨
+            in_outs = json.loads(sample["input_output"])
+            qid = in_outs.get("question_id")
+        if qid is None:
+            raise ValueError("sample에 question_id가 없습니다.")
+        samples_by_qid[str(qid)] = sample
 
-    assert len(samples_list) == len(
-        generations_list
-    ), f"samples_list and generations_list length mismatch: {len(samples_list)} vs {len(generations_list)}"
+    # 공통 qid 집합 (테스트와 코드가 모두 있는 qid만 평가)
+    common_qids = sorted(
+        set(samples_by_qid.keys()) & set(str(k) for k in generations_by_qid.keys())
+    )
+    if not common_qids:
+        raise ValueError("samples와 generations 사이에 공통 question_id가 없습니다.")
 
-    # index -> "{index}_{fn_name}" 매핑 미리 계산
-    index_to_key = {}
-    for idx, sample in enumerate(samples_list):
-        in_outs = json.loads(sample["input_output"])
-        fn_name = in_outs.get("fn_name")
-
-        # fn_name 없으면 question_id, 그것도 없으면 idx 사용
-        if fn_name is None:
-            fn_name = sample.get("question_id", idx)
-
-        index_to_key[idx] = f"{idx}_{fn_name}"
-
-    # 프로세스로 넘길 입력 구성 (각 index를 같이 들고 감)
-    inputs = [
-        [(generations_list[index], samples_list[index], debug, timeout), index]
-        for index in range(len(generations_list))
-    ]
+    # 프로세스로 넘길 입력 구성: (generations, sample, debug, timeout), qid
+    inputs = []
+    for qid in common_qids:
+        gens = generations_by_qid[str(qid)]
+        sample = samples_by_qid[str(qid)]
+        inputs.append(((gens, sample, debug, timeout), qid))
 
     with tqdm(total=len(inputs)) as pbar:
         with ProcessPoolExecutor(
             max_workers=1 if debug else num_process_evaluate
         ) as executor:
             futures = {
-                executor.submit(evaluate_generations_by_problem, arg): index
-                for arg, index in inputs
+                executor.submit(evaluate_generations_by_problem, arg): qid
+                for arg, qid in inputs
             }
 
             results = {}
             metadata = {}
             for future in as_completed(futures):
-                index = futures[future]
-                key = index_to_key[index]
-
+                qid = futures[future]  # 여기서부터 key는 순수 qid
                 res, meta = future.result()
-                results[key] = res
-                metadata[key] = meta
-
+                print(res)
+                results[str(qid)] = res
+                metadata[str(qid)] = meta
                 pbar.update(1)
 
     assert len(results) == len(

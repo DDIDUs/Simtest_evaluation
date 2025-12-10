@@ -311,124 +311,133 @@ def grade_stdio(
     all_outputs: list,
     timeout: int,
 ):
+    import signal
+    import time
+    import faulthandler
+
+    # 1) 코드 전처리 및 컴파일
     code = clean_if_name(code)
     code = make_function(code)
 
     compiled_sol = compile_code(code, timeout)
     if compiled_sol is None:
-        return
+        # 컴파일 실패 자체도 전체 실패
+        return [False] * len(all_inputs), {
+            "error": "CompileError",
+            "error_code": -10,
+            "error_message": "Code compilation failed"
+        }
 
     method = get_function(compiled_sol, "wrapped_function")
     if method is None:
-        return
+        return [False] * len(all_inputs), {
+            "error": "FunctionLoadError",
+            "error_code": -11,
+            "error_message": "wrapped_function not found"
+        }
 
     all_results = []
-    total_execution_time = 0
     first_failure_meta = None
+    total_execution_time = 0
 
+    # 2) 모든 테스트 실행
     for idx, (gt_inp, gt_out) in enumerate(zip(all_inputs, all_outputs)):
+
         signal.alarm(timeout)
         faulthandler.enable()
 
         try:
-            signal.alarm(timeout)
             with Capturing() as captured_output:
                 start = time.time()
                 call_method(method, gt_inp)
                 total_execution_time += time.time() - start
-                signal.alarm(0)
         except Exception as e:
+            # 예외는 False 처리
+            all_results.append(False)
             signal.alarm(0)
-            if "timeoutexception" in repr(e).lower():
-                all_results.append(-3)
-                if first_failure_meta is None:
-                    first_failure_meta = {
-                        "error": repr(e),
-                        "error_code": -3,
-                        "error_message": "Time Limit Exceeded",
-                        "inputs": truncatefn(gt_inp),
-                        "expected": truncatefn(gt_out),
-                    }
-            else:
-                all_results.append(-4)
-                if first_failure_meta is None:
-                    first_failure_meta = {
-                        "error": repr(e),
-                        "error_code": -4,
-                        "error_message": "Runtime Error",
-                        "inputs": truncatefn(gt_inp),
-                        "expected": truncatefn(gt_out),
-                    }
+
+            if first_failure_meta is None:
+                first_failure_meta = {
+                    "error": repr(e),
+                    "error_code": -4,
+                    "error_message": "Exception during execution",
+                    "inputs": truncatefn(gt_inp),
+                    "expected": truncatefn(gt_out),
+                }
+            continue
+
         finally:
             signal.alarm(0)
             faulthandler.disable()
 
-        # 예외가 나지 않았다면 출력 비교
-        if len(all_results) < idx + 1 or all_results[idx] in (-3, -4):
-            # 위 except에서 이미 결과 코드 append 했으면 이 테스트는 비교 스킵
+        # 3) 예외가 없었다면 출력 비교
+        if len(captured_output) == 0:
+            # 출력이 전혀 없는 경우 – Wrong Answer
+            all_results.append(False)
+            if first_failure_meta is None:
+                first_failure_meta = {
+                    "error": "EmptyOutput",
+                    "error_code": -2,
+                    "error_message": "No output produced",
+                    "inputs": truncatefn(gt_inp),
+                    "expected": truncatefn(gt_out),
+                }
             continue
 
         prediction = captured_output[0]
+
         stripped_prediction_lines = get_stripped_lines(prediction)
         stripped_gt_out_lines = get_stripped_lines(gt_out)
 
-        WA_send_args = {
-            "output": truncatefn(prediction),
-            "inputs": truncatefn(gt_inp),
-            "expected": truncatefn(gt_out),
-            "error_code": -2,
-        }
-
-        test_ok = True
-
+        # 3-1) 라인 수 비교
         if len(stripped_prediction_lines) != len(stripped_gt_out_lines):
-            test_ok = False
-            WA_send_args["error_message"] = "Wrong answer: mismatched output length"
-        else:
-            for output_line_idx, (
-                stripped_prediction_line,
-                stripped_gt_out_line,
-            ) in enumerate(zip(stripped_prediction_lines, stripped_gt_out_lines)):
-                WA_send_args["error_message"] = (
-                    f"Wrong answer at {output_line_idx=}: "
-                    f"{truncatefn(stripped_prediction_line)} != "
-                    f"{truncatefn(stripped_gt_out_line)}"
-                )
+            all_results.append(False)
+            if first_failure_meta is None:
+                first_failure_meta = {
+                    "error": "WrongOutputLength",
+                    "error_code": -2,
+                    "error_message": "Output length mismatch",
+                    "inputs": truncatefn(gt_inp),
+                    "expected": truncatefn(gt_out),
+                    "output": truncatefn(prediction),
+                }
+            continue
 
-                if stripped_prediction_line == stripped_gt_out_line:
-                    continue
+        # 3-2) 라인별 비교
+        ok = True
+        for pline, gtline in zip(stripped_prediction_lines, stripped_gt_out_lines):
+            if pline == gtline:
+                continue
 
-                success, decimal_prediction_line = convert_line_to_decimals(
-                    stripped_prediction_line
-                )
-                if not success:
-                    test_ok = False
-                    break
+            # float 비교 시도
+            s1, d1 = convert_line_to_decimals(pline)
+            s2, d2 = convert_line_to_decimals(gtline)
 
-                success, decimal_gtout_line = convert_line_to_decimals(
-                    stripped_gt_out_line
-                )
-                if not success:
-                    test_ok = False
-                    break
-
-                if decimal_prediction_line == decimal_gtout_line:
-                    continue
-
-                test_ok = False
+            if not (s1 and s2 and d1 == d2):
+                ok = False
                 break
 
-        if test_ok:
+        # 성공
+        if ok:
             all_results.append(True)
         else:
-            all_results.append(-2)
+            all_results.append(False)
             if first_failure_meta is None:
-                first_failure_meta = WA_send_args
+                first_failure_meta = {
+                    "error": "WrongAnswer",
+                    "error_code": -2,
+                    "error_message": "Output mismatch",
+                    "inputs": truncatefn(gt_inp),
+                    "expected": truncatefn(gt_out),
+                    "output": truncatefn(prediction),
+                }
 
-    if first_failure_meta is not None:
-        return all_results, first_failure_meta
-    else:
+    # 4) 모든 테스트 종료 후 리턴
+    if first_failure_meta is None:
         return all_results, {"execution time": total_execution_time}
+    else:
+        return all_results, first_failure_meta
+
 
 def run_test(sample, test=None, debug=False, timeout=6):
     """
