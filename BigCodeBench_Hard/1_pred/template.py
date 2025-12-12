@@ -1,6 +1,6 @@
 PRED_PROMPT_TMPL = '''
 You are a skilled Python programmer and code reviewer.
-Carefully evaluate the given code passes all provided public and hidden test cases.
+Carefully evaluate if the given code passes all provided public and hidden test cases.
 
 [You are given]
 - Python code
@@ -31,4 +31,3 @@ Testcase:
 {testcase}
 ```
 '''
-
