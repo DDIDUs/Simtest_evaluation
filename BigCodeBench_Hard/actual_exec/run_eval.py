@@ -14,6 +14,31 @@ from unittest.mock import patch
 
 from utils import extract_code_blocks, save_json
 
+import numpy as np
+
+def estimate_pass_at_k(num_samples: int, num_correct: int, k: int) -> float:
+    """
+    Estimates pass@k using the unbiased estimator.
+    Ref: https://arxiv.org/abs/2107.03374
+    """
+    if num_samples < k:
+        return 0.0
+    if num_correct == num_samples:
+        return 1.0
+
+    # 1 - binom(n-c, k) / binom(n, k)
+    # Calculated as: 1 - prod_{i=0}^{k-1} ( (n - c - i) / (n - i) )
+    
+    n = num_samples
+    c = num_correct
+    
+    prob_failure = 1.0
+    for i in range(k):
+        prob_failure *= (n - c - i) / (n - i)
+    
+    return 1.0 - prob_failure
+
+
 
 logging.basicConfig(
     level=logging.INFO,
@@ -176,9 +201,23 @@ def run_tests_for_code(code_str: str) -> Tuple[List[bool], List[float], Dict]:
                 idx = int(err.id().split(".")[-1].replace("test_case_", "")) - 1
                 per_test_flags[idx] = False
 
+            # Parse failures/errors to map to specific test cases
+            error_map = {}
+            for failure in result.failures:
+                # Expected format: "test_case_X (TestCases.test_case_X)" or similar depending on unittest
+                # We extracted test_case_N earlier manually
+                # result.failures is list of (test_case, msg)
+                case_id = failure[0].id().split(".")[-1]
+                msg = failure[1]
+                error_map[case_id] = msg
+            
+            for error in result.errors:
+                case_id = error[0].id().split(".")[-1]
+                msg = error[1]
+                error_map[case_id] = msg
+
             meta = {
-                "failures": [f"{case.id()}: {msg}" for case, msg in result.failures],
-                "errors": [f"{case.id()}: {msg}" for case, msg in result.errors],
+                "failures": error_map,
                 "trace": buf.getvalue(),
             }
             return per_test_flags, per_test_times, meta
@@ -220,41 +259,130 @@ def evaluate_files(
                 continue
 
             codes = load_generated_codes(str(gen_path))
-            eval_results = []
-            total = 0
-            passed = 0
+            # Prepare data structures for detail and summary
+            
+            # eval_all.json list
+            detail_results = []
+            
+            # For summary stats
+            total_tasks = 0
+            pass_at_1_greedy_sum = 0.0
+            
+            # We will calculate pass@k for these k values if n_samples >= k
+            # Determine max_samples from data
+            max_samples = 0
+            if codes:
+                max_samples = max(len(cl) for cl in codes.values())
+            
+            # Standard k values to check + the actual max samples if distinct
+            target_k_values = {1, 5, 10}
+            if max_samples > 0:
+                target_k_values.add(max_samples)
+            
+            possible_k = sorted([k for k in target_k_values if k <= max_samples])
+            pass_at_k_sums = {k: 0.0 for k in possible_k}
 
             for task_id, code_list in list(codes.items())[: limit or None]:
+                total_tasks += 1
+                graded_list = []
+                num_correct = 0
+                
+                # Check all samples
                 for idx, code in enumerate(code_list):
-                    total += 1
                     try:
                         (res, times), meta = check_correctness(code, timeout=timeout)
                         is_pass = all(res)
+                        graded_list.append(is_pass)
                         if is_pass:
-                            passed += 1
-                        outcome = {
-                            "passed": is_pass,
-                            "per_test": res,
-                            "per_test_time": times,
-                            "metadata": meta,
-                            "task_id": task_id,
-                            "code_index": idx,
-                        }
+                            num_correct += 1
                     except Exception as exc:
-                        outcome = {
-                            "passed": False,
-                            "per_test": [],
-                            "per_test_time": [],
-                            "metadata": {"error": repr(exc), "trace": ""},
-                            "task_id": task_id,
-                            "code_index": idx,
-                        }
-                    eval_results.append(outcome)
+                        # Should be handled inside check_correctness but catch-all here
+                        graded_list.append(False)
 
-            summary = {"total": total, "passed": passed, "pass_rate": passed / total if total else 0}
-            out_path = Path(results_root) / model_name / f"{strategy}_eval.json"
-            save_json(str(out_path), {"results": eval_results, "summary": summary})
-            logging.info("Saved eval: %s", out_path)
+                # Greedy pass@1: Correctness of the FIRST sample (idx 0)
+                # If no code generated, count as 0
+                p1_greedy = 1.0 if (graded_list and graded_list[0]) else 0.0
+                pass_at_1_greedy_sum += p1_greedy
+                
+                # Unbiased estimator for pass@k
+                n_samples = len(code_list)
+                task_pass_at_k = {}
+                for k_val in possible_k:
+                    est = estimate_pass_at_k(n_samples, num_correct, k_val)
+                    task_pass_at_k[f"pass@{k_val}"] = est
+                    pass_at_k_sums[k_val] += est
+
+                # Detail entry
+                # We need to re-run or store metadata for detailed error report? 
+                # Ideally we stored it above. Optimization: check_correctness is expensive so we run it once per code.
+                # To match the requested format, we want "failures" and "errors" details.
+                # Re-running check_correctness just for metadata if it failed?
+                # Actually, in the loop above we didn't store metadata. Let's fix loop to store it.
+                
+                # Refactoring loop to store results
+                pass # Placeholder to allow re-writing the block below correctly
+                
+            # Re-implementing the loop properly
+            detail_results = []
+            total_tasks = 0
+            pass_at_1_greedy_sum = 0.0
+            pass_at_k_sums = {k: 0.0 for k in possible_k}
+            
+            for task_id, code_list in list(codes.items())[: limit or None]:
+                total_tasks += 1
+                task_graded_results = []
+                task_metadata_list = []
+                num_correct = 0
+
+                for code in code_list:
+                    (res, times), meta = check_correctness(code, timeout=timeout)
+                    is_pass = all(res)
+                    task_graded_results.append(is_pass)
+                    task_metadata_list.append(meta) # Store full metadata including errors
+                    if is_pass:
+                        num_correct += 1
+                
+                # Greedy Pass@1
+                p1_greedy = 1.0 if (task_graded_results and task_graded_results[0]) else 0.0
+                pass_at_1_greedy_sum += p1_greedy
+                
+                # Pass@k Estimator
+                est_values = {}
+                n_samples = len(code_list)
+                for k_val in possible_k:
+                    est = estimate_pass_at_k(n_samples, num_correct, k_val)
+                    pass_at_k_sums[k_val] += est
+                    est_values[f"pass@{k_val}"] = est
+
+                # Construct detail item
+                detail_item = {
+                    "question_id": task_id, # Mapping task_id to question_id
+                    "code_list": code_list,
+                    "graded_list": task_graded_results,
+                    "pass@1": p1_greedy,
+                    "metadata": task_metadata_list, # List of dicts
+                    **est_values 
+                }
+                detail_results.append(detail_item)
+
+            # Calculate Summary
+            summary = {
+                "total": total_tasks,
+                "pass@1_greedy": pass_at_1_greedy_sum / total_tasks if total_tasks else 0.0
+            }
+            for k_val in possible_k:
+                summary[f"pass@{k_val}"] = pass_at_k_sums[k_val] / total_tasks if total_tasks else 0.0
+
+            # Save Eval (Summary)
+            out_path_summary = Path(results_root) / model_name / f"{strategy}_eval.json"
+            save_json(str(out_path_summary), summary)
+            
+            # Save Eval All (Details)
+            out_path_details = Path(results_root) / model_name / f"{strategy}_eval_all.json"
+            save_json(str(out_path_details), detail_results)
+            
+            logging.info("Saved eval summary: %s", out_path_summary)
+            logging.info("Saved eval details: %s", out_path_details)
 
 
 def main(

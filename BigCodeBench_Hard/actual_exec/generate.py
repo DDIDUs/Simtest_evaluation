@@ -2,7 +2,7 @@ import argparse
 import asyncio
 import logging
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 
 from openai import AsyncOpenAI
 
@@ -19,7 +19,7 @@ DEFAULT_MODELS: Dict[str, Dict] = {
     "qwen3-coder-30B-A3B-instruct": {
         "api_model": "Qwen/Qwen3-Coder-30B-A3B-Instruct",
         "api_key": "EMPTY",
-        "base_url": "http://129.254.177.83:8085/v1",
+        "base_url": "http://129.254.222.36:8000/v1",
         "extra_body": {"repetition_penalty": 1.05},
     },
     "llama3.2:1b": { # for testing code in local
@@ -86,7 +86,9 @@ async def generate_for_model(
     model_cfg: Dict,
     problems: List[Dict[str, str]],
     output_dir: Path,
+
     sampling_subset: Optional[List[str]] = None,
+    n_samples: int = 1,
 ) -> None:
     client = build_client(model_cfg)
     semaphore = asyncio.Semaphore(MAX_CONCURRENT_TASKS)
@@ -99,34 +101,88 @@ async def generate_for_model(
         strategies = {k: v for k, v in strategies.items() if k in sampling_subset}
 
     for strategy, sampling in strategies.items():
+        # Initialize results storage
         raw_dict: Dict[str, List[str]] = {}
         code_dict: Dict[str, List[str]] = {}
+        
+        # Output path
+        out_path = output_dir / model_name / f"{strategy}_code_generate.json"
+        
+        # Load existing progress if file exists (optional, but good for resuming)
+        if out_path.exists():
+            try:
+                import json
+                with open(out_path, 'r', encoding='utf-8') as f:
+                    existing_data = json.load(f)
+                    raw_dict = existing_data.get("raw", {})
+                    code_dict = existing_data.get("code", {})
+                    logging.info("Resuming from existing file with %d tasks completed", len(raw_dict))
+            except Exception as e:
+                logging.warning(f"Could not load existing file {out_path}: {e}")
 
+        # Create tasks
         tasks = []
         for problem in problems:
             task_id = problem["task_id"]
+            
+            # Skip if already completed (all samples generated)
+            if task_id in raw_dict and len(raw_dict[task_id]) >= n_samples:
+                continue
+                
             prompt = GENERATION_PROMPT_TMPL.format(prompt=problem["prompt"])
-            tasks.append(
-                asyncio.create_task(
-                    process_problem(
-                        task_id,
-                        prompt,
-                        client,
-                        semaphore,
-                        sampling["temperature"],
-                        sampling["top_p"],
-                        model_cfg,
-                        raw_dict,
-                        code_dict,
+            
+            # Create n_samples tasks for each problem
+            # We need to know how many we need to generate to reach n_samples
+            current_count = len(raw_dict.get(task_id, []))
+            needed = n_samples - current_count
+            
+            for _ in range(needed):
+                tasks.append(
+                    asyncio.create_task(
+                        process_problem(
+                            task_id,
+                            prompt,
+                            client,
+                            semaphore,
+                            sampling["temperature"],
+                            sampling["top_p"],
+                            model_cfg,
+                        )
                     )
                 )
-            )
+        
+        if not tasks:
+            logging.info("All tasks already completed for strategy %s", strategy)
+            continue
 
-        await asyncio.gather(*tasks)
+        logging.info(f"Starting {len(tasks)} tasks for strategy {strategy}")
+        
+        # Process results as they complete
+        completed_count = 0
+        save_interval = 50
+        
+        for coro in asyncio.as_completed(tasks):
+            task_id, raw_resp, extracted_codes = await coro
+            
+            if task_id not in raw_dict:
+                raw_dict[task_id] = []
+                code_dict[task_id] = []
+            
+            if raw_resp:
+                raw_dict[task_id].append(raw_resp)
+            if extracted_codes:
+                code_dict[task_id].extend(extracted_codes)
+                
+            completed_count += 1
+            
+            # Incremental save
+            if completed_count % save_interval == 0:
+                save_json(str(out_path), {"raw": raw_dict, "code": code_dict})
+                logging.info(f"Saved progress: {completed_count}/{len(tasks)} tasks completed")
 
-        out_path = output_dir / model_name / f"{strategy}_code_generate.json"
+        # Final save
         save_json(str(out_path), {"raw": raw_dict, "code": code_dict})
-        logging.info("Saved %s", out_path)
+        logging.info("Saved final results to %s", out_path)
 
 
 async def process_problem(
@@ -137,9 +193,7 @@ async def process_problem(
     temperature: float,
     top_p: float,
     model_cfg: Dict,
-    raw_store: Dict[str, List[str]],
-    code_store: Dict[str, List[str]],
-) -> None:
+) -> Tuple[str, Optional[str], List[str]]:
     raw_resp = await call_llm(
         prompt=prompt,
         llm=client,
@@ -151,8 +205,10 @@ async def process_problem(
         extra_body=model_cfg.get("extra_body"),
     )
 
-    raw_store[task_id] = [raw_resp or ""]
-    code_store[task_id] = extract_code_blocks(raw_resp or "")
+
+
+    extracted = extract_code_blocks(raw_resp or "")
+    return task_id, raw_resp, extracted
 
 
 async def main(
@@ -161,6 +217,7 @@ async def main(
     limit: Optional[int],
     models: Dict[str, Dict],
     sampling_subset: Optional[List[str]] = None,
+    n_samples: int = 1,
 ) -> None:
     problems = load_bigcodebench_hard(dataset_path)
     if not problems:
@@ -172,7 +229,7 @@ async def main(
     output_dir.mkdir(parents=True, exist_ok=True)
 
     for model_name, cfg in models.items():
-        await generate_for_model(model_name, cfg, problems, output_dir, sampling_subset)
+        await generate_for_model(model_name, cfg, problems, output_dir, sampling_subset, n_samples)
 
 
 if __name__ == "__main__":
@@ -244,6 +301,12 @@ if __name__ == "__main__":
         default=None,
         help="Subset of strategies to run (greedy, neuclus).",
     )
+    parser.add_argument(
+        "--n_samples",
+        type=int,
+        default=1,
+        help="Number of samples to generate per problem (default: 1).",
+    )
     args = parser.parse_args()
 
     models = dict(DEFAULT_MODELS)
@@ -266,4 +329,4 @@ if __name__ == "__main__":
                 raise ValueError(f"Unknown model '{m}'. Available: {list(models.keys())}")
         models = selected
 
-    asyncio.run(main(args.dataset, args.out_dir, args.limit, models, args.sampling))
+    asyncio.run(main(args.dataset, args.out_dir, args.limit, models, args.sampling, args.n_samples))
