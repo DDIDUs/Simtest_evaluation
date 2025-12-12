@@ -70,6 +70,9 @@ def normalize_problem(item: Dict[str, Any], idx: int) -> Optional[Dict[str, str]
         or item.get("problem")
         or item.get("description")
     )
+    test = item.get("test")
+    entry_point = item.get("entry_point")
+
     if prompt is None:
         try:
             prompt = json.dumps(item, ensure_ascii=False)
@@ -77,7 +80,13 @@ def normalize_problem(item: Dict[str, Any], idx: int) -> Optional[Dict[str, str]
             prompt = str(item)
     if not prompt:
         return None
-    return {"task_id": str(task_id), "prompt": str(prompt)}
+        
+    return {
+        "task_id": str(task_id), 
+        "prompt": str(prompt),
+        "test": str(test) if test else "",
+        "entry_point": str(entry_point) if entry_point else ""
+    }
 
 
 def load_bigcodebench_hard(dataset_path: Optional[str] = None) -> List[Dict[str, str]]:

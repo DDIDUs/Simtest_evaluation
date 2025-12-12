@@ -95,7 +95,7 @@ async def generate_for_model(
 
     strategies = {
         "greedy": {"temperature": 0.2, "top_p": 0.95},
-        "neuclus": {"temperature": 0.7, "top_p": 0.95},
+        "nucleus": {"temperature": 0.7, "top_p": 0.95},
     }
     if sampling_subset:
         strategies = {k: v for k, v in strategies.items() if k in sampling_subset}
@@ -299,7 +299,7 @@ if __name__ == "__main__":
         type=str,
         nargs="*",
         default=None,
-        help="Subset of strategies to run (greedy, neuclus).",
+        help="Subset of strategies to run (greedy, nucleus).",
     )
     parser.add_argument(
         "--n_samples",
