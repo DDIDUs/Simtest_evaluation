@@ -41,14 +41,14 @@ MODEL_CONFIGS = {
         "base_url": "http://129.254.222.36:8000/v1",
         "extra_body": {"repetition_penalty": 1.05},
         "max_tokens": 1024,
-        "temperature": 0.0,
+        "temperature": 0.2,
     },
     "gpt-4o-2024-08-06": {
         "api_model": "gpt-4o-2024-08-06",
         "api_key": os.getenv("OPENAI_API_KEY"),
         "base_url": None,  # Use default OpenAI URL
         "max_tokens": 1024,
-        "temperature": 0.0,
+        "temperature": 0.2,
     }
 }
 

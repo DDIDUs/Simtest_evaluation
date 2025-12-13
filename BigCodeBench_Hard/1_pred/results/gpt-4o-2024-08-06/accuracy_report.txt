@@ -1,6 +1,11 @@
 ----------------------------------------
-Total Predictions Evaluated: 148
-Correct Predictions: 116
-Missing/Skipped: 0
-Accuracy: 78.38%
+Total Tasks Evaluated:       148
+Correct Tasks (Overall):     116
+Task Accuracy (Overall):     78.38%
+----------------------------------------
+Total Test Cases Evaluated:  542
+Correct Test Cases:          346
+Test Case Accuracy (Detail): 63.84%
+----------------------------------------
+Missing/Skipped Tasks:       0
 ----------------------------------------
