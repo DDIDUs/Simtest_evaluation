@@ -237,12 +237,11 @@ def evaluate_files(
 
     for model_name in models:
         for strategy in strategies:
-            # Handle filename mismatch (nucleus vs neuclus typo in generation)
             gen_filename = f"{strategy}_code_generate.json"
             gen_path = Path(results_root) / model_name / gen_filename
             
             if strategy == "nucleus" and not gen_path.exists():
-                 fallback_path = Path(results_root) / model_name / "neuclus_code_generate.json"
+                 fallback_path = Path(results_root) / model_name / "nuclus_code_generate.json"
                  if fallback_path.exists():
                      logging.info(f"Using fallback file: {fallback_path}")
                      gen_path = fallback_path
