@@ -12,8 +12,9 @@ import re
 from dotenv import load_dotenv
 
 # Load .env from parent directory (root of BigCodeBench_Hard)
-env_path = Path(__file__).parent.parent / '.env'
-load_dotenv(dotenv_path=env_path)
+# Load .env from parent directory (root of BigCodeBench_Hard)
+env_path = Path(__file__).resolve().parent.parent / '.env'
+load_dotenv(dotenv_path=env_path, override=True)
 
 from openai import AsyncOpenAI
 from datasets import load_dataset
@@ -209,8 +210,17 @@ async def main(
     
     # LLM Client
     # LLM Client
+    api_key = model_config.get("api_key")
+    if not api_key:
+        api_key = os.getenv("OPENAI_API_KEY") # Fallback to env var if config was None (though config uses getenv already)
+    
+    if not api_key:
+        logging.error(f"API Key for model {model_name} is missing. Checked 'OPENAI_API_KEY' in env.")
+        logging.error(f"Ensure .env file at {env_path} contains OPENAI_API_KEY.")
+        raise ValueError("API Key missing")
+
     client = AsyncOpenAI(
-        api_key=model_config["api_key"],
+        api_key=api_key,
         base_url=model_config["base_url"]
     )
     semaphore = asyncio.Semaphore(MAX_CONCURRENT_REQUESTS)

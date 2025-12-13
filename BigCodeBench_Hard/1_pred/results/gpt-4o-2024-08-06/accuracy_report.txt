@@ -1,0 +1,6 @@
+----------------------------------------
+Total Predictions Evaluated: 148
+Correct Predictions: 116
+Missing/Skipped: 0
+Accuracy: 78.38%
+----------------------------------------
