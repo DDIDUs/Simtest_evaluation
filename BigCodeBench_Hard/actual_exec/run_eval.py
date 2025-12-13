@@ -87,7 +87,7 @@ def check_correctness(code_str: str, test_code: str, timeout: int) -> Tuple[List
     return result[0], metadata_list[0]
 
 
-def run_tests_for_code(code_str: str, test_code: str) -> Tuple[List[bool], List[float], Dict]:
+def run_tests_for_code(code_str: str, test_code: str) -> Tuple[List[bool], Dict, Dict]:
     """Execute provided unit tests against a single code string and return per-test pass list."""
     buf = io.StringIO()
 
@@ -124,7 +124,7 @@ def run_tests_for_code(code_str: str, test_code: str) -> Tuple[List[bool], List[
             class TimeTrackingTestResult(unittest.TextTestResult):
                 def __init__(self, *args, **kwargs):
                     super().__init__(*args, **kwargs)
-                    self.test_times = []
+                    self.test_times = {}
                     self._current_start_time = 0
 
                 def startTest(self, test):
@@ -133,42 +133,56 @@ def run_tests_for_code(code_str: str, test_code: str) -> Tuple[List[bool], List[
 
                 def stopTest(self, test):
                     elapsed = time.time() - self._current_start_time
-                    self.test_times.append(elapsed)
+                    self.test_times[test.id()] = elapsed
                     super().stopTest(test)
 
             suite = unittest.defaultTestLoader.loadTestsFromTestCase(TestClass)
             runner = unittest.TextTestRunner(
                 stream=buf, verbosity=2, resultclass=TimeTrackingTestResult
             )
+            # Match test cases to indices by iterating over the suite
+            test_id_to_index = {}
+            for i, test in enumerate(suite):
+                test_id_to_index[test.id()] = i
+
             result = runner.run(suite)
-            # For precise per-test booleans, reconstruct using result data
+            
+            # Initialize flags
             total_tests = suite.countTestCases()
             per_test_flags = [True] * total_tests
-            # Note: result.test_times populated by TimeTrackingTestResult
-            per_test_times = getattr(result, "test_times", [0.0] * total_tests)
+            
+            # Get times (now a dict)
+            per_test_times = getattr(result, "test_times", {})
 
-            for failed, _ in result.failures:
-                # BigCodeBench usually names tests test_case_N
+            # Helper to mark failures
+            def mark_failure(test_obj, reason):
+                # Try exact ID match first
+                tid = test_obj.id()
+                if tid in test_id_to_index:
+                    per_test_flags[test_id_to_index[tid]] = False
+                    return
+                # Fallback: try parsing test_case_N
                 try:
-                    idx = int(failed.id().split(".")[-1].replace("test_case_", ""))
-                    per_test_flags[idx] = False
-                except ValueError:
-                     # Fallback for non-standard test names, just mark something false?
-                     # Ideally we map correctly. For safety, just mark last or we need map.
-                     # But for now, let's assume standard naming or simple failure accounting.
-                     # Real world fallback: if we can't parse index, we can't strict map. 
-                     # But we must ensure the pass count is right.
-                     # Actually, `check_correctness` uses `all(res)`, so precise mapping only matters for metadata display.
-                     pass 
-                     
-            for err, _ in result.errors:
-                try:
-                    idx = int(err.id().split(".")[-1].replace("test_case_", ""))
-                    per_test_flags[idx] = False
+                    # Expecting format like "test_case_1 (TestCases.test_case_1)"
+                    # test_obj.id() gives "module.Class.method"
+                    method_name = tid.split(".")[-1]
+                    if method_name.startswith("test_case_"):
+                        idx = int(method_name.replace("test_case_", ""))
+                        if 0 <= idx < total_tests:
+                            per_test_flags[idx] = False
                 except ValueError:
                     pass
 
-            # Parse failures/errors to map to specific test cases
+            for failed, _ in result.failures:
+                mark_failure(failed, "failure")
+            for err, _ in result.errors:
+                mark_failure(err, "error")
+
+            # Final safeguard: if result says fail but we didn't mark any flag (mismatch), mark all as False
+            if not result.wasSuccessful() and all(per_test_flags):
+                per_test_flags = [False] * total_tests
+
+            # Parse failures/errors map
             error_map = {}
             for failure in result.failures:
                 case_id = failure[0].id().split(".")[-1]
@@ -182,6 +196,7 @@ def run_tests_for_code(code_str: str, test_code: str) -> Tuple[List[bool], List[
 
             meta = {
                 "failures": error_map,
+                "times": per_test_times,
                 "trace": buf.getvalue(),
             }
             return per_test_flags, per_test_times, meta
@@ -222,90 +237,80 @@ def evaluate_files(
 
     for model_name in models:
         for strategy in strategies:
-            gen_path = Path(results_root) / model_name / f"{strategy}_code_generate.json"
+            # Handle filename mismatch (nucleus vs neuclus typo in generation)
+            gen_filename = f"{strategy}_code_generate.json"
+            gen_path = Path(results_root) / model_name / gen_filename
+            
+            if strategy == "nucleus" and not gen_path.exists():
+                 fallback_path = Path(results_root) / model_name / "neuclus_code_generate.json"
+                 if fallback_path.exists():
+                     logging.info(f"Using fallback file: {fallback_path}")
+                     gen_path = fallback_path
+
             if not gen_path.exists():
                 logging.warning("Skip missing generation file: %s", gen_path)
                 continue
 
             codes = load_generated_codes(str(gen_path))
-            # Prepare data structures for detail and summary
-            
-            # eval_all.json list
+            # Prepare data structures
             detail_results = []
+            processed_ids = set()
             
-            # For summary stats
-            total_tasks = 0
-            pass_at_1_greedy_sum = 0.0
+            # Paths
+            out_path_summary = Path(results_root) / model_name / f"{strategy}_eval.json"
+            out_path_details = Path(results_root) / model_name / f"{strategy}_eval_all.json"
+
+            # Resume logic: Load existing details if available
+            if out_path_details.exists():
+                try:
+                    with open(out_path_details, "r", encoding="utf-8") as f:
+                        existing_data = json.load(f)
+                        if isinstance(existing_data, list):
+                            detail_results = existing_data
+                            processed_ids = {item["question_id"] for item in detail_results}
+                            logging.info(f"Resuming evaluation. Found {len(detail_results)} existing records.")
+                except Exception as e:
+                    logging.warning(f"Could not load existing evaluation details for resuming: {e}")
+
+            # Calculate metrics counters based on existing data
+            total_tasks = len(detail_results)
+            pass_at_1_greedy_sum = sum(item["pass@1"] for item in detail_results)
             
-            # We will calculate pass@k for these k values if n_samples >= k
             # Determine max_samples from data
             max_samples = 0
             if codes:
                 max_samples = max(len(cl) for cl in codes.values())
             
-            # Standard k values to check + the actual max samples if distinct
+            # Standard k values
             target_k_values = {1, 5, 10}
             if max_samples > 0:
                 target_k_values.add(max_samples)
             
             possible_k = sorted([k for k in target_k_values if k <= max_samples])
-            pass_at_k_sums = {k: 0.0 for k in possible_k}
-
-            for task_id, code_list in list(codes.items())[: limit or None]:
-                total_tasks += 1
-                graded_list = []
-                num_correct = 0
-                
-                # Check all samples
-                for idx, code in enumerate(code_list):
-                    try:
-                        (res, times), meta = check_correctness(code, timeout=timeout)
-                        is_pass = all(res)
-                        graded_list.append(is_pass)
-                        if is_pass:
-                            num_correct += 1
-                    except Exception as exc:
-                        # Should be handled inside check_correctness but catch-all here
-                        graded_list.append(False)
-
-                # Greedy pass@1: Correctness of the FIRST sample (idx 0)
-                # If no code generated, count as 0
-                p1_greedy = 1.0 if (graded_list and graded_list[0]) else 0.0
-                pass_at_1_greedy_sum += p1_greedy
-                
-                # Unbiased estimator for pass@k
-                n_samples = len(code_list)
-                task_pass_at_k = {}
-                for k_val in possible_k:
-                    est = estimate_pass_at_k(n_samples, num_correct, k_val)
-                    task_pass_at_k[f"pass@{k_val}"] = est
-                    pass_at_k_sums[k_val] += est
-
-                # Detail entry
-                # We need to re-run or store metadata for detailed error report? 
-                # Ideally we stored it above. Optimization: check_correctness is expensive so we run it once per code.
-                # To match the requested format, we want "failures" and "errors" details.
-                # Re-running check_correctness just for metadata if it failed?
-                # Actually, in the loop above we didn't store metadata. Let's fix loop to store it.
-                
-                # Refactoring loop to store results
-                pass # Placeholder to allow re-writing the block below correctly
-                
-            # Re-implementing the loop properly
-            detail_results = []
-            total_tasks = 0
-            pass_at_1_greedy_sum = 0.0
-            pass_at_k_sums = {k: 0.0 for k in possible_k}
             
+            # Reconstruct pass_at_k sums from existing details
+            pass_at_k_sums = {k: 0.0 for k in possible_k}
+            for item in detail_results:
+                for k_val in possible_k:
+                    k_key = f"pass@{k_val}"
+                    if k_key in item:
+                        pass_at_k_sums[k_val] += item[k_key]
+
             code_items = list(codes.items())[: limit or None]
             total_count = len(code_items)
-            logging.info(f"Starting evaluation for {model_name} - {strategy}: {total_count} tasks total.")
+            logging.info(f"Starting evaluation for {model_name} - {strategy}: {total_count} tasks total. (Already done: {len(processed_ids)})")
 
-            processed_count = 0
+            processed_this_run = 0
+            save_interval = 1
+
             for task_id, code_list in code_items:
-                processed_count += 1
-                if processed_count % 50 == 0:
-                    logging.info(f"Evaluated {processed_count}/{total_count} tasks...")
+                # Skip if already processed
+                if task_id in processed_ids:
+                    continue
+
+                processed_this_run += 1
+                if processed_this_run % 1 == 0:
+                    logging.info(f"Evaluated {processed_this_run} new tasks (Total: {len(detail_results) + 1}/{total_count})...")
                 
                 # Get dynamic test code
                 if task_id not in problems_map:
@@ -348,8 +353,22 @@ def evaluate_files(
                     **est_values 
                 }
                 detail_results.append(detail_item)
+                
+                # Incremental Save
+                if processed_this_run % save_interval == 0:
+                    # Summary
+                    summary = {
+                        "total": total_tasks,
+                        "pass@1_greedy": pass_at_1_greedy_sum / total_tasks if total_tasks else 0.0
+                    }
+                    for k_val in possible_k:
+                        summary[f"pass@{k_val}"] = pass_at_k_sums[k_val] / total_tasks if total_tasks else 0.0
+                    
+                    save_json(str(out_path_summary), summary)
+                    save_json(str(out_path_details), detail_results)
+                    logging.info(f"Saved incremental progress: {len(detail_results)}/{total_count}")
 
-            # Calculate Summary
+            # Final Save
             summary = {
                 "total": total_tasks,
                 "pass@1_greedy": pass_at_1_greedy_sum / total_tasks if total_tasks else 0.0
@@ -357,12 +376,7 @@ def evaluate_files(
             for k_val in possible_k:
                 summary[f"pass@{k_val}"] = pass_at_k_sums[k_val] / total_tasks if total_tasks else 0.0
 
-            # Save Eval (Summary)
-            out_path_summary = Path(results_root) / model_name / f"{strategy}_eval.json"
             save_json(str(out_path_summary), summary)
-            
-            # Save Eval All (Details)
-            out_path_details = Path(results_root) / model_name / f"{strategy}_eval_all.json"
             save_json(str(out_path_details), detail_results)
             
             logging.info("Saved eval summary: %s", out_path_summary)
