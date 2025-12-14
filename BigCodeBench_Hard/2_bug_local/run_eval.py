@@ -92,15 +92,9 @@ def parse_result(response: Optional[str]) -> str:
         return "NULL"
 
     # Pattern: [Result] followed by ```plaintext ... ``` containing PASS or FAIL
-    # Case insensitive for robustness
-    # The prompt explicitly asks for:
-    # [Result]
-    # ```plaintext
-    # [PASS/FAIL]
-    # ```
-    # or PASS / FAIL
-    
-    match = re.search(r"\[Result\].*?```plaintext\s*(PASS|FAIL|\[PASS\]|\[FAIL\])\s*```", response, re.DOTALL | re.IGNORECASE)
+    # Case insensitive for robustness. 
+    # [Result] tag might be missing, so we look for the code block anywhere.
+    match = re.search(r"```plaintext\s*(PASS|FAIL|\[PASS\]|\[FAIL\])\s*```", response, re.DOTALL | re.IGNORECASE)
     if match:
         result = match.group(1).upper()
         if "PASS" in result:
@@ -108,7 +102,7 @@ def parse_result(response: Optional[str]) -> str:
         if "FAIL" in result:
             return "FAIL"
 
-    # Fallback looser match within [Result] section?
+    # Fallback: Look for [Result] section if code block missing
     if "[Result]" in response:
         part = response.split("[Result]")[1]
         # Look for the next section header e.g. [Bug Localization] or end of string
@@ -120,6 +114,13 @@ def parse_result(response: Optional[str]) -> str:
             return "PASS"
         if "FAIL" in part and "PASS" not in part:
             return "FAIL"
+    
+    # Ultimate fallback: if just "PASS" or "FAIL" is the entire content (trimmed)
+    cleaned = response.strip().upper()
+    if cleaned in ["PASS", "[PASS]"]:
+        return "PASS"
+    if cleaned in ["FAIL", "[FAIL]"]:
+        return "FAIL"
             
     return "NULL"
 

@@ -115,20 +115,37 @@ def parse_result(response: Optional[str]) -> str:
         if "[PASS]" in result_content: return "PASS"
         if "[FAIL]" in result_content: return "FAIL"
     
-    # Fallback: search entire response for explicit ```plaintext PASS ``` or similar if [Result] headers are missing/malformed
-    # The template asks for ```plaintext ... ```
-    match = re.search(r"```plaintext\s*(PASS|FAIL|\[PASS\]|\[FAIL\])\s*```", response, re.IGNORECASE)
+    # Pattern: [Result] followed by ```plaintext ... ``` containing PASS or FAIL
+    # Case insensitive for robustness. 
+    # [Result] tag might be missing, so we look for the code block anywhere.
+    match = re.search(r"```plaintext\s*(PASS|FAIL|\[PASS\]|\[FAIL\])\s*```", response, re.DOTALL | re.IGNORECASE)
     if match:
-        val = match.group(1).upper()
-        if "PASS" in val: return "PASS"
-        if "FAIL" in val: return "FAIL"
+        result = match.group(1).upper()
+        if "PASS" in result:
+            return "PASS"
+        if "FAIL" in result:
+            return "FAIL"
 
-    # Extreme Fallback
-    if "PASS" in response and "FAIL" not in response:
-        return "PASS"
-    if "FAIL" in response and "PASS" not in response:
-        return "FAIL"
+    # Fallback: Look for [Result] section if code block missing
+    if "[Result]" in response:
+        part = response.split("[Result]")[1]
+        # Look for the next section header e.g. [Bug Localization] or end of string
+        end_idx = part.find("[Bug Localization]")
+        if end_idx != -1:
+            part = part[:end_idx]
         
+        if "PASS" in part and "FAIL" not in part:
+            return "PASS"
+        if "FAIL" in part and "PASS" not in part:
+            return "FAIL"
+    
+    # Ultimate fallback: if just "PASS" or "FAIL" is the entire content (trimmed)
+    cleaned = response.strip().upper()
+    if cleaned in ["PASS", "[PASS]"]:
+        return "PASS"
+    if cleaned in ["FAIL", "[FAIL]"]:
+        return "FAIL"
+            
     return "NULL"
 
 async def evaluate_task(
