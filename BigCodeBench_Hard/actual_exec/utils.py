@@ -2,6 +2,8 @@ import json
 import logging
 import os
 import re
+import ast
+import astunparse
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -139,3 +141,74 @@ def extract_code_blocks(text: str) -> List[str]:
 def extract_first_code(text: str) -> Optional[str]:
     blocks = extract_code_blocks(text)
     return blocks[0] if blocks else None
+
+def split_test_cases(test_case_code: str) -> List[tuple]:
+    """
+    Splits a unittest class string into individual test cases.
+    Returns: List[Tuple[str, str]] (test_method_name, full_test_case_code)
+    """
+    try:
+        tree = ast.parse(test_case_code)
+    except SyntaxError:
+        return [("error_parsing", test_case_code)]
+
+    # Separating imports/global level stuff from the Class
+    imports_and_globals = []
+    test_class_node = None
+    
+    for node in tree.body:
+        if isinstance(node, ast.ClassDef):
+            test_class_node = node
+        else:
+            imports_and_globals.append(node)
+            
+    if not test_class_node:
+        return [("no_class_found", test_case_code)]
+        
+    # Extract setUp, tearDown, and test_ methods
+    setup_method = None
+    teardown_method = None
+    test_methods = []
+    other_methods = [] 
+    
+    for item in test_class_node.body:
+        if isinstance(item, ast.FunctionDef):
+            if item.name == 'setUp':
+                setup_method = item
+            elif item.name == 'tearDown':
+                teardown_method = item
+            elif item.name.startswith('test'):
+                test_methods.append(item)
+            else:
+                other_methods.append(item)
+        else:
+            other_methods.append(item)
+            
+    if not test_methods:
+         return [("no_test_methods", test_case_code)]
+         
+    split_cases = []
+    
+    for test_method in test_methods:
+        new_body = []
+        new_body.extend(other_methods)
+        if setup_method:
+            new_body.append(setup_method)
+        if teardown_method:
+            new_body.append(teardown_method)
+        new_body.append(test_method)
+        
+        new_class = ast.ClassDef(
+            name=test_class_node.name,
+            bases=test_class_node.bases,
+            keywords=test_class_node.keywords,
+            body=new_body,
+            decorator_list=test_class_node.decorator_list
+        )
+        
+        new_module_body = imports_and_globals + [new_class]
+        new_module = ast.Module(body=new_module_body, type_ignores=[])
+        
+        split_cases.append((test_method.name, astunparse.unparse(new_module)))
+        
+    return split_cases
