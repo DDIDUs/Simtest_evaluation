@@ -1,0 +1,13 @@
+========================================
+      ACCURACY REPORT (Ground Truth)      
+========================================
+Total Tasks (Dataset):       148
+Correct Task Predictions:    104
+Task Accuracy (Overall):     70.27%
+----------------------------------------
+Total Test Cases (Dataset):  854
+Correct TC Predictions:      462
+Test Case Level Accuracy:    54.10%
+----------------------------------------
+Missing Predictions:         0
+========================================
