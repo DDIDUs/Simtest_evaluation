@@ -87,24 +87,32 @@ def parse_result(response: Optional[str]) -> str:
     if response is None:
         return "NULL"
     
-    # If empty string
     if not response.strip():
         return "NULL"
-    # Extract PASS or FAIL from the response
-    # Look for [PASS] or [FAIL] or just PASS/FAIL
-    # The template asks for ```plaintext [PASS/FAIL] ```
-    
-    match = re.search(r"```plaintext\s*(PASS|FAIL)\s*```", response, re.IGNORECASE)
+
+    # Pattern: [Result] followed by ```plaintext ... ``` containing PASS or FAIL
+    # Case insensitive for robustness
+    match = re.search(r"\[Result\].*?```plaintext\s*(PASS|FAIL|\[PASS\]|\[FAIL\])\s*```", response, re.DOTALL | re.IGNORECASE)
     if match:
-        return match.group(1).upper()
-    
-    # Fallback: check if PASS or FAIL appears clearly
-    if "PASS" in response and "FAIL" not in response:
-        return "PASS"
-    if "FAIL" in response and "PASS" not in response:
-        return "FAIL"
+        result = match.group(1).upper()
+        if "PASS" in result:
+            return "PASS"
+        if "FAIL" in result:
+            return "FAIL"
+
+    # Fallback looser match within [Result] section?
+    if "[Result]" in response:
+        part = response.split("[Result]")[1]
+        # Look for the next section header e.g. [Bug Localization] or end of string
+        end_idx = part.find("[Bug Localization]")
+        if end_idx != -1:
+            part = part[:end_idx]
         
-    # If empty, junk, or ambiguous -> NULL
+        if "PASS" in part and "FAIL" not in part:
+            return "PASS"
+        if "FAIL" in part and "PASS" not in part:
+            return "FAIL"
+            
     return "NULL"
 
 async def evaluate_task(
@@ -116,25 +124,32 @@ async def evaluate_task(
     model_config: Dict,
     code_index: int = 0
 ) -> Dict:
-    pass_fail_list = []
-    latency_list = []
     
     tasks = []
     test_names = []
     
     for test_name, test_code in test_cases:
         prompt = construct_prompt(code, test_code)
+        # logging.info(f"Starting test case: {test_name} for task {task_id}") 
         tasks.append(call_llm(client, prompt, semaphore, model_config))
         test_names.append(test_name)
     
-    results = await asyncio.gather(*tasks)
+    results = await asyncio.gather(*tasks, return_exceptions=True)
     
     pass_fail_dict = {}
     latency_dict = {}
     raw_response_dict = {}
 
-    for i, (content, latency) in enumerate(results):
+    for i, res in enumerate(results):
         name = test_names[i]
+        if isinstance(res, Exception):
+            logging.error(f"Test {name} failed with exception: {res}")
+            content, latency = None, 0.0
+        else:
+             content, latency = res
+             # call_llm in 1_pred returns (content, latency) or (None, 0.0) if it caught its own exception
+             # But if call_llm crashed, res would be exception.
+
         result = parse_result(content)
         pass_fail_dict[name] = result
         latency_dict[name] = latency
@@ -187,12 +202,12 @@ async def main(
         t_id = item['task_id']
         if t_id in code_map:
             codes = code_map[t_id]
-            # Randomly select 1 code if multiple exist
+            # Always select the first code (index 0) as per user request
             if isinstance(codes, list) and len(codes) > 0:
-                selected_idx = random.randint(0, len(codes) - 1)
-                selected_code = codes[selected_idx]
+                selected_idx = 0
+                selected_code = codes[0]
             else:
-                # Handle edge case where it might not be a list or list is empty (though unlikely per data)
+                # Handle edge case where it might not be a list or list is empty
                 selected_idx = 0
                 selected_code = codes if isinstance(codes, str) else codes[0]
 
@@ -278,17 +293,17 @@ async def main(
 
     logging.info(f"Evaluating {len(problems_to_run)} problems (Skipped {len(processed_ids)})...")
     
-    progress_bar = tqdm(total=len(problems_to_run), desc="Evaluating")
-
-    # Open in append mode ('a')
-    with open(final_output_path, 'a') as f, open(final_raw_output_path, 'a') as f_raw:
+    # Open files for appending
+    f_out = open(final_output_path, 'a', encoding='utf-8')
+    f_raw = open(final_raw_output_path, 'a', encoding='utf-8')
+    
+    try:
+        # Create all coroutines
+        pending_tasks = []
         for prob in problems_to_run:
-            # parsing test cases
-
             split_tests = split_test_cases(prob['test_code'])
             
-
-            result = await evaluate_task(
+            coro = evaluate_task(
                 prob['task_id'],
                 prob['code'],
                 split_tests,
@@ -297,6 +312,15 @@ async def main(
                 model_config,
                 code_index=prob['code_index']
             )
+            # Wrap in a task to ensure it's scheduled? 
+            # Actually as_completed takes a list of awaitables.
+            pending_tasks.append(coro)
+
+        progress_bar = tqdm(total=len(pending_tasks), desc="Evaluating")
+        
+        # Process as they complete
+        for coro in asyncio.as_completed(pending_tasks):
+            result = await coro
             
             # Extract raw responses
             raw_data = {
@@ -304,17 +328,20 @@ async def main(
                 "raw_responses": result.pop("raw_responses")
             }
             
-            # Write key results to main file
-            f.write(json.dumps(result) + "\n")
-            f.flush()
+            # Write to files
+            f_out.write(json.dumps(result) + "\n")
+            f_out.flush()
             
-            # Write raw responses to raw file
             f_raw.write(json.dumps(raw_data) + "\n")
             f_raw.flush()
             
             progress_bar.update(1)
             
-    progress_bar.close()
+        progress_bar.close()
+        
+    finally:
+        f_out.close()
+        f_raw.close()
     logging.info(f"Done. Results saved to {final_output_path}")
     logging.info(f"Raw responses saved to {final_raw_output_path}")
 

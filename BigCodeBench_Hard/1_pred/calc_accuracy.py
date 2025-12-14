@@ -18,6 +18,8 @@ def load_json(path):
     with open(path, 'r', encoding='utf-8') as f:
         return json.load(f)
 
+from utils import load_bigcodebench_hard, split_test_cases
+
 def main():
     parser = argparse.ArgumentParser(description="Calculate prediction accuracy against ground truth.")
     parser.add_argument("--pred_file", type=str, required=True, help="Path to test.jsonl")
@@ -27,134 +29,177 @@ def main():
     
     print(f"Loading predictions from {args.pred_file}...")
     preds = load_jsonl(args.pred_file)
+    pred_map_by_id = {item['id']: item for item in preds}
+
+    print(f"Loading execution results (Ground Truth outcomes) from {args.truth_file}...")
+    exec_data = load_json(args.truth_file)
+    # Map: task_id -> metadata (execution logs)
+    exec_map = {}
+    for item in exec_data:
+        t_id = item.get('question_id') or item.get('task_id')
+        if t_id:
+            exec_map[t_id] = item
+
+    print("Loading Dataset Registry (Total 853 TCs)...")
+    dataset = load_bigcodebench_hard()
     
-    print(f"Loading ground truth from {args.truth_file}...")
-    truth_data = load_json(args.truth_file)
+    total_tasks = 0
+    correct_tasks = 0
     
-    # Create lookup map for ground truth
-    # nucleus_eval_all.json items have 'question_id'
-    truth_map = {item['question_id']: item for item in truth_data}
+    total_tcs = 0
+    correct_tcs = 0
     
-    total = 0
-    correct = 0
-    missing = 0
-    
-    # Granular counters
-    total_test_cases = 0
-    correct_test_cases = 0
+    missing_tasks_in_pred = 0
     
     results = []
     
-    for pred in preds:
-        t_id = pred['id']
+    # Iterate over EVERY task in the benchmark
+    for item in dataset:
+        task_id = item.get('task_id')
+        test_code = item.get('test', '')
         
-        if t_id not in truth_map:
-            # Maybe ID mismatch? BigCodeBench IDs usually match.
-            # Only count if we have ground truth
-            print(f"Warning: Task ID {t_id} not found in ground truth.")
-            missing += 1
-            continue
+        total_tasks += 1
+        
+        # 1. Determine Actual Outcome (PASS/FAIL) from Execution
+        # If task failed to run (missing in exec_map), it's a FAIL.
+        exec_item = exec_map.get(task_id)
+        
+        # We need the specific code index results. 
+        # Usually prediction is for code_index 0 (first sample).
+        target_code_idx = 0 
+        
+        # Check Task Level Pass/Fail (Greedy/First sample)
+        actual_task_pass = False
+        actual_tc_outcomes = {} # {test_name: "PASS"|"FAIL"}
+        
+        # Identify all expected test cases from parsing
+        split = split_test_cases(test_code)
+        expected_tcs = [t[0] for t in split if t[0] not in ("error_parsing", "no_class_found", "no_test_methods")]
+        
+        # Default all to FAIL first
+        for tc in expected_tcs:
+            actual_tc_outcomes[tc] = "FAIL"
             
-        truth_item = truth_map[t_id]
-        
-        # Get code index used in prediction
-        code_idx = pred.get('code_index', 0)
-        
-        # --- Overall Check ---
-        pred_status = pred.get('overall_pass')
-        pred_bool = (pred_status == "PASS")
-        
-        graded_list = truth_item.get('graded_list', [])
-        if code_idx >= len(graded_list):
-            print(f"Warning: Code index {code_idx} out of range for task {t_id} (len {len(graded_list)})")
-            missing += 1
-            continue
+        if exec_item:
+            graded_list = exec_item.get('graded_list', [])
+            if target_code_idx < len(graded_list):
+                actual_task_pass = graded_list[target_code_idx]
             
-        actual_bool = graded_list[code_idx]
-        is_correct = (pred_bool == actual_bool)
+            # Detailed TC outcomes
+            metadata_list = exec_item.get('metadata', [])
+            if target_code_idx < len(metadata_list):
+                meta = metadata_list[target_code_idx]
+                if meta:
+                    times_map = meta.get('times', {})
+                    failures_map = meta.get('failures', {})
+                    
+                    for tc in expected_tcs:
+                        # Check signatures
+                        # times_map might contain: "candidate.TestCases.test_case_1"
+                        # expected_tcs: "test_case_1"
+                        
+                        # A test passed ONLY IF:
+                        # 1. It is in times_map (it ran)
+                        # 2. It is NOT in failures_map
+                        
+                        ran = False
+                        failed = False
+                        
+                        # Naive substring check or split check
+                        for key in times_map.keys():
+                            if key.endswith(f".{tc}") or key == tc:
+                                ran = True
+                                break
+                        
+                        for key in failures_map.keys():
+                            if key.endswith(f".{tc}") or key == tc:
+                                failed = True
+                                break
+                                
+                        if ran and not failed:
+                            actual_tc_outcomes[tc] = "PASS"
         
-        total += 1
-        if is_correct:
-            correct += 1
-            
-        # --- Granular Check ---
-        # Prediction Map: { "test_case_1": "PASS", "test_case_2": "FAIL" ... }
-        pred_map = pred.get('pass_fail_list', {})
+        # 2. Compare with Prediction
+        pred_item = pred_map_by_id.get(task_id)
         
-        # Ground Truth Extraction
-        # truth_item['metadata'] is a list of metadata for each sample
-        metadata_list = truth_item.get('metadata', [])
-        if code_idx < len(metadata_list):
-            meta = metadata_list[code_idx]
-            failures_map = meta.get('failures', {})
-            times_map = meta.get('times', {})
-            
-            # Identify all executed test cases from 'times' keys
-            # Key format usually: "candidate.TestCases.test_case_1" or "test_case_1"
-            # We need to normalize to just "test_case_N" to match pred_map keys
-            
-            for complex_key in times_map.keys():
-                # Extract simple name
-                # e.g. "candidate.TestCases.test_case_1" -> "test_case_1"
-                simple_key = complex_key.split('.')[-1]
-                
-                # Check if this test case exists in prediction
-                if simple_key not in pred_map:
-                    # Maybe prediction skipped it or format differs?
-                    continue
-                
-                # Ground Truth for this specific test case
-                # If key is in failures_map -> FAIL, else PASS
-                # failures map might use complex key OR simple key depending on implementation
-                # Check both just in case
-                is_fail = (complex_key in failures_map) or (simple_key in failures_map)
-                gt_status = "FAIL" if is_fail else "PASS"
-                
-                # Prediction for this specific test case
-                # pred_map values are "PASS", "FAIL", "NULL"
-                p_status = pred_map[simple_key]
-                
-                total_test_cases += 1
-                if p_status == gt_status:
-                    correct_test_cases += 1
-                
+        # Task Level Comparison
+        pred_task_pass = False
+        if pred_item:
+             pred_task_pass = (pred_item.get('overall_pass') == "PASS")
         else:
-             print(f"Warning: Metadata missing for code index {code_idx} in task {t_id}")
+             missing_tasks_in_pred += 1
+        
+        if pred_task_pass == actual_task_pass:
+            correct_tasks += 1
+            
+        # TC Level Comparison
+        pred_tc_list = pred_item.get('pass_fail_list', {}) if pred_item else {}
+        
+        for tc in expected_tcs:
+            total_tcs += 1
+            
+            actual_status = actual_tc_outcomes[tc]
+            
+            # Prediction status
+            # If prediction missing, default to FAIL (or we could say 'NULL' != 'PASS'/'FAIL' -> Incorrect)
+            # Actually if prediction is missing, it's NOT correct.
+            pred_status = pred_tc_list.get(tc, "NULL")
+            
+            if pred_status == actual_status:
+                correct_tcs += 1
+                
+            # Log detailed result for this test case
+            actual_tc_outcomes[tc] = {
+                "status": actual_status, 
+                "pred": pred_status, 
+                "correct": pred_status == actual_status
+            }
 
         results.append({
-            "id": t_id,
-
-            "code_index": code_idx,
-            "prediction": pred_status,
-            "ground_truth": "PASS" if actual_bool else "FAIL",
-            "is_correct": is_correct
+            "task_id": task_id,
+            "overall_correct": pred_task_pass == actual_task_pass,
+            "gt_overall": "PASS" if actual_task_pass else "FAIL",
+            "pred_overall": "PASS" if pred_task_pass else "FAIL",
+            "test_cases": actual_tc_outcomes
         })
-        
-    accuracy = (correct / total) * 100 if total > 0 else 0.0
-    detail_accuracy = (correct_test_cases / total_test_cases) * 100 if total_test_cases > 0 else 0.0
+
+    # Report
+    task_acc = (correct_tasks / total_tasks * 100) if total_tasks else 0
+    tc_acc = (correct_tcs / total_tcs * 100) if total_tcs else 0
     
     report_lines = [
+        "=" * 40,
+        "      ACCURACY REPORT (Ground Truth)      ",
+        "=" * 40,
+        f"Total Tasks (Dataset):       {total_tasks}",
+        f"Correct Task Predictions:    {correct_tasks}",
+        f"Task Level Accuracy:         {task_acc:.2f}%",
         "-" * 40,
-        f"Total Tasks Evaluated:       {total}",
-        f"Correct Tasks (Overall):     {correct}",
-        f"Task Accuracy (Overall):     {accuracy:.2f}%",
+        f"Total Test Cases (Dataset):  {total_tcs}",
+        f"Correct TC Predictions:      {correct_tcs}",
+        f"Test Case Level Accuracy:    {tc_acc:.2f}%",
         "-" * 40,
-        f"Total Test Cases Evaluated:  {total_test_cases}",
-        f"Correct Test Cases:          {correct_test_cases}",
-        f"Test Case Accuracy (Detail): {detail_accuracy:.2f}%",
-        "-" * 40,
-        f"Missing/Skipped Tasks:       {missing}",
-        "-" * 40
+        f"Missing Predictions:         {missing_tasks_in_pred}",
+        "=" * 40
     ]
     
     report = "\n".join(report_lines)
     print(report)
     
-    # Save to file
-    output_path = Path(args.pred_file).parent / "accuracy_report.txt"
+    output_dir = Path(args.pred_file).parent
+    
+    # Save Report
+    output_path = output_dir / "accuracy_report.txt"
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(report + "\n")
     print(f"\nReport saved to: {output_path}")
+
+    # Save Raw Debug Log
+    raw_path = output_dir / "accuracy_raw.jsonl"
+    with open(raw_path, "w", encoding="utf-8") as f:
+        for res in results:
+            f.write(json.dumps(res) + "\n")
+    print(f"Detailed raw logs saved to: {raw_path}")
 
 if __name__ == "__main__":
     main()
