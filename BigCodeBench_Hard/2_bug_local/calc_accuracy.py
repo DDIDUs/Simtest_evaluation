@@ -50,6 +50,8 @@ def main():
     
     missing_tasks_in_pred = 0
     
+    results = []
+    
     # Iterate over EVERY task in the benchmark
     for item in dataset:
         task_id = item.get('task_id')
@@ -75,7 +77,7 @@ def main():
         
         # Default all to FAIL first
         for tc in expected_tcs:
-            actual_tc_outcomes[tc] = "FAIL"
+            actual_tc_outcomes[tc] = {"status": "FAIL", "pred": "NULL", "correct": False}
             
         if exec_item:
             graded_list = exec_item.get('graded_list', [])
@@ -92,17 +94,9 @@ def main():
                     
                     for tc in expected_tcs:
                         # Check signatures
-                        # times_map might contain: "candidate.TestCases.test_case_1"
-                        # expected_tcs: "test_case_1"
-                        
-                        # A test passed ONLY IF:
-                        # 1. It is in times_map (it ran)
-                        # 2. It is NOT in failures_map
-                        
                         ran = False
                         failed = False
                         
-                        # Naive substring check or split check
                         for key in times_map.keys():
                             if key.endswith(f".{tc}") or key == tc:
                                 ran = True
@@ -114,7 +108,7 @@ def main():
                                 break
                                 
                         if ran and not failed:
-                            actual_tc_outcomes[tc] = "PASS"
+                            actual_tc_outcomes[tc]["status"] = "PASS"
         
         # 2. Compare with Prediction
         pred_item = pred_map_by_id.get(task_id)
@@ -135,15 +129,23 @@ def main():
         for tc in expected_tcs:
             total_tcs += 1
             
-            actual_status = actual_tc_outcomes[tc]
-            
-            # Prediction status
-            # If prediction missing, default to FAIL (or we could say 'NULL' != 'PASS'/'FAIL' -> Incorrect)
-            # Actually if prediction is missing, it's NOT correct.
+            actual_status = actual_tc_outcomes[tc]["status"]
             pred_status = pred_tc_list.get(tc, "NULL")
             
             if pred_status == actual_status:
                 correct_tcs += 1
+            
+            # Update detailed log info
+            actual_tc_outcomes[tc]["pred"] = pred_status
+            actual_tc_outcomes[tc]["correct"] = (pred_status == actual_status)
+
+        results.append({
+            "task_id": task_id,
+            "overall_correct": pred_task_pass == actual_task_pass,
+            "gt_overall": "PASS" if actual_task_pass else "FAIL",
+            "pred_overall": "PASS" if pred_task_pass else "FAIL",
+            "test_cases": actual_tc_outcomes
+        })
 
     # Report
     task_acc = (correct_tasks / total_tasks * 100) if total_tasks else 0
@@ -155,7 +157,7 @@ def main():
         "=" * 40,
         f"Total Tasks (Dataset):       {total_tasks}",
         f"Correct Task Predictions:    {correct_tasks}",
-        f"Task Accuracy (Overall):     {task_acc:.2f}%",
+        f"Task Level Accuracy:         {task_acc:.2f}%",
         "-" * 40,
         f"Total Test Cases (Dataset):  {total_tcs}",
         f"Correct TC Predictions:      {correct_tcs}",
@@ -168,11 +170,20 @@ def main():
     report = "\n".join(report_lines)
     print(report)
     
-    # Save
-    output_path = Path(args.pred_file).parent / "accuracy_report.txt"
+    output_dir = Path(args.pred_file).parent
+    
+    # Save Report
+    output_path = output_dir / "accuracy_report.txt"
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(report + "\n")
     print(f"\nReport saved to: {output_path}")
+
+    # Save Raw Debug Log
+    raw_path = output_dir / "accuracy_raw.jsonl"
+    with open(raw_path, "w", encoding="utf-8") as f:
+        for res in results:
+            f.write(json.dumps(res) + "\n")
+    print(f"Detailed raw logs saved to: {raw_path}")
 
 if __name__ == "__main__":
     main()

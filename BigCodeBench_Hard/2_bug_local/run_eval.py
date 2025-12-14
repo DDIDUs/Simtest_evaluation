@@ -284,13 +284,17 @@ async def main(
         logging.info("All problems already processed. Exiting.")
         return
 
-    progress_bar = tqdm(total=len(problems_to_run), desc="Evaluating")
-
-    with open(final_output_path, 'a', buffering=1) as f, open(final_raw_output_path, 'a', buffering=1) as f_raw:
+    # Open files for appending
+    f_out = open(final_output_path, 'a', buffering=1, encoding='utf-8')
+    f_raw = open(final_raw_output_path, 'a', buffering=1, encoding='utf-8')
+    
+    try:
+        # Create all coroutines
+        pending_tasks = []
         for prob in problems_to_run:
             split_tests = split_test_cases(prob['test_code'])
             
-            result = await evaluate_task(
+            coro = evaluate_task(
                 prob['task_id'],
                 prob['code'],
                 split_tests,
@@ -299,21 +303,37 @@ async def main(
                 model_config,
                 code_index=prob['code_index']
             )
+            # Wrap in a task to ensure it's scheduled correctly if needed, but simple list is fine for as_completed
+            pending_tasks.append(coro)
+
+        progress_bar = tqdm(total=len(pending_tasks), desc="Evaluating")
+        
+        # Process as they complete
+        for coro in asyncio.as_completed(pending_tasks):
+            result = await coro
             
+            # Extract raw responses
             raw_data = {
                 "id": result["id"],
                 "raw_responses": result.pop("raw_responses")
             }
             
-            f.write(json.dumps(result) + "\n")
-            f.flush()
+            # Write key results to main file
+            f_out.write(json.dumps(result) + "\n")
+            f_out.flush()
             
+            # Write raw responses to raw file
             f_raw.write(json.dumps(raw_data) + "\n")
             f_raw.flush()
             
             progress_bar.update(1)
             
-    progress_bar.close()
+        progress_bar.close()
+        
+    finally:
+        f_out.close()
+        f_raw.close()
+    
     logging.info(f"Done. Results saved to {final_output_path}")
 
 if __name__ == "__main__":
