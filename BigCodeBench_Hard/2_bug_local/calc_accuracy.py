@@ -2,6 +2,7 @@ from utils import load_bigcodebench_hard, split_test_cases
 import json
 import argparse
 from pathlib import Path
+from collections import defaultdict
 
 def load_jsonl(path):
     data = []
@@ -19,10 +20,29 @@ def load_json(path):
     with open(path, 'r', encoding='utf-8') as f:
         return json.load(f)
 
+def load_levels(level_dir):
+    """
+    Load level indices from the given directory.
+    Returns a dict: task_id -> level ("Easy", "Medium", "Hard")
+    """
+    level_map = {}
+    level_dir = Path(level_dir)
+    
+    for level_name in ["easy", "medium", "hard"]:
+        file_path = level_dir / f"{level_name}.json"
+        if file_path.exists():
+            data = load_json(file_path)
+            # data['ids'] should contain the list of task_ids
+            for task_id in data.get('ids', []):
+                level_map[task_id] = level_name.capitalize()
+    
+    return level_map
+
 def main():
     parser = argparse.ArgumentParser(description="Calculate prediction accuracy against ground truth.")
     parser.add_argument("--pred_file", type=str, required=True, help="Path to test.jsonl")
     parser.add_argument("--truth_file", type=str, required=True, help="Path to nucleus_eval_all.json")
+    parser.add_argument("--level_dir", type=str, default=None, help="Directory containing level index files (easy.json, etc.)")
     
     args = parser.parse_args()
     
@@ -39,6 +59,17 @@ def main():
         if t_id:
             exec_map[t_id] = item
 
+    # Determine Level Directory
+    if args.level_dir:
+        level_dir = Path(args.level_dir)
+    else:
+        # Default assumption: ../actual_exec/problem_level_index relative to this script?
+        base_dir = Path(__file__).resolve().parent.parent 
+        level_dir = base_dir / "actual_exec" / "problem_level_index"
+
+    print(f"Loading Level Index from {level_dir}...")
+    task_level_map = load_levels(level_dir)
+
     print("Loading Dataset Registry (Total 853 TCs)...")
     dataset = load_bigcodebench_hard()
     
@@ -50,14 +81,19 @@ def main():
     
     missing_tasks_in_pred = 0
     
+    # Level-based aggregations
+    level_stats = defaultdict(lambda: {"total_tasks": 0, "correct_tasks": 0, "total_tcs": 0, "correct_tcs": 0})
+
     results = []
     
     # Iterate over EVERY task in the benchmark
     for item in dataset:
         task_id = item.get('task_id')
         test_code = item.get('test', '')
+        level = task_level_map.get(task_id, "Unknown")
         
         total_tasks += 1
+        level_stats[level]["total_tasks"] += 1
         
         # 1. Determine Actual Outcome (PASS/FAIL) from Execution
         # If task failed to run (missing in exec_map), it's a FAIL.
@@ -122,18 +158,21 @@ def main():
         
         if pred_task_pass == actual_task_pass:
             correct_tasks += 1
+            level_stats[level]["correct_tasks"] += 1
             
         # TC Level Comparison
         pred_tc_list = pred_item.get('pass_fail_list', {}) if pred_item else {}
         
         for tc in expected_tcs:
             total_tcs += 1
+            level_stats[level]["total_tcs"] += 1
             
             actual_status = actual_tc_outcomes[tc]["status"]
             pred_status = pred_tc_list.get(tc, "NULL")
             
             if pred_status == actual_status:
                 correct_tcs += 1
+                level_stats[level]["correct_tcs"] += 1
             
             # Update detailed log info
             actual_tc_outcomes[tc]["pred"] = pred_status
@@ -141,6 +180,7 @@ def main():
 
         results.append({
             "task_id": task_id,
+            "level": level,
             "overall_correct": pred_task_pass == actual_task_pass,
             "gt_overall": "PASS" if actual_task_pass else "FAIL",
             "pred_overall": "PASS" if pred_task_pass else "FAIL",
@@ -152,20 +192,35 @@ def main():
     tc_acc = (correct_tcs / total_tcs * 100) if total_tcs else 0
     
     report_lines = [
-        "=" * 40,
+        "=" * 60,
         "      ACCURACY REPORT (Ground Truth)      ",
-        "=" * 40,
-        f"Total Tasks (Dataset):       {total_tasks}",
-        f"Correct Task Predictions:    {correct_tasks}",
-        f"Task Level Accuracy:         {task_acc:.2f}%",
-        "-" * 40,
-        f"Total Test Cases (Dataset):  {total_tcs}",
-        f"Correct TC Predictions:      {correct_tcs}",
-        f"Test Case Level Accuracy:    {tc_acc:.2f}%",
-        "-" * 40,
-        f"Missing Predictions:         {missing_tasks_in_pred}",
-        "=" * 40
+        "=" * 60,
+        f"{'Metric':<25} | {'Total':<10} | {'Correct':<10} | {'Accuracy':<10}",
+        "-" * 60,
+        f"{'Overall Task':<25} | {total_tasks:<10} | {correct_tasks:<10} | {task_acc:.2f}%",
+        f"{'Overall Test Case':<25} | {total_tcs:<10} | {correct_tcs:<10} | {tc_acc:.2f}%",
+        "-" * 60,
     ]
+
+    # Append Level Reports
+    for level in ["Easy", "Medium", "Hard", "Unknown"]:
+        stats = level_stats.get(level)
+        if not stats: continue
+        
+        l_total_tasks = stats["total_tasks"]
+        l_correct_tasks = stats["correct_tasks"]
+        l_task_acc = (l_correct_tasks / l_total_tasks * 100) if l_total_tasks else 0
+        
+        l_total_tcs = stats["total_tcs"]
+        l_correct_tcs = stats["correct_tcs"]
+        l_tc_acc = (l_correct_tcs / l_total_tcs * 100) if l_total_tcs else 0
+        
+        report_lines.append(f"{f'[{level}] Task':<25} | {l_total_tasks:<10} | {l_correct_tasks:<10} | {l_task_acc:.2f}%")
+        report_lines.append(f"{f'[{level}] Test Case':<25} | {l_total_tcs:<10} | {l_correct_tcs:<10} | {l_tc_acc:.2f}%")
+        report_lines.append("-" * 60)
+
+    report_lines.append(f"Missing Predictions:         {missing_tasks_in_pred}")
+    report_lines.append("=" * 60)
     
     report = "\n".join(report_lines)
     print(report)

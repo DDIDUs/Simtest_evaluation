@@ -1,6 +1,5 @@
 import json
 import ast
-import astunparse
 import os
 import logging
 from typing import List, Dict, Any, Optional
@@ -184,6 +183,6 @@ def split_test_cases(test_case_code):
         new_module = ast.Module(body=new_module_body, type_ignores=[])
         
         # Unparse to string
-        split_cases.append((test_method.name, astunparse.unparse(new_module)))
+        split_cases.append((test_method.name, ast.unparse(new_module)))
         
     return split_cases
