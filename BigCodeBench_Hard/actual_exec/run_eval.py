@@ -1,43 +1,24 @@
 import argparse
-import io
 import json
 import logging
 import multiprocessing
 import os
-import tempfile
+import re
 import time
-import types
-import unittest
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
-from unittest.mock import patch
+from typing import Any, Dict, List, Optional, Tuple
 
-from utils import extract_code_blocks, save_json, load_bigcodebench_hard
+# Official Evaluation Utils
+from bigcodebench_eval_utils import (
+    untrusted_check, 
+    estimate_pass_at_k, 
+    PASS, 
+    FAIL, 
+    TIMEOUT,
+    TIMEOUT_LIMIT
+)
 
-import numpy as np
-
-def estimate_pass_at_k(num_samples: int, num_correct: int, k: int) -> float:
-    """
-    Estimates pass@k using the unbiased estimator.
-    Ref: https://arxiv.org/abs/2107.03374
-    """
-    if num_samples < k:
-        return 0.0
-    if num_correct == num_samples:
-        return 1.0
-
-    # 1 - binom(n-c, k) / binom(n, k)
-    # Calculated as: 1 - prod_{i=0}^{k-1} ( (n - c - i) / (n - i) )
-    
-    n = num_samples
-    c = num_correct
-    
-    prob_failure = 1.0
-    for i in range(k):
-        prob_failure *= (n - c - i) / (n - i)
-    
-    return 1.0 - prob_failure
-
+from datasets import load_dataset
 
 
 logging.basicConfig(
@@ -51,157 +32,139 @@ logging.basicConfig(
 
 
 STRATEGIES = ["greedy", "nucleus"]
-GLOBAL_TIMEOUT = 30  # seconds per code
+# Use official defaults or overrides
+# Official uses 4GB usually for bigcodebench
+MAX_AS_LIMIT = 4 * 1024 # MB
+MAX_DATA_LIMIT = 4 * 1024 # MB
+MAX_STACK_LIMIT = 10 # MB
+DEFAULT_DATASET_ID = "bigcode/bigcodebench-hard"
+DEFAULT_SPLIT = "v0.1.4"
 
 
-# --- Test runner logic (adapted from compute_code_generation_metrics style) ---
-def _run_suite(code_str: str, test_code: str, result_list, metadata_list) -> None:
-    try:
-        run_result, run_times, meta = run_tests_for_code(code_str, test_code)
-    except Exception as exc:  # safeguard against unexpected runner failures
-        run_result = [False]
-        run_times = []
-        meta = {"error": repr(exc), "trace": ""}
-    result_list.append((run_result, run_times))
-    metadata_list.append(meta)
+# --- Data Utilities (Inlined) ---
+
+def ensure_parent_dir(path: str) -> None:
+    """Create parent directories for a file path if they do not exist."""
+    Path(path).parent.mkdir(parents=True, exist_ok=True)
 
 
-def check_correctness(code_str: str, test_code: str, timeout: int) -> Tuple[List[bool], Dict]:
-    manager = multiprocessing.Manager()
-    result = manager.list()
-    metadata_list = manager.list()
-    p = multiprocessing.Process(target=_run_suite, args=(code_str, test_code, result, metadata_list))
-    p.start()
-    p.join(timeout=timeout)
-
-    if p.is_alive():
-        p.kill()
-
-    if not result:
-        # Timeout or crash
-        result.append(([False], []))
-        metadata_list.append(
-            {"error": "GlobalTimeout", "trace": "Global timeout exceeded in check_correctness"}
-        )
-
-    return result[0], metadata_list[0]
+def save_json(path: str, data: Any) -> None:
+    ensure_parent_dir(path)
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
 
 
-def run_tests_for_code(code_str: str, test_code: str) -> Tuple[List[bool], Dict, Dict]:
-    """Execute provided unit tests against a single code string and return per-test pass list."""
-    buf = io.StringIO()
+def read_json_or_jsonl(path: str) -> List[Dict[str, Any]]:
+    """Read JSON or JSONL file and return list of dicts."""
+    with open(path, "r", encoding="utf-8") as f:
+        text = f.read()
+        if not text.strip():
+            return []
 
-    with tempfile.TemporaryDirectory() as tmpdir:
-        cwd = os.getcwd()
-        os.chdir(tmpdir)
-        try:
-            module = types.ModuleType("candidate")
-            # If the code requests input, we raise SystemExit to kill this test process
-            # (check_correctness handles process death gracefully)
-            with patch("builtins.input", side_effect=SystemExit("Input called")), \
-                 patch("getpass.getpass", side_effect=SystemExit("Getpass called")):
-                
-                # Exec candidate code
-                exec(code_str, module.__dict__)
-                
-                # Exec test code in the same module dict so it can see the candidate functions
-                exec(test_code, module.__dict__)
-            
-            # Find the test class
-            TestClass = None
-            for name, val in module.__dict__.items():
-                if isinstance(val, type) and issubclass(val, unittest.TestCase):
-                    TestClass = val
-                    break
-            
-            if not TestClass:
-                 # Fallback: maybe specific class name expected like "TestCases"?
-                 TestClass = module.__dict__.get("TestCases")
-            
-            if not TestClass:
-                raise ValueError("No unittest.TestCase class found in the provided test code.")
-
-            class TimeTrackingTestResult(unittest.TextTestResult):
-                def __init__(self, *args, **kwargs):
-                    super().__init__(*args, **kwargs)
-                    self.test_times = {}
-                    self._current_start_time = 0
-
-                def startTest(self, test):
-                    self._current_start_time = time.time()
-                    super().startTest(test)
-
-                def stopTest(self, test):
-                    elapsed = time.time() - self._current_start_time
-                    self.test_times[test.id()] = elapsed
-                    super().stopTest(test)
-
-            suite = unittest.defaultTestLoader.loadTestsFromTestCase(TestClass)
-            runner = unittest.TextTestRunner(
-                stream=buf, verbosity=2, resultclass=TimeTrackingTestResult
-            )
-            # Match test cases to indices by iterating over the suite
-            test_id_to_index = {}
-            for i, test in enumerate(suite):
-                test_id_to_index[test.id()] = i
-
-            result = runner.run(suite)
-            
-            # Initialize flags
-            total_tests = suite.countTestCases()
-            per_test_flags = [True] * total_tests
-            
-            # Get times (now a dict)
-            per_test_times = getattr(result, "test_times", {})
-
-            # Helper to mark failures
-            def mark_failure(test_obj, reason):
-                # Try exact ID match first
-                tid = test_obj.id()
-                if tid in test_id_to_index:
-                    per_test_flags[test_id_to_index[tid]] = False
-                    return
-                # Fallback: try parsing test_case_N
+    if path.endswith(".jsonl"):
+        rows: List[Dict[str, Any]] = []
+        with open(path, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
                 try:
-                    # Expecting format like "test_case_1 (TestCases.test_case_1)"
-                    # test_obj.id() gives "module.Class.method"
-                    method_name = tid.split(".")[-1]
-                    if method_name.startswith("test_case_"):
-                        idx = int(method_name.replace("test_case_", ""))
-                        if 0 <= idx < total_tests:
-                            per_test_flags[idx] = False
-                except ValueError:
-                    pass
+                    rows.append(json.loads(line))
+                except Exception as exc:
+                    logging.warning("Skip invalid JSONL line: %s (%s)", line[:80], exc)
+        return rows
 
-            for failed, _ in result.failures:
-                mark_failure(failed, "failure")
-            for err, _ in result.errors:
-                mark_failure(err, "error")
+    with open(path, "r", encoding="utf-8") as f:
+        content = json.load(f)
+    if isinstance(content, list):
+        return content
+    if isinstance(content, dict):
+        return list(content.values())
+    return []
 
-            # Final safeguard: if result says fail but we didn't mark any flag (mismatch), mark all as False
-            if not result.wasSuccessful() and all(per_test_flags):
-                per_test_flags = [False] * total_tests
 
-            # Parse failures/errors map
-            error_map = {}
-            for failure in result.failures:
-                case_id = failure[0].id().split(".")[-1]
-                msg = failure[1]
-                error_map[case_id] = msg
-            
-            for error in result.errors:
-                case_id = error[0].id().split(".")[-1]
-                msg = error[1]
-                error_map[case_id] = msg
+def normalize_problem(item: Dict[str, Any], idx: int) -> Optional[Dict[str, str]]:
+    """Normalize a dataset row into {task_id, prompt}."""
+    task_id = (
+        item.get("task_id")
+        or item.get("question_id")
+        or item.get("problem_id")
+        or item.get("id")
+        or f"BigCodeBench_{idx}"
+    )
+    prompt = (
+        item.get("complete_prompt")
+        or item.get("prompt")
+        or item.get("question")
+        or item.get("instruction")
+        or item.get("text")
+        or item.get("problem")
+        or item.get("description")
+    )
+    test = item.get("test")
+    entry_point = item.get("entry_point")
 
-            meta = {
-                "failures": error_map,
-                "times": per_test_times,
-                "trace": buf.getvalue(),
-            }
-            return per_test_flags, per_test_times, meta
-        finally:
-            os.chdir(cwd)
+    if prompt is None:
+        try:
+            prompt = json.dumps(item, ensure_ascii=False)
+        except Exception:
+            prompt = str(item)
+    if not prompt:
+        return None
+        
+    return {
+        "task_id": str(task_id), 
+        "prompt": str(prompt),
+        "test": str(test) if test else "",
+        "entry_point": str(entry_point) if entry_point else ""
+    }
+
+
+def load_bigcodebench_hard(dataset_path: Optional[str] = None) -> List[Dict[str, str]]:
+    """Load BigCodeBench-Hard style problems and normalize fields."""
+    records: List[Dict[str, Any]] = []
+
+    if dataset_path and os.path.exists(dataset_path):
+        records = read_json_or_jsonl(dataset_path)
+    else:
+        try:
+            ds = load_dataset(dataset_path or DEFAULT_DATASET_ID, split=DEFAULT_SPLIT)
+            records = list(ds)
+        except Exception as exc:
+            raise RuntimeError(
+                f"Failed to load dataset from {dataset_path or DEFAULT_DATASET_ID} (split={DEFAULT_SPLIT}): {exc}"
+            )
+
+    normalized: List[Dict[str, str]] = []
+    for idx, item in enumerate(records):
+        norm = normalize_problem(item, idx)
+        if norm:
+            normalized.append(norm)
+        else:
+            logging.warning("Skip record without prompt: %s", item)
+    return normalized
+
+
+def extract_code_blocks(text: str) -> List[str]:
+    """Extract code blocks from an LLM response, preferring fenced blocks."""
+    if not text:
+        return []
+
+    # ```python ... ```
+    blocks = re.findall(r"```(?:python)?\s*(.*?)```", text, flags=re.DOTALL | re.IGNORECASE)
+    if not blocks:
+        # Generic fenced block
+        blocks = re.findall(r"```(.*?)```", text, flags=re.DOTALL)
+    if not blocks:
+        # <code>...</code>
+        blocks = re.findall(r"<code>(.*?)</code>", text, flags=re.DOTALL | re.IGNORECASE)
+
+    cleaned = [b.strip() for b in blocks if b and b.strip()]
+    if cleaned:
+        return cleaned
+
+    fallback = text.strip()
+    return [fallback] if fallback else []
 
 
 # --- Loading and evaluation orchestration ---
@@ -315,7 +278,10 @@ def evaluate_files(
                 if task_id not in problems_map:
                     logging.warning(f"Task {task_id} not found in dataset. Skipping evaluation for this task.")
                     continue
+                
+                # Official benchmark uses "test" field which contains the full test harness
                 test_code = problems_map[task_id].get("test", "")
+                entry_point = problems_map[task_id].get("entry_point", "")
                 
                 total_tasks += 1
                 task_graded_results = []
@@ -323,10 +289,29 @@ def evaluate_files(
                 num_correct = 0
 
                 for code in code_list:
-                    (res, times), meta = check_correctness(code, test_code, timeout=timeout)
-                    is_pass = all(res)
+                    # Use official untrusted_check
+                    stat, details, runtime, per_test_times = untrusted_check(
+                        code=code,
+                        test_code=test_code,
+                        entry_point=entry_point,
+                        max_as_limit=MAX_AS_LIMIT,
+                        max_data_limit=MAX_DATA_LIMIT,
+                        max_stack_limit=MAX_STACK_LIMIT,
+                        gt_time_limit=timeout # Use user provided timeout as GT limit base
+                    )
+                    
+                    is_pass = (stat == PASS)
                     task_graded_results.append(is_pass)
-                    task_metadata_list.append(meta) # Store full metadata including errors
+                    
+                    # Store metadata similar to before but adapted
+                    meta = {
+                        "status": stat,
+                        "details": details,
+                        "runtime": runtime,
+                        "time_breakdown": per_test_times
+                    }
+                    task_metadata_list.append(meta)
+                    
                     if is_pass:
                         num_correct += 1
                 
@@ -338,17 +323,17 @@ def evaluate_files(
                 est_values = {}
                 n_samples = len(code_list)
                 for k_val in possible_k:
-                    est = estimate_pass_at_k(n_samples, num_correct, k_val)
+                    est = estimate_pass_at_k(n_samples, [num_correct], k_val)[0]
                     pass_at_k_sums[k_val] += est
                     est_values[f"pass@{k_val}"] = est
 
                 # Construct detail item
                 detail_item = {
-                    "question_id": task_id, # Mapping task_id to question_id
+                    "question_id": task_id,
                     "code_list": code_list,
                     "graded_list": task_graded_results,
                     "pass@1": p1_greedy,
-                    "metadata": task_metadata_list, # List of dicts
+                    "metadata": task_metadata_list, 
                     **est_values 
                 }
                 detail_results.append(detail_item)
@@ -385,7 +370,7 @@ def evaluate_files(
 def main(
     results_root: str,
     models: Optional[List[str]] = None,
-    timeout: int = GLOBAL_TIMEOUT,
+    timeout: int = TIMEOUT_LIMIT,
     limit: Optional[int] = None,
     sampling: Optional[List[str]] = None,
 ) -> None:
@@ -397,7 +382,7 @@ def main(
     if sampling:
         strategies_to_use = [s for s in STRATEGIES if s in sampling]
 
-    evaluate_files(models_to_use, strategies_to_use, results_root, timeout, limit)
+    evaluate_files(models_to_use, strategies_to_use, results_root, int(timeout), limit)
 
 
 if __name__ == "__main__":
@@ -417,8 +402,8 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--timeout",
-        type=int,
-        default=GLOBAL_TIMEOUT,
+        type=float,
+        default=TIMEOUT_LIMIT,
         help="Per-code global timeout (seconds).",
     )
     parser.add_argument(

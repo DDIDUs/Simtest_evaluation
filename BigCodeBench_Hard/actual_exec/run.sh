@@ -8,7 +8,7 @@ cd "$(dirname "$0")"
 # python3 generate.py --models qwen3-coder-30B-A3B-instruct --sampling nucleus --n_samples 10
 
 # Run evaluation for nucleus
-echo "Running evaluation for nucleus..."
-python3 run_eval.py --models qwen3-coder-30B-A3B-instruct --sampling nucleus
+echo "Running evaluation for nucleus (qwen3-coder-30B-A3B-instruct)..."
+python3 run_eval.py --results_root results --models qwen3-coder-30B-A3B-instruct --sampling nucleus
 
-echo "Dryrun complete. Check results/ and log files."
+echo "Evaluation complete. Check results/qwen3-coder-30B-A3B-instruct/nucleus_eval.json"
