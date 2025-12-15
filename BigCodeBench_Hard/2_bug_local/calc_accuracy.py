@@ -110,6 +110,7 @@ def main():
         # Identify all expected test cases from parsing
         split = split_test_cases(test_code)
         expected_tcs = [t[0] for t in split if t[0] not in ("error_parsing", "no_class_found", "no_test_methods")]
+        expected_tcs = sorted(list(set(expected_tcs))) # Deduplicate and sort
         
         # Default all to FAIL first
         for tc in expected_tcs:
