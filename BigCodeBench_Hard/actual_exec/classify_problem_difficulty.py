@@ -5,9 +5,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Paths
-RESULTS_DIR = Path("/Users/woo/Documents/Simtest_evaluation/BigCodeBench_Hard/actual_exec/results/qwen3-coder-30B-A3B-instruct")
+RESULTS_DIR = Path("/home/yrwoo/ICST26/Simtest_evaluation/BigCodeBench_Hard/actual_exec/results/qwen3-coder-30B-A3B-instruct")
 INPUT_FILE = RESULTS_DIR / "nucleus_eval_all.json"
-OUTPUT_DIR = Path("/Users/woo/Documents/Simtest_evaluation/BigCodeBench_Hard/actual_exec/problem_level_index")
+OUTPUT_DIR = Path("/home/yrwoo/ICST26/Simtest_evaluation/BigCodeBench_Hard/actual_exec/problem_level_index")
 
 def main():
     if not INPUT_FILE.exists():
@@ -65,6 +65,8 @@ def main():
     plt.grid(axis='y', alpha=0.3)
     
     plot_path = OUTPUT_DIR / "pass_rate_distribution_analysis.png"
+    # Ensure directory exists before saving plot
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
     plt.savefig(plot_path)
     print(f"Distribution plot saved to: {plot_path}")
 

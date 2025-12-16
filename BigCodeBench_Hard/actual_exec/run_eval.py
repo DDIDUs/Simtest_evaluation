@@ -35,7 +35,7 @@ STRATEGIES = ["greedy", "nucleus"]
 # Use official defaults or overrides
 # Official uses 4GB usually for bigcodebench
 MAX_AS_LIMIT = 4 * 1024 # MB
-MAX_DATA_LIMIT = 4 * 1024 # MB
+MAX_DATA_LIMIT = 8 * 1024 # MB
 MAX_STACK_LIMIT = 10 # MB
 DEFAULT_DATASET_ID = "bigcode/bigcodebench-hard"
 DEFAULT_SPLIT = "v0.1.4"

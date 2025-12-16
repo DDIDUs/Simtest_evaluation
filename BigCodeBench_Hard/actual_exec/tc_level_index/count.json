@@ -1,0 +1,9997 @@
+{
+  "BigCodeBench/13#test_case_1": {
+    "count": 6,
+    "code_index": [
+      1,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/13#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/13#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/13#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/13#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/15#test_successful_command_execution": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/15#test_file_not_found": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/15#test_invalid_command": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/15#test_empty_csv_file": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/15#test_mixed_commands": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/15#test_command_failure_with_specific_exit_code": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/17#test_process_not_found_starts_process": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/17#test_process_found_restarts_process": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/17#test_process_terminates_and_restarts_multiple_instances": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/19#test_single_file_zip": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/19#test_multiple_files_zip": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/19#test_empty_directory": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/19#test_non_existent_directory": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/19#test_exclusion_of_subdirectories": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/19#test_file_integrity_in_zip": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/34#test_case_1": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/34#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/34#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/34#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/34#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/37#test_case_1": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/37#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/37#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/37#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/37#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/82#test_app": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/82#test_protected_route_access": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/82#test_secret_key": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/82#test_login_page_accessibility": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/82#test_login_manager_initialization": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/82#test_logout_route_redirects_to_login": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/89#test_original_data_unchanged": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/89#test_data_without_outliers": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/89#test_return_type": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/89#test_no_plotting": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/89#test_no_change_in_data_dimension": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/89#test_plot_titles": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/92#test_cluster_centers": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/92#test_single_cluster_error": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/92#test_valid_input": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/92#test_invalid_data_type": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/92#test_invalid_cluster_number": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/92#test_return_type": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/92#test_return_labels": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/93#test_transformed_data_shape": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/93#test_invalid_n_components": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/93#test_invalid_n_components_type": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/93#test_plot_axes": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/93#test_values": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/99#test_figure_type": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/99#test_axes_existence": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/99#test_figure_children": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/99#test_plot_labels": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/99#test_plot_title": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/100#test_plot_attributes": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/100#test_reproducibility": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/100#test_random_seed_effect": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/100#test_data_range": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/100#test_value_range": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/100#test_value": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/101#test_basic_functionality": {
+    "count": 4,
+    "code_index": [
+      1,
+      2,
+      5,
+      7
+    ]
+  },
+  "BigCodeBench/101#test_heatmap_features": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/101#test_heatmap_values": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/101#test_plot_appearance": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/108#test_return_type": {
+    "count": 9,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/108#test_invalid_input_data": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/108#test_invalid_input_type": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/108#test_invalid_model": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/108#test_invalid_frequency": {
+    "count": 3,
+    "code_index": [
+      4,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/108#test_insufficient_data": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/108#test_components_existence": {
+    "count": 9,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/108#test_component_shapes": {
+    "count": 9,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/108#test_additive_model": {
+    "count": 9,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/108#test_non_numeric_values": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/108#test_missing_values": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/120#test_reproducibility_with_seed": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/120#test_series_length": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/120#test_invalid_date_types": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/120#test_start_date_after_end_date": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/120#test_return_type": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/120#test_date_within_range": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/123#test_return_type": {
+    "count": 6,
+    "code_index": [
+      2,
+      3,
+      4,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/123#test_list_modification": {
+    "count": 6,
+    "code_index": [
+      2,
+      3,
+      4,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/123#test_invalid_input": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/123#test_file_not_found": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/123#test_correct_file_count": {
+    "count": 6,
+    "code_index": [
+      2,
+      3,
+      4,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/124#test_output_types": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/124#test_invalid_input_type": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/124#test_invalid_list_elements": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/124#test_plot_title": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/124#test_time_measurement": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/124#test_size_limit": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/129#test_return_type": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/129#test_invalid_url": {
+    "count": 1,
+    "code_index": [
+      1
+    ]
+  },
+  "BigCodeBench/129#test_empty_page": {
+    "count": 1,
+    "code_index": [
+      1
+    ]
+  },
+  "BigCodeBench/129#test_non_html_content": {
+    "count": 1,
+    "code_index": [
+      1
+    ]
+  },
+  "BigCodeBench/129#test_http_error": {
+    "count": 9,
+    "code_index": [
+      0,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/129#test_return_type_with_complex_data": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/139#test_return_type": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/139#test_invalid_input_empty_dataframe": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/139#test_invalid_input_type": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/139#test_no_numeric_columns": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/139#test_histograms_count": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/139#test_plot_labels": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/139#test_correctness_of_histogram_lines": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/147#test_return_type": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/147#test_open_port": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/147#test_closed_port": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/147#test_all_ips_checked": {
+    "count": 1,
+    "code_index": [
+      5
+    ]
+  },
+  "BigCodeBench/147#test_return_value_structure": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/161#test_log_to_csv_content": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/161#test_no_log_entries": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/161#test_incorrect_format_log": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/161#test_partial_correct_log": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/161#test_malformed_timestamp": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/162#test_histogram_content": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/162#test_empty_text": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/162#test_single_word": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/162#test_histogram_bin_counts": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/162#test_rwidth_parameter_effect": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/177#test_word_frequencies": {
+    "count": 1,
+    "code_index": [
+      8
+    ]
+  },
+  "BigCodeBench/177#test_no_matching_articles": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/177#test_empty_dataframe": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/177#test_case_sensitive_handling": {
+    "count": 1,
+    "code_index": [
+      8
+    ]
+  },
+  "BigCodeBench/177#test_invalid_columns": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/184#test_case_1": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/184#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/184#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/184#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/184#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/187#test_default_parameters": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/187#test_custom_cities": {
+    "count": 7,
+    "code_index": [
+      2,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/187#test_invalid_dic": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/187#test_coordinate_ranges": {
+    "count": 7,
+    "code_index": [
+      2,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/187#test_return_type": {
+    "count": 7,
+    "code_index": [
+      2,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/199#test_valid_input": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/199#test_invalid_datetime_type": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/199#test_missing_timezone_for_custom_city": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/199#test_custom_cities_and_timezones": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/199#test_reproducibility_with_seed": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/208#test_case_1": {
+    "count": 4,
+    "code_index": [
+      1,
+      3,
+      5,
+      7
+    ]
+  },
+  "BigCodeBench/208#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/208#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/208#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/208#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/211#test_download_and_extract": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/211#test_2": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/211#test_3": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/211#test_4": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/211#test_5": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/214#test_image_size_and_type": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/214#test_random_seed_reproducibility": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/214#test_range_values": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/214#test_error_on_invalid_range": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/214#test_return_types": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/227#test_nonexistent_audio_file": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/227#test_empty_list_input": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/227#test_successful_matrix_creation": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/227#test_docstring_examples": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/227#test_spl_calculation": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/239#test_case_1": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/239#test_case_2": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/239#test_case_3": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/239#test_case_4": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/239#test_case_5": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/241#test_case_1": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/241#test_case_2": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/241#test_case_3": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/241#test_case_4": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/241#test_case_5": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/267#test_case_1": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/267#test_case_2": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/267#test_case_3": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/267#test_case_4": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/267#test_case_5": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/273#test_invalid_content_type": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/273#test_class_properties": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/273#test_valid_json_data": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/273#test_invalid_json": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/273#test_missing_data_key": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/274#test_invalid_content_type": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/274#test_missing_key_in_json_data": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/274#test_valid_json_request": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/274#test_invalid_json_format": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/274#test_empty_json_data": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/274#test_email_sending_exception": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/287#test_single_file_few_words": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/287#test_multiple_files": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/287#test_empty_files": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/287#test_files_with_special_characters": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/287#test_nested_directories": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/302#test_basic_functionality": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/302#test_empty_dataframe": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/302#test_plot_generation": {
+    "count": 9,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/302#test_invalid_data": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/302#test_plot_data_correlation": {
+    "count": 9,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/308#test_dataframe_structure": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/308#test_additional_fields": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/308#test_grades_range": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/308#test_average_grade": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/308#test_subject_average": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/308#test_non_negative_grades": {
+    "count": 4,
+    "code_index": [
+      0,
+      1,
+      6,
+      7
+    ]
+  },
+  "BigCodeBench/310#test_file_creation": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/310#test_file_content_rows": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/310#test_averages_calculation": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/310#test_header": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/310#test_average_row_label": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/313#test_case_1": {
+    "count": 3,
+    "code_index": [
+      4,
+      5,
+      7
+    ]
+  },
+  "BigCodeBench/313#test_case_2": {
+    "count": 3,
+    "code_index": [
+      4,
+      5,
+      7
+    ]
+  },
+  "BigCodeBench/313#test_case_3": {
+    "count": 5,
+    "code_index": [
+      1,
+      4,
+      5,
+      7,
+      8
+    ]
+  },
+  "BigCodeBench/313#test_case_4": {
+    "count": 3,
+    "code_index": [
+      4,
+      5,
+      7
+    ]
+  },
+  "BigCodeBench/313#test_case_5": {
+    "count": 5,
+    "code_index": [
+      1,
+      4,
+      5,
+      7,
+      8
+    ]
+  },
+  "BigCodeBench/324#test_empty_file_list": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/324#test_valid_files": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/324#test_valid_directory_and_files": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/324#test_process_still_running": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/324#test_multiple_processes_with_different_exit_codes": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/326#test_no_bat_files": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/326#test_single_bat_file_success": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/326#test_single_bat_file_failure": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/326#test_multiple_bat_files_mixed_results": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/326#test_exception_handling": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/341#test_numeric_data": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/341#test_categorical_data": {
+    "count": 2,
+    "code_index": [
+      2,
+      4
+    ]
+  },
+  "BigCodeBench/341#test_mixed_data": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/341#test_invalid_column": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/341#test_empty_dataframe": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/346#test_case_1": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/346#test_case_2": {
+    "count": 3,
+    "code_index": [
+      3,
+      6,
+      7
+    ]
+  },
+  "BigCodeBench/346#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/346#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/346#test_case_5": {
+    "count": 7,
+    "code_index": [
+      0,
+      1,
+      2,
+      4,
+      5,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/360#test_normal_functionality": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/360#test_non_existent_file": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/360#test_invalid_sheet_name": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/360#test_correct_mean_and_std_values": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/360#test_bar_chart_labels": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/360#test_value": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/367#test_case_1": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/367#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/367#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/367#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/367#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/368#test_case_1": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/368#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/368#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/368#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/368#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/374#test_case_1": {
+    "count": 5,
+    "code_index": [
+      0,
+      2,
+      5,
+      6,
+      7
+    ]
+  },
+  "BigCodeBench/374#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/374#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/374#test_case_4": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/374#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/399#test_case_1": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/399#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/399#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/399#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/399#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/401#test_case_1": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/401#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/401#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/401#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/401#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/409#test_normal_functionality": {
+    "count": 7,
+    "code_index": [
+      0,
+      1,
+      2,
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  "BigCodeBench/409#test_non_existent_file": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/409#test_invalid_column_name": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/409#test_empty_excel_file": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/409#test_file_with_different_data_types": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/417#test_model_type": {
+    "count": 8,
+    "code_index": [
+      0,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/417#test_axes_type": {
+    "count": 8,
+    "code_index": [
+      0,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/417#test_axes_title": {
+    "count": 8,
+    "code_index": [
+      0,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/417#test_axes_xlabel": {
+    "count": 8,
+    "code_index": [
+      0,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/417#test_axes_ylabel": {
+    "count": 8,
+    "code_index": [
+      0,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/417#test_model_output_shape": {
+    "count": 8,
+    "code_index": [
+      0,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/417#test_model_weights": {
+    "count": 6,
+    "code_index": [
+      0,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "BigCodeBench/417#test_model_loss": {
+    "count": 8,
+    "code_index": [
+      0,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/417#test_model_optimizer": {
+    "count": 8,
+    "code_index": [
+      0,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/418#test_return_types": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/418#test_model_type": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/418#test_model_output_shape": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/418#test_model_loss": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/418#test_model_optimizer": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/418#test_plot_axes": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/424#test_normal_functionality": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/424#test_non_existent_file": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/424#test_invalid_n_clusters": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/424#test_n_clusters_as_non_integer": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/424#test_single_cluster_returns_original_image": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/443#test_case_1": {
+    "count": 4,
+    "code_index": [
+      1,
+      2,
+      6,
+      9
+    ]
+  },
+  "BigCodeBench/443#test_case_2": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/443#test_case_3": {
+    "count": 2,
+    "code_index": [
+      3,
+      4
+    ]
+  },
+  "BigCodeBench/443#test_case_4": {
+    "count": 6,
+    "code_index": [
+      0,
+      3,
+      4,
+      5,
+      7,
+      8
+    ]
+  },
+  "BigCodeBench/443#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/443#test_case_6": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/443#test_case_7": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/445#test_case_1": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/445#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/445#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/445#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/445#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/445#test_case_6": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/454#test_move_no_files": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/454#test_empty_extension": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/454#test_move_specified_extension_files": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/454#test_no_files_moved_with_different_extension": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/454#test_exception_raised_when_dirs_do_not_exist": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/458#test_case_1": {
+    "count": 2,
+    "code_index": [
+      3,
+      9
+    ]
+  },
+  "BigCodeBench/458#test_case_2": {
+    "count": 4,
+    "code_index": [
+      3,
+      4,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/458#test_case_3": {
+    "count": 2,
+    "code_index": [
+      3,
+      9
+    ]
+  },
+  "BigCodeBench/458#test_case_4": {
+    "count": 9,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/458#test_case_5": {
+    "count": 2,
+    "code_index": [
+      3,
+      9
+    ]
+  },
+  "BigCodeBench/461#test_case_1": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/461#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/461#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/461#test_case_4": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/461#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/461#test_case_6": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/461#test_case_7": {
+    "count": 7,
+    "code_index": [
+      0,
+      3,
+      4,
+      5,
+      6,
+      7,
+      9
+    ]
+  },
+  "BigCodeBench/461#test_case_8": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/461#test_case_9": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/461#test_case_10": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/477#test_case_1": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/477#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/477#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/477#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/477#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/477#test_case_6": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/477#test_case_7": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/477#test_case_8": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/477#test_case_9": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/486#test_case_1": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/486#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/486#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/486#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/486#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/486#test_case_6": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/486#test_case_7": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/486#test_case_8": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/492#test_case_1": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/492#test_case_2": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/492#test_case_3": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/492#test_case_4": {
+    "count": 8,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      5,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/492#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/492#test_case_6": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/492#test_case_7": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/501#test_valid_json": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/501#test_invalid_json": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/501#test_empty_json": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/501#test_non_string_json": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/501#test_custom_sheet_name": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/501#test_file_content": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/502#test_case_1": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/502#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/502#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/502#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/502#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/503#test_case_1": {
+    "count": 1,
+    "code_index": [
+      8
+    ]
+  },
+  "BigCodeBench/503#test_case_2": {
+    "count": 1,
+    "code_index": [
+      8
+    ]
+  },
+  "BigCodeBench/503#test_case_3": {
+    "count": 1,
+    "code_index": [
+      8
+    ]
+  },
+  "BigCodeBench/503#test_case_4": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/503#test_case_5": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/503#test_case_6": {
+    "count": 9,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      9
+    ]
+  },
+  "BigCodeBench/503#test_case_7": {
+    "count": 9,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      9
+    ]
+  },
+  "BigCodeBench/503#test_case_8": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/509#test_difference_report": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/509#test_file_not_found": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/509#test_custom_delimiter": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/509#test_invalid_file_path": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/509#test_empty_files": {
+    "count": 8,
+    "code_index": [
+      0,
+      1,
+      3,
+      4,
+      5,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/511#test_case_1": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/511#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/511#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/511#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/511#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/511#test_case_6": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/511#test_case_7": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/513#test_case_1": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/513#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/513#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/513#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/513#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/513#test_case_6": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/513#test_case_7": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/513#test_case_8": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/513#test_case_9": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/513#test_case_10": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/513#test_case_11": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/513#test_case_12": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/526#test_case_1": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/526#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/526#test_case_3": {
+    "count": 7,
+    "code_index": [
+      1,
+      3,
+      4,
+      5,
+      6,
+      7,
+      9
+    ]
+  },
+  "BigCodeBench/526#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/526#test_case_5": {
+    "count": 7,
+    "code_index": [
+      1,
+      3,
+      4,
+      5,
+      6,
+      7,
+      9
+    ]
+  },
+  "BigCodeBench/526#test_case_6": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/526#test_case_7": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/526#test_case_8": {
+    "count": 7,
+    "code_index": [
+      1,
+      3,
+      4,
+      5,
+      6,
+      7,
+      9
+    ]
+  },
+  "BigCodeBench/526#test_case_9": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/528#test_case_1": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/528#test_case_2": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/528#test_case_3": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/528#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/528#test_case_5": {
+    "count": 9,
+    "code_index": [
+      0,
+      1,
+      2,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/530#test_case_1": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/530#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/530#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/530#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/530#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/530#test_case_6": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/530#test_case_7": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/532#test_case_1": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/532#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/532#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/532#test_case_4": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/532#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/532#test_case_6": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/553#test_non_empty_lists": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/553#test_empty_a_list": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/553#test_empty_b_list": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/553#test_both_lists_empty": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/553#test_a_list_longer_than_columns": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/560#test_basic_functionality": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/560#test_full_year_data": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/560#test_partial_year_data": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/560#test_incorrect_data_format": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/560#test_empty_data": {
+    "count": 3,
+    "code_index": [
+      4,
+      6,
+      9
+    ]
+  },
+  "BigCodeBench/567#test_case_1": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/567#test_case_2": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/567#test_case_3": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/567#test_case_4": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/567#test_case_5": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/574#test_case_1": {
+    "count": 7,
+    "code_index": [
+      0,
+      2,
+      3,
+      4,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/574#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/574#test_case_5": {
+    "count": 7,
+    "code_index": [
+      0,
+      2,
+      3,
+      4,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/574#test_varying_noise_levels": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/574#test_plot_outputs": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/579#test_valid_csv_file": {
+    "count": 4,
+    "code_index": [
+      2,
+      3,
+      4,
+      5
+    ]
+  },
+  "BigCodeBench/579#test_file_not_found_error": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/579#test_io_error": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/579#test_plot_output": {
+    "count": 4,
+    "code_index": [
+      2,
+      3,
+      4,
+      5
+    ]
+  },
+  "BigCodeBench/579#test_normalized_text": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/582#test_case_1": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/582#test_standard_functionality": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/582#test_varying_sizes": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/582#test_histogram_pdf_overlay": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/582#test_return_type": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/583#test_return_type": {
+    "count": 3,
+    "code_index": [
+      0,
+      2,
+      7
+    ]
+  },
+  "BigCodeBench/583#test_file_creation": {
+    "count": 3,
+    "code_index": [
+      0,
+      2,
+      7
+    ]
+  },
+  "BigCodeBench/583#test_file_content": {
+    "count": 2,
+    "code_index": [
+      0,
+      2
+    ]
+  },
+  "BigCodeBench/583#test_key_size": {
+    "count": 1,
+    "code_index": [
+      2
+    ]
+  },
+  "BigCodeBench/583#test_unique_file_per_call": {
+    "count": 3,
+    "code_index": [
+      0,
+      2,
+      7
+    ]
+  },
+  "BigCodeBench/583#test_encryption_decryption": {
+    "count": 1,
+    "code_index": [
+      2
+    ]
+  },
+  "BigCodeBench/587#test_file_encryption": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/587#test_encrypted_key_file_creation": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/587#test_public_key_type": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/587#test_encrypted_file_content": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/587#test_aes_key_file_content": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/587#test_non_existent_file": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/590#test_valid_url": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/590#test_invalid_url": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/590#test_network_error": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/590#test_empty_url": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/590#test_dynamic_comparison": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/590#test_fetch_time_format": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/592#test_csv_file_creation": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/592#test_csv_file_rows": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/592#test_csv_file_header": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/592#test_file_path_return": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/592#test_no_hours_data": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/593#test_dataframe_content": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/593#test_empty_dataframe_on_zero_hours": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/593#test_directory_creation": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/593#test_plot_generation": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/593#test_task_func_runs_without_error": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/594#test_task_func_checks_backup_directory_exists": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/594#test_task_func_copies_to_backup_directory": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/594#test_task_func_writes_correct_header": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/594#test_backup_file_creation": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/594#test_csv_writing": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/618#test_case_1": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/618#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/618#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/618#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/618#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/636#test_case_1": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/636#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/636#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/636#test_case_4": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/636#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/637#test_case_1": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/637#test_case_2": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/637#test_case_3": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/637#test_case_4": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/637#test_case_5": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/654#test_return_types": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/654#test_target_value_found": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/654#test_target_value_not_found": {
+    "count": 5,
+    "code_index": [
+      0,
+      3,
+      4,
+      6,
+      8
+    ]
+  },
+  "BigCodeBench/654#test_not_enough_points": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/654#test_functionality": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/655#test_extract_topics": {
+    "count": 7,
+    "code_index": [
+      0,
+      1,
+      3,
+      4,
+      6,
+      7,
+      9
+    ]
+  },
+  "BigCodeBench/655#test_invalid_num_topics": {
+    "count": 7,
+    "code_index": [
+      0,
+      1,
+      3,
+      4,
+      6,
+      7,
+      9
+    ]
+  },
+  "BigCodeBench/655#test_empty_texts": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/655#test_single_text": {
+    "count": 7,
+    "code_index": [
+      0,
+      1,
+      3,
+      4,
+      6,
+      7,
+      9
+    ]
+  },
+  "BigCodeBench/655#test_all_stopwords": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/657#test_case_1": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/657#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/657#test_case_3": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/657#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/657#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/678#test_basic_operation": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/678#test_empty_directory": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/678#test_non_json_files": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/678#test_single_file": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/678#test_with_empty_json_file": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/720#test_return_value": {
+    "count": 7,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      9
+    ]
+  },
+  "BigCodeBench/720#test_file_existence": {
+    "count": 7,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      9
+    ]
+  },
+  "BigCodeBench/720#test_file_content": {
+    "count": 2,
+    "code_index": [
+      2,
+      9
+    ]
+  },
+  "BigCodeBench/720#test_data_appending": {
+    "count": 5,
+    "code_index": [
+      2,
+      3,
+      4,
+      5,
+      9
+    ]
+  },
+  "BigCodeBench/720#test_headers_only_once": {
+    "count": 7,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      9
+    ]
+  },
+  "BigCodeBench/723#test_correct_scraping": {
+    "count": 1,
+    "code_index": [
+      5
+    ]
+  },
+  "BigCodeBench/723#test_invalid_url": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/723#test_empty_table": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/723#test_no_table": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/723#test_overwrite_existing_csv": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/752#test_case_test_size": {
+    "count": 5,
+    "code_index": [
+      1,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/752#test_case_random_state": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/752#test_case_df": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/752#test_case_target_column": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/752#test_case_empty_df": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/752#test_case_non_numeric_values": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/752#test_case_1": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/752#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/752#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/752#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/760#test_dataframe_structure": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/760#test_randomness_and_encoding": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/760#test_custom_parameters": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/760#test_invalid_year_range": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/760#test_empty_name_lists": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/760#test_rng": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/763#test_case_1": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/763#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/763#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/763#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/763#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/765#test_files_with_content": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/765#test_files_with_no_content": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/765#test_files_do_not_exist": {
+    "count": 2,
+    "code_index": [
+      0,
+      2
+    ]
+  },
+  "BigCodeBench/765#test_mixed_case": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/765#test_empty_dict": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/771#test_file_creation_and_content": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/771#test_empty_directory": {
+    "count": 3,
+    "code_index": [
+      0,
+      4,
+      7
+    ]
+  },
+  "BigCodeBench/771#test_non_matching_files": {
+    "count": 3,
+    "code_index": [
+      0,
+      4,
+      7
+    ]
+  },
+  "BigCodeBench/771#test_mixed_file_types": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/771#test_exception_handling": {
+    "count": 7,
+    "code_index": [
+      1,
+      2,
+      3,
+      5,
+      6,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/777#test_case_1": {
+    "count": 8,
+    "code_index": [
+      0,
+      1,
+      3,
+      4,
+      5,
+      6,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/777#test_case_2": {
+    "count": 9,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/777#test_case_3": {
+    "count": 9,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/777#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/777#test_case_5": {
+    "count": 9,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/785#test_archive_txt_files": {
+    "count": 3,
+    "code_index": [
+      0,
+      2,
+      6
+    ]
+  },
+  "BigCodeBench/785#test_archive_image_files": {
+    "count": 3,
+    "code_index": [
+      0,
+      2,
+      6
+    ]
+  },
+  "BigCodeBench/785#test_no_matching_files": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/785#test_multiple_archiving_unique_naming": {
+    "count": 3,
+    "code_index": [
+      0,
+      2,
+      6
+    ]
+  },
+  "BigCodeBench/785#test_archiving_in_nonexistent_directory": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/800#test_case_1": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/800#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/800#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/800#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/800#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/826#test_files_moved": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/826#test_no_files_moved": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/826#test_directory_does_not_exist": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/826#test_empty_source_directory": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/826#test_target_directory_creation": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/845#test_case_identical_strings": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/845#test_case_different_strings": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/845#test_case_empty_strings": {
+    "count": 9,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  "BigCodeBench/845#test_case_similar_strings": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/845#test_case_numerical_strings": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/854#test_case_1": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/854#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/854#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/854#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/854#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/857#test_successful_transfer": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/857#test_empty_source_directory": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/857#test_invalid_file_extensions": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/857#test_exception_handling": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/857#test_all_extensions": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/865#test_case_1": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/865#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/865#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/865#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/865#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/865#test_return_value": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/865#test_large_data_amount": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/870#test_default_data": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/870#test_custom_data": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/870#test_incomplete_data": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/870#test_empty_data": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/870#test_non_numeric_data": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/879#test_case_1": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/879#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/879#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/879#test_edge_case_empty_dataframe": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/879#test_edge_case_non_categorical": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/879#test_edge_case_single_category": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/879#test_edge_case_large_categories_small_counts": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/879#test_col_not_in_df": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/897#test_case_1": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/897#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/897#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/897#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/897#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/906#test_case_1": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/906#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/906#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/906#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/906#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/914#test_case_1": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/914#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/914#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/914#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/914#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/915#test_case_1": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/915#test_case_2": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/915#test_case_3": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/915#test_case_4": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/915#test_case_5": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/916#test_case_1": {
+    "count": 2,
+    "code_index": [
+      6,
+      7
+    ]
+  },
+  "BigCodeBench/916#test_empty_df": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/916#test_invalid_column": {
+    "count": 8,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/916#test_single_value_df": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/916#test_large_values_df": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/917#test_case_1": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/917#test_case_2": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/917#test_case_3": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/917#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/917#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/928#test_case_1": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/928#test_case_2": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/928#test_case_3": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/928#test_case_4": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/928#test_case_5": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/942#test_case_1": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/942#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/942#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/942#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/942#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/945#test_with_default_parameters": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/945#test_with_custom_parameters": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/945#test_with_random_sales_data": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/945#test_forecasted_values_increasing": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/945#test_with_specific_sales_data": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/952#test_case_1": {
+    "count": 3,
+    "code_index": [
+      3,
+      6,
+      9
+    ]
+  },
+  "BigCodeBench/952#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/952#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/952#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/952#test_case_5": {
+    "count": 6,
+    "code_index": [
+      0,
+      1,
+      3,
+      4,
+      5,
+      8
+    ]
+  },
+  "BigCodeBench/952#test_case_6": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/952#test_case_7": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/952#test_case_8": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/952#test_case_9": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/952#test_case_10": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/955#test_case_1": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/955#test_case_2": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/955#test_case_3": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/955#test_case_4": {
+    "count": 6,
+    "code_index": [
+      0,
+      2,
+      4,
+      5,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/955#test_case_5": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/955#test_case_6": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/955#test_case_7": {
+    "count": 9,
+    "code_index": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/955#test_case_8": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/955#test_case_9": {
+    "count": 1,
+    "code_index": [
+      0
+    ]
+  },
+  "BigCodeBench/955#test_case_10": {
+    "count": 8,
+    "code_index": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/963#test_case_1": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/963#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/963#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/963#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/963#test_case_5": {
+    "count": 4,
+    "code_index": [
+      0,
+      5,
+      7,
+      8
+    ]
+  },
+  "BigCodeBench/963#test_case_6": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/963#test_case_7": {
+    "count": 4,
+    "code_index": [
+      0,
+      5,
+      7,
+      8
+    ]
+  },
+  "BigCodeBench/964#test_case_1": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/964#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/964#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/964#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/964#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/964#test_case_6": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/964#test_case_7": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/964#test_case_8": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/964#test_case_9": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/969#test_incremental_values": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/969#test_negative_numbers": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/969#test_all_zeros": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/969#test_same_numbers": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/969#test_non_numeric_data_raises": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/969#test_nan_values_raise": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/969#test_empty_dataframe": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/971#test_case_1": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/971#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/971#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/971#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/971#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/971#test_case_6": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/971#test_case_7": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/971#test_case_8": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/971#test_case_9": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/971#test_case_10": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/985#test_case_1": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/985#test_case_2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/985#test_case_3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/985#test_case_4": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/985#test_case_5": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/985#test_case_6": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/985#test_case_7": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/985#test_case_8": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/985#test_case_9": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/988#test_file_is_file": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/988#test_file_is_not_dir": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/988#test_dir_is_dir": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/988#test_dir_is_not_file": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/988#test_has_special_char": {
+    "count": 9,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/988#test_has_no_special_char": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/988#test_has_numbers": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/988#test_multiple_predicates": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/988#test_deduplicate_predicates": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/988#test_empty_predicates": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/988#test_invalid_predicates": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/988#test_nonexistent_directory_error": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/990#test_hex_string_sample": {
+    "count": 3,
+    "code_index": [
+      0,
+      5,
+      6
+    ]
+  },
+  "BigCodeBench/990#test_hex_string_1": {
+    "count": 3,
+    "code_index": [
+      0,
+      5,
+      6
+    ]
+  },
+  "BigCodeBench/990#test_hex_string_2": {
+    "count": 3,
+    "code_index": [
+      0,
+      5,
+      6
+    ]
+  },
+  "BigCodeBench/990#test_hex_string_3": {
+    "count": 3,
+    "code_index": [
+      0,
+      5,
+      6
+    ]
+  },
+  "BigCodeBench/990#test_hex_string_4": {
+    "count": 3,
+    "code_index": [
+      0,
+      5,
+      6
+    ]
+  },
+  "BigCodeBench/990#test_hex_string_non_ascii": {
+    "count": 3,
+    "code_index": [
+      0,
+      5,
+      6
+    ]
+  },
+  "BigCodeBench/998#test_valid_file": {
+    "count": 8,
+    "code_index": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/998#test_invalid_checksum_valid_format": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/998#test_download_failure": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/998#test_file_removal_after_failure": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/998#test_extraction_success": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/999#test_count_categories_data1": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/999#test_count_names_data2": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/999#test_count_categories_data3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/999#test_count_names_data3": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/999#test_non_existent_column": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1003#test_valid_xml": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/1003#test_empty_xml": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1003#test_different_structure_xml": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1003#test_invalid_url": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1003#test_non_xml_data": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1004#test_word_frequencies": {
+    "count": 3,
+    "code_index": [
+      3,
+      5,
+      6
+    ]
+  },
+  "BigCodeBench/1004#test_empty_file": {
+    "count": 2,
+    "code_index": [
+      3,
+      5
+    ]
+  },
+  "BigCodeBench/1004#test_non_text_file": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1004#test_special_characters": {
+    "count": 3,
+    "code_index": [
+      3,
+      5,
+      6
+    ]
+  },
+  "BigCodeBench/1004#test_large_input": {
+    "count": 3,
+    "code_index": [
+      3,
+      5,
+      6
+    ]
+  },
+  "BigCodeBench/1006#test_non_zip_content": {
+    "count": 20,
+    "code_index": [
+      0,
+      0,
+      1,
+      1,
+      2,
+      2,
+      3,
+      3,
+      4,
+      4,
+      5,
+      5,
+      6,
+      6,
+      7,
+      7,
+      8,
+      8,
+      9,
+      9
+    ]
+  },
+  "BigCodeBench/1006#test_invalid_url": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1006#test_download_invald_zip_file": {
+    "count": 4,
+    "code_index": [
+      0,
+      5,
+      6,
+      9
+    ]
+  },
+  "BigCodeBench/1006#test_general_error": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1008#test_successful_scrape": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/1008#test_table_not_found": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/1008#test_network_error": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1008#test_http_error": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1008#test_empty_table": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/1012#test_successful_download_and_extraction": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/1012#test_invalid_url": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/1012#test_non_200_http_response": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/1012#test_network_error": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1012#test_corrupted_zip_file": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1012#test_request_exception": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1013#test_empty_page": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/1013#test_single_link": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/1013#test_multiple_links": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/1013#test_duplicate_links": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/1013#test_external_links": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/1015#test_valid_webpage_url": {
+    "count": 4,
+    "code_index": [
+      0,
+      3,
+      4,
+      5
+    ]
+  },
+  "BigCodeBench/1015#test_local_file_url": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1015#test_invalid_url": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1015#test_empty_table": {
+    "count": 2,
+    "code_index": [
+      4,
+      8
+    ]
+  },
+  "BigCodeBench/1015#test_database_error": {
+    "count": 4,
+    "code_index": [
+      0,
+      3,
+      4,
+      5
+    ]
+  },
+  "BigCodeBench/1019#test_successful_ocr_extraction_and_encoding": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1019#test_ocr_fails_comment_extraction_succeeds": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/1019#test_ocr_succeeds_encoding_fails": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/1019#test_ocr_and_comment_extraction_fail": {
+    "count": 6,
+    "code_index": [
+      2,
+      3,
+      4,
+      6,
+      7,
+      8
+    ]
+  },
+  "BigCodeBench/1019#test_ocr_extraction_succeeds_no_encoding_needed": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1020#test_get_data_with_default_parameters": {
+    "count": 8,
+    "code_index": [
+      0,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  "BigCodeBench/1020#test_get_data_with_custom_url_and_encodings": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1020#test_get_data_with_empty_response": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1020#test_get_data_with_invalid_json": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/1020#test_get_data_with_different_valid_encoding": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1020#test_get_data_with_undetectable_encoding": {
+    "count": 8,
+    "code_index": [
+      0,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  "BigCodeBench/1022#test_valid_input": {
+    "count": 1,
+    "code_index": [
+      9
+    ]
+  },
+  "BigCodeBench/1022#test_file_not_found": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1022#test_column_not_found": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1022#test_empty_file": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1022#test_no_future_dates": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1039#test_file_found": {
+    "count": 3,
+    "code_index": [
+      2,
+      3,
+      8
+    ]
+  },
+  "BigCodeBench/1039#test_file_not_found": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/1039#test_exception_handling": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/1039#test_task_func_empty_file": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1039#test_task_func_large_file": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1040#test_queue_empty_condition": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/1040#test_server_response": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1040#test_multiple_connections": {
+    "count": 1,
+    "code_index": [
+      1
+    ]
+  },
+  "BigCodeBench/1040#test_no_data_received": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1040#test_server_closes_after_duration": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1040#test_large_data_transfer": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1042#test_successful_email_send": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/1042#test_email_with_empty_message": {
+    "count": 1,
+    "code_index": [
+      1
+    ]
+  },
+  "BigCodeBench/1042#test_smtp_server_connection_error": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/1042#test_socket_closes_after_operation": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/1042#test_successful_email_dispatch": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/1053#test_display_plot": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1053#test_save_plot": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1053#test_empty_file": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1053#test_invalid_file_path": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1053#test_large_data_set": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1057#test_default_input": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1057#test_custom_input": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1057#test_empty_input": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/1057#test_single_input": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1057#test_partial_default": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1077#test_example_case": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1077#test_different_timezones": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1077#test_varying_differences": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1077#test_single_time_string": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1077#test_span_across_days": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1077#test_out_of_order_strings": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/1085#test_empty_text": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1085#test_single_word": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1085#test_punctuation": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1085#test_case_sensitivity": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1085#test_common_scenario": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1124#test_valid_url_with_title": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/1124#test_non_existent_website": {
+    "count": 9,
+    "code_index": [
+      0,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1124#test_string_without_urls": {
+    "count": 9,
+    "code_index": [
+      0,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1124#test_multiple_urls_in_string": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/1124#test_url_with_no_title_tag": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/1124#test_malformed_url": {
+    "count": 9,
+    "code_index": [
+      0,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1129#test_download_with_direct_key": {
+    "count": 7,
+    "code_index": [
+      1,
+      3,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1129#test_download_with_incorrect_key": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1129#test_download_with_specified_directory": {
+    "count": 7,
+    "code_index": [
+      1,
+      3,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1129#test_download_to_default_directory": {
+    "count": 7,
+    "code_index": [
+      1,
+      3,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1129#test_multiple_downloads": {
+    "count": 7,
+    "code_index": [
+      1,
+      3,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1137#test_phone_numbers_page_1": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/1137#test_phone_numbers_page_2": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/1137#test_phone_numbers_page_3": {
+    "count": 8,
+    "code_index": [
+      0,
+      1,
+      2,
+      4,
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  "BigCodeBench/1137#test_phone_numbers_page_4": {
+    "count": 0,
+    "code_index": []
+  },
+  "BigCodeBench/1137#test_phone_numbers_page_5": {
+    "count": 0,
+    "code_index": []
+  }
+}
