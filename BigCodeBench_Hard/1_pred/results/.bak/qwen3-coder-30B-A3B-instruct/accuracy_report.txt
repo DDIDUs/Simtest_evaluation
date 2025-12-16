@@ -1,7 +1,0 @@
-----------------------------------------
-Total Predictions Evaluated: 148
-Correct Predictions: 117
-Missing/Skipped: 0
-Accuracy: 79.05%
-----------------------------------------
-temperature 0.0 결과

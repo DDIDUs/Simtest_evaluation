@@ -43,10 +43,17 @@ MODEL_CONFIGS = {
         "max_tokens": 1024,
         "temperature": 0.2,
     },
-    "gpt-4o-2024-08-06": {
-        "api_model": "gpt-4o-2024-08-06",
+    "gpt-5-mini-2025-08-07": {
+        "api_model": "gpt-5-mini-2025-08-07",
         "api_key": os.getenv("OPENAI_API_KEY"),
         "base_url": None,  # Use default OpenAI URL
+        "max_completion_tokens": 1024,
+        "temperature": 1,
+    },
+    "claude-haiku-4-5-20251001": {
+        "api_model": "claude-haiku-4-5-20251001",
+        "api_key": os.getenv("CLAUDE_API_KEY"),
+        "base_url": None,
         "max_tokens": 1024,
         "temperature": 0.2,
     }
@@ -65,14 +72,19 @@ async def call_llm(
         for attempt in range(3):
             try:
                 start_time = time.time()
+                kwargs = {
+                    "model": model_config["api_model"],
+                    "messages": [{"role": "user", "content": prompt}],
+                    "temperature": model_config["temperature"],
+                    "extra_body": model_config.get("extra_body"),
+                }
+                if "max_completion_tokens" in model_config:
+                    kwargs["max_completion_tokens"] = model_config["max_completion_tokens"]
+                else:
+                    kwargs["max_tokens"] = model_config["max_tokens"]
+
                 response = await asyncio.wait_for(
-                    client.chat.completions.create(
-                        model=model_config["api_model"],
-                        messages=[{"role": "user", "content": prompt}],
-                        temperature=model_config["temperature"],
-                        max_tokens=model_config["max_tokens"],
-                        extra_body=model_config.get("extra_body"),
-                    ),
+                    client.chat.completions.create(**kwargs),
                     timeout=TIMEOUT_SECONDS
                 )
                 latency = time.time() - start_time

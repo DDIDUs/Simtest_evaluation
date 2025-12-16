@@ -274,6 +274,8 @@ def evaluate_files(
                 if processed_this_run % 1 == 0:
                     logging.info(f"Evaluated {processed_this_run} new tasks (Total: {len(detail_results) + 1}/{total_count})...")
                 
+                logging.info(f"Processing Task ID: {task_id}")
+                
                 # Get dynamic test code
                 if task_id not in problems_map:
                     logging.warning(f"Task {task_id} not found in dataset. Skipping evaluation for this task.")
