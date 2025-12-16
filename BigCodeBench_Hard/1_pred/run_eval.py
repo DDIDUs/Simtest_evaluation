@@ -39,14 +39,14 @@ MODEL_CONFIGS = {
         "api_key": "EMPTY",
         "base_url": "http://129.254.222.36:8000/v1",
         "extra_body": {"repetition_penalty": 1.05},
-        "max_tokens": 1024,
+        "max_tokens": 8192,
         "temperature": 0.0,
     },
     "gpt-5-mini-2025-08-07": {
         "api_model": "gpt-5-mini-2025-08-07",
         "api_key": os.getenv("OPENAI_API_KEY"),
         "base_url": None,  # Use default OpenAI URL
-        "max_completion_tokens": 1024,
+        "max_completion_tokens": 8192,
         "temperature": 1,
     },
     # Claude: top_p only (NO temperature)
@@ -54,7 +54,7 @@ MODEL_CONFIGS = {
         "api_model": "claude-haiku-4-5-20251001",
         "api_key": os.getenv("CLAUDE_API_KEY"),
         "base_url": None,
-        "max_tokens": 1024,
+        "max_tokens": 8192,
         "temperature": 0.0,
         "client_type": "anthropic"
     }
@@ -116,6 +116,15 @@ async def call_llm(
                     )
                     latency = time.time() - start_time
                     content = response.choices[0].message.content
+                    
+                    # DEBUG: Check for safety refusal or strange finish reasons
+                    if not content or content.strip() == "":
+                        finish_reason = response.choices[0].finish_reason
+                        refusal = getattr(response.choices[0].message, 'refusal', None)
+                        logging.warning(f"Empty Content! Finish Reason: {finish_reason}, Refusal: {refusal}")
+                        # Return details instead of empty string for visibility in raw_responses
+                        content = f"[DEBUG_EMPTY] Reason: {format(finish_reason)} | Refusal: {format(refusal)}"
+
                     logging.info(f"OpenAI call finished in {latency:.2f}s")
                     return content, latency
 
@@ -133,30 +142,35 @@ def parse_result(response: Optional[str]) -> str:
     if not response.strip():
         return "NULL"
 
-    match = re.search(r"```plaintext\s*(PASS|FAIL|\[PASS\]|\[FAIL\])\s*```", response, re.DOTALL | re.IGNORECASE)
+    # 1. Try strict regex (relaxed slightly for spacing)
+    match = re.search(r"```(?:plaintext|text)?\s*[\r\n]+(.*?)(?:```|$)", response, re.DOTALL | re.IGNORECASE)
     if match:
-        result = match.group(1).upper()
-        if "PASS" in result:
+        block_content = match.group(1).upper()
+        if "[PASS]" in block_content or "PASS" in block_content.split():
             return "PASS"
-        if "FAIL" in result:
+        if "[FAIL]" in block_content or "FAIL" in block_content.split():
             return "FAIL"
 
-    if "[Result]" in response:
-        part = response.split("[Result]")[1]
-        end_idx = part.find("[Bug Localization]")
-        if end_idx != -1:
-            part = part[:end_idx]
-
-        if "PASS" in part and "FAIL" not in part:
-            return "PASS"
-        if "FAIL" in part and "PASS" not in part:
-            return "FAIL"
-
-    cleaned = response.strip().upper()
-    if cleaned in ["PASS", "[PASS]"]:
+    # 2. Check for [PASS] / [FAIL] globally
+    if "[PASS]" in response.upper():
         return "PASS"
-    if cleaned in ["FAIL", "[FAIL]"]:
+    if "[FAIL]" in response.upper():
         return "FAIL"
+
+    # 3. Handle [Result] or [Results] block
+    if "[RESULT" in response.upper():
+        # Heuristic: look for PASS/FAIL in the last few lines
+        lines = response.splitlines()[-5:]
+        joined = "\n".join(lines).upper()
+        if "PASS" in joined and "FAIL" not in joined:
+             return "PASS"
+        if "FAIL" in joined:
+             return "FAIL"
+
+    # 4. Fallback: look for PASS/FAIL words
+    candidates = re.findall(r"\b(PASS|FAIL)\b", response.upper())
+    if candidates:
+        return candidates[-1]
 
     return "NULL"
 
