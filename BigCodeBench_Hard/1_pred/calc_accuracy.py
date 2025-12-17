@@ -240,6 +240,31 @@ def main():
         report_lines.append(f"{f'[{level}] Test Case':<25} | {l_total_tcs:<10} | {l_correct_tcs:<10} | {l_tc_acc:.2f}%")
         report_lines.append("-" * 60)
 
+    # Calculate Prediction Stats
+    pred_task_pass_count = 0
+    pred_task_fail_count = 0
+    pred_tc_pass_count = 0
+    pred_tc_fail_count = 0
+
+    for res in results:
+        # Task Level
+        if res['pred_overall'] == 'PASS':
+            pred_task_pass_count += 1
+        else:
+            pred_task_fail_count += 1
+        
+        # TC Level
+        for tc_name, tc_res in res['test_cases'].items():
+            if tc_res['pred'] == 'PASS':
+                pred_tc_pass_count += 1
+            else:
+                pred_tc_fail_count += 1
+
+    report_lines.append("Prediction Distribution:")
+    report_lines.append(f"  Tasks: PASS {pred_task_pass_count}/{total_tasks} ({(pred_task_pass_count/total_tasks*100) if total_tasks else 0:.1f}%), FAIL {pred_task_fail_count}/{total_tasks} ({(pred_task_fail_count/total_tasks*100) if total_tasks else 0:.1f}%)")
+    report_lines.append(f"  Test Cases: PASS {pred_tc_pass_count}/{total_tcs} ({(pred_tc_pass_count/total_tcs*100) if total_tcs else 0:.1f}%), FAIL {pred_tc_fail_count}/{total_tcs} ({(pred_tc_fail_count/total_tcs*100) if total_tcs else 0:.1f}%)")
+    report_lines.append("-" * 60)
+
     report_lines.append(f"Missing Predictions:         {missing_tasks_in_pred}")
     report_lines.append("=" * 60)
     

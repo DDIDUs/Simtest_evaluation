@@ -1,4 +1,3 @@
-from utils import load_bigcodebench_hard, split_test_cases
 import json
 import argparse
 from pathlib import Path
@@ -38,6 +37,8 @@ def load_levels(level_dir):
     
     return level_map
 
+from utils import load_bigcodebench_hard, split_test_cases
+
 def main():
     parser = argparse.ArgumentParser(description="Calculate prediction accuracy against ground truth.")
     parser.add_argument("--pred_file", type=str, required=True, help="Path to test.jsonl")
@@ -64,6 +65,9 @@ def main():
         level_dir = Path(args.level_dir)
     else:
         # Default assumption: ../actual_exec/problem_level_index relative to this script?
+        # Or relative to pred_file? Let's try relative to this script.
+        # Script is at BigCodeBench_Hard/1_pred/calc_accuracy.py
+        # Level dir is at BigCodeBench_Hard/actual_exec/problem_level_index
         base_dir = Path(__file__).resolve().parent.parent 
         level_dir = base_dir / "actual_exec" / "problem_level_index"
 
@@ -82,6 +86,7 @@ def main():
     missing_tasks_in_pred = 0
     
     # Level-based aggregations
+    # Structure: { "Easy": {"total_tasks": 0, "correct_tasks": 0, "total_tcs": 0, "correct_tcs": 0}, ... }
     level_stats = defaultdict(lambda: {"total_tasks": 0, "correct_tasks": 0, "total_tcs": 0, "correct_tcs": 0})
 
     results = []
@@ -114,7 +119,7 @@ def main():
         
         # Default all to FAIL first
         for tc in expected_tcs:
-            actual_tc_outcomes[tc] = {"status": "FAIL", "pred": "NULL", "correct": False}
+            actual_tc_outcomes[tc] = "FAIL"
             
         if exec_item:
             graded_list = exec_item.get('graded_list', [])
@@ -131,9 +136,17 @@ def main():
                     
                     for tc in expected_tcs:
                         # Check signatures
+                        # times_map might contain: "candidate.TestCases.test_case_1"
+                        # expected_tcs: "test_case_1"
+                        
+                        # A test passed ONLY IF:
+                        # 1. It is in times_map (it ran)
+                        # 2. It is NOT in failures_map
+                        
                         ran = False
                         failed = False
                         
+                        # Naive substring check or split check
                         for key in times_map.keys():
                             if key.endswith(f".{tc}") or key == tc:
                                 ran = True
@@ -145,7 +158,7 @@ def main():
                                 break
                                 
                         if ran and not failed:
-                            actual_tc_outcomes[tc]["status"] = "PASS"
+                            actual_tc_outcomes[tc] = "PASS"
         
         # 2. Compare with Prediction
         pred_item = pred_map_by_id.get(task_id)
@@ -168,16 +181,23 @@ def main():
             total_tcs += 1
             level_stats[level]["total_tcs"] += 1
             
-            actual_status = actual_tc_outcomes[tc]["status"]
+            actual_status = actual_tc_outcomes[tc]
+            
+            # Prediction status
+            # If prediction missing, default to FAIL (or we could say 'NULL' != 'PASS'/'FAIL' -> Incorrect)
+            # Actually if prediction is missing, it's NOT correct.
             pred_status = pred_tc_list.get(tc, "NULL")
             
             if pred_status == actual_status:
                 correct_tcs += 1
                 level_stats[level]["correct_tcs"] += 1
-            
-            # Update detailed log info
-            actual_tc_outcomes[tc]["pred"] = pred_status
-            actual_tc_outcomes[tc]["correct"] = (pred_status == actual_status)
+                
+            # Log detailed result for this test case
+            actual_tc_outcomes[tc] = {
+                "status": actual_status, 
+                "pred": pred_status, 
+                "correct": pred_status == actual_status
+            }
 
         results.append({
             "task_id": task_id,
@@ -219,6 +239,31 @@ def main():
         report_lines.append(f"{f'[{level}] Task':<25} | {l_total_tasks:<10} | {l_correct_tasks:<10} | {l_task_acc:.2f}%")
         report_lines.append(f"{f'[{level}] Test Case':<25} | {l_total_tcs:<10} | {l_correct_tcs:<10} | {l_tc_acc:.2f}%")
         report_lines.append("-" * 60)
+
+    # Calculate Prediction Stats
+    pred_task_pass_count = 0
+    pred_task_fail_count = 0
+    pred_tc_pass_count = 0
+    pred_tc_fail_count = 0
+
+    for res in results:
+        # Task Level
+        if res['pred_overall'] == 'PASS':
+            pred_task_pass_count += 1
+        else:
+            pred_task_fail_count += 1
+        
+        # TC Level
+        for tc_name, tc_res in res['test_cases'].items():
+            if tc_res['pred'] == 'PASS':
+                pred_tc_pass_count += 1
+            else:
+                pred_tc_fail_count += 1
+
+    report_lines.append("Prediction Distribution:")
+    report_lines.append(f"  Tasks: PASS {pred_task_pass_count}/{total_tasks} ({(pred_task_pass_count/total_tasks*100) if total_tasks else 0:.1f}%), FAIL {pred_task_fail_count}/{total_tasks} ({(pred_task_fail_count/total_tasks*100) if total_tasks else 0:.1f}%)")
+    report_lines.append(f"  Test Cases: PASS {pred_tc_pass_count}/{total_tcs} ({(pred_tc_pass_count/total_tcs*100) if total_tcs else 0:.1f}%), FAIL {pred_tc_fail_count}/{total_tcs} ({(pred_tc_fail_count/total_tcs*100) if total_tcs else 0:.1f}%)")
+    report_lines.append("-" * 60)
 
     report_lines.append(f"Missing Predictions:         {missing_tasks_in_pred}")
     report_lines.append("=" * 60)

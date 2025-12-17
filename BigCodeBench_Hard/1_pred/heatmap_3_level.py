@@ -80,29 +80,43 @@ def load_accuracy_data(filepath, tc_map, task_map):
     return results
 
 def main():
+    # Argument Parsing
+    import argparse
+    parser = argparse.ArgumentParser(description="Generate Heatmap (3 Levels) for a specific model.")
+    parser.add_argument("--model", required=True, help="Model name (e.g., gpt-5-mini-2025-08-07)")
+    args = parser.parse_args()
+    model_name = args.model
+
     # Dynamic Path Resolution
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Assuming script is in .../BigCodeBench_Hard/1_pred/results/{MODEL_NAME}/correlation/heatmap.py
-
+    # Script is in .../BigCodeBench_Hard/1_pred/heatmap_3_level.py
+    
+    # Root Dir resolution (assuming script is in BigCodeBench_Hard/1_pred)
     path_parts = script_dir.split(os.sep)
     try:
         idx = path_parts.index("BigCodeBench_Hard")
         root_dir = os.sep.join(path_parts[:idx])
     except ValueError:
         # Fallback if structure is different
-        root_dir = os.path.abspath(os.path.join(script_dir, "../../../../../"))
+        root_dir = os.path.abspath(os.path.join(script_dir, "../../"))
 
     # Fixed Paths (Standard of Truth)
     count_json_path = os.path.join(root_dir, "BigCodeBench_Hard/actual_exec/tc_level_index/count.json")
     # ALWAYS use Qwen's eval data for Task Difficulty
     task_eval_path = os.path.join(root_dir, "BigCodeBench_Hard/actual_exec/results/qwen3-coder-30B-A3B-instruct/nucleus_eval_all.json")
     
-    # Model Specific Data (Relative to script)
-    model_dir = os.path.dirname(script_dir)
+    # Model Specific Data
+    # Input: results/{model_name}/accuracy_raw.jsonl
+    model_dir = os.path.join(script_dir, "results", model_name)
     accuracy_jsonl_path = os.path.join(model_dir, "accuracy_raw.jsonl")
+
+    # Output: results/{model_name}/correlation/
+    output_dir = os.path.join(model_dir, "correlation")
+    os.makedirs(output_dir, exist_ok=True)
 
     print(f"Root Dir: {root_dir}")
     print(f"Model Dir: {model_dir}")
+    print(f"Output Dir: {output_dir}")
 
     # Load mappings
     tc_pass_map = load_tc_pass_rate_data(count_json_path)
@@ -119,28 +133,48 @@ def main():
 
     df = pd.DataFrame(data)
     
-    # Binning Config
-    bins = [i/10.0 for i in range(11)]
-    labels = [f"{bins[i]:.1f}-{bins[i+1]:.1f}" for i in range(len(bins)-1)]
+    # Determine Method Name
+    parent_dir = os.path.basename(script_dir)
+    method_map = {
+        "1_pred": "Näive",
+        "2_bug_local": "Diagnostic",
+        "3_bug_report": "Rationale-Guided"
+    }
+    method_name = method_map.get(parent_dir, parent_dir)
+
+    # Configs (Target: Combo 2 Logic)
     
-    # Create Bins
-    df['tc_bin'] = pd.cut(df['tc_pass_rate'], bins=bins, labels=labels, include_lowest=True, right=True)
-    df['task_bin'] = pd.cut(df['task_pass_rate'], bins=bins, labels=labels, include_lowest=True, right=True)
+    # Task: Hard (0.0), Medium (0.0 < x < 1.0), Easy (1.0) -> Label as Low, Medium, High
+    task_bins = [-0.1, 0.0001, 0.9999, 1.1]
+    task_labels = ["Low (0.0)", "Medium (0.0 < x < 1.0)", "High (1.0)"]
     
-    # Group by both bins
+    # TC: Hard (0.0-0.1), Medium (0.1-0.9), Easy (0.9-1.0) -> Label as Hard, Medium, Easy
+    tc_bins = [0.0, 0.1, 0.9, 1.0]
+    tc_labels = ["Hard (0.0-0.1)", "Medium (0.1-0.9)", "Easy (0.9-1.0)"]
+    
+    # Binning
+    df['tc_bin'] = pd.cut(df['tc_pass_rate'], bins=tc_bins, labels=tc_labels, include_lowest=True, right=True)
+    df['task_bin'] = pd.cut(df['task_pass_rate'], bins=task_bins, labels=task_labels, include_lowest=True, right=True)
+    
+    # Group
     heatmap_stats = df.groupby(['task_bin', 'tc_bin'], observed=False)['correct'].mean().reset_index()
     heatmap_counts = df.groupby(['task_bin', 'tc_bin'], observed=False)['correct'].count().reset_index()
-    heatmap_sum = df.groupby(['task_bin', 'tc_bin'], observed=False)['correct'].sum().reset_index() # Count of True (1)
-    
-    # Pivot for Heatmap (Y=Task, X=TC)
+    heatmap_sum = df.groupby(['task_bin', 'tc_bin'], observed=False)['correct'].sum().reset_index()
+
+    # Pivot
     pivot_accuracy = heatmap_stats.pivot(index='task_bin', columns='tc_bin', values='correct')
     pivot_total = heatmap_counts.pivot(index='task_bin', columns='tc_bin', values='correct')
     pivot_correct = heatmap_sum.pivot(index='task_bin', columns='tc_bin', values='correct')
-    
-    # Create Annotation Matrix
-    # Format: "75.0%\n(3/4)"
+
+    # Reorder Columns (Easy -> Hard) as requested
+    # Labels must match exactly defined above
+    column_order = ["Easy (0.9-1.0)", "Medium (0.1-0.9)", "Hard (0.0-0.1)"]
+    pivot_accuracy = pivot_accuracy.reindex(columns=column_order)
+    pivot_total = pivot_total.reindex(columns=column_order)
+    pivot_correct = pivot_correct.reindex(columns=column_order)
+
+    # Annotations
     annotations = pd.DataFrame(index=pivot_accuracy.index, columns=pivot_accuracy.columns)
-    
     for r in pivot_accuracy.index:
         for c in pivot_accuracy.columns:
             acc = pivot_accuracy.loc[r, c]
@@ -151,9 +185,9 @@ def main():
                 annotations.loc[r, c] = ""
             else:
                 annotations.loc[r, c] = f"{acc:.1%}\n({int(correct)}/{int(total)})"
-
+    
     # Save Stats
-    stats_path = os.path.join(script_dir, "heatmap_2d_stats.json")
+    stats_path = os.path.join(output_dir, "heatmap_3_level_stats.json")
     heatmap_stats['count'] = heatmap_counts['correct']
     heatmap_stats['correct_count'] = heatmap_sum['correct']
     heatmap_stats.rename(columns={'correct': 'average_accuracy'}, inplace=True)
@@ -162,20 +196,29 @@ def main():
 
     # Plotting
     plt.figure(figsize=(12, 10))
+    # sns.set(font_scale=1.2) # Optional global scale
     
     ax = sns.heatmap(pivot_accuracy, annot=annotations, fmt="", cmap="RdYlGn", vmin=0, vmax=1, 
-                     cbar_kws={'label': 'Average Accuracy'})
+                     cbar_kws={'label': 'Average Accuracy'}, annot_kws={"size": 18})
     
-    # Invert Y axis to have 0.0 at bottom
+    # Colorbar label font size
+    cbar = ax.collections[0].colorbar
+    cbar.ax.yaxis.label.set_size(16)
+    cbar.ax.tick_params(labelsize=14)
+
     ax.invert_yaxis()
     
-    plt.title("LLM Accuracy Heatmap\n(X: Test Case Pass Rate, Y: Task Pass Rate)")
-    plt.xlabel("Test Case Pass Rate (0.0=Hardest -> 1.0=Easiest)")
-    plt.ylabel("Task Pass Rate (0.0=Hardest -> 1.0=Easiest)")
+    # plt.title(f"LLM Accuracy Heatmap ({model_name} - {method_name})\n(X: Testcase Difficulty, Y: Code Quality)")
+    plt.xlabel("Testcase Difficulty", fontsize=18)
+    plt.ylabel("Code Quality", fontsize=18)
     
-    output_img_path = os.path.join(script_dir, "heatmap_2d.png")
+    plt.xticks(fontsize=18)
+    plt.yticks(fontsize=18)
+    
+    output_img_path = os.path.join(output_dir, "heatmap_3_level.png")
     plt.savefig(output_img_path, bbox_inches='tight')
     print(f"Heatmap saved to {output_img_path}")
+    plt.close()
 
 if __name__ == "__main__":
     main()

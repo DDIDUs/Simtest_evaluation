@@ -80,29 +80,47 @@ def load_accuracy_data(filepath, tc_map, task_map):
     return results
 
 def main():
+    # Argument Parsing
+    import argparse
+    parser = argparse.ArgumentParser(description="Generate Heatmap for a specific model.")
+    parser.add_argument("--model", required=True, help="Model name (e.g., gpt-5-mini-2025-08-07)")
+    args = parser.parse_args()
+    model_name = args.model
+
     # Dynamic Path Resolution
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Assuming script is in .../BigCodeBench_Hard/1_pred/results/{MODEL_NAME}/correlation/heatmap.py
+    # Script is in .../BigCodeBench_Hard/1_pred/heatmap.py
+    
+    # Root Dir resolution (assuming script is in BigCodeBench_Hard/1_pred)
+    # We want to find the root of the repo to locate actual_exec/tc_level_index/count.json
+    # Path: .../BigCodeBench_Hard/1_pred/heatmap.py
+    # Root: .../
     
     path_parts = script_dir.split(os.sep)
     try:
         idx = path_parts.index("BigCodeBench_Hard")
         root_dir = os.sep.join(path_parts[:idx])
     except ValueError:
-        # Fallback if structure is different
-        root_dir = os.path.abspath(os.path.join(script_dir, "../../../../../"))
+        # Fallback if structure is different, assume script is deep enough
+        root_dir = os.path.abspath(os.path.join(script_dir, "../../"))
 
     # Fixed Paths (Standard of Truth)
     count_json_path = os.path.join(root_dir, "BigCodeBench_Hard/actual_exec/tc_level_index/count.json")
     # ALWAYS use Qwen's eval data for Task Difficulty
     task_eval_path = os.path.join(root_dir, "BigCodeBench_Hard/actual_exec/results/qwen3-coder-30B-A3B-instruct/nucleus_eval_all.json")
     
-    # Model Specific Data (Relative to script)
-    model_dir = os.path.dirname(script_dir)
+    # Model Specific Data
+    # Input: results/{model_name}/accuracy_raw.jsonl
+    model_dir = os.path.join(script_dir, "results", model_name)
     accuracy_jsonl_path = os.path.join(model_dir, "accuracy_raw.jsonl")
+
+    # Output: results/{model_name}/correlation/
+    output_dir = os.path.join(model_dir, "correlation")
+    os.makedirs(output_dir, exist_ok=True)
 
     print(f"Root Dir: {root_dir}")
     print(f"Model Dir: {model_dir}")
+    print(f"Output Dir: {output_dir}")
 
     # Load mappings
     tc_pass_map = load_tc_pass_rate_data(count_json_path)
@@ -120,8 +138,8 @@ def main():
     df = pd.DataFrame(data)
     
     # Binning Config
-    bins = [0.0, 1/3, 2/3, 1.0]
-    labels = ["Low (0-0.1)", "Medium (0.1-0.9)", "High (0.9-1.0)"]
+    bins = [i/10.0 for i in range(11)]
+    labels = [f"{bins[i]:.1f}-{bins[i+1]:.1f}" for i in range(len(bins)-1)]
     
     # Create Bins
     df['tc_bin'] = pd.cut(df['tc_pass_rate'], bins=bins, labels=labels, include_lowest=True, right=True)
@@ -153,13 +171,22 @@ def main():
                 annotations.loc[r, c] = f"{acc:.1%}\n({int(correct)}/{int(total)})"
 
     # Save Stats
-    stats_path = os.path.join(script_dir, "heatmap_3_level_stats.json")
+    stats_path = os.path.join(output_dir, "heatmap_2d_stats.json")
     heatmap_stats['count'] = heatmap_counts['correct']
     heatmap_stats['correct_count'] = heatmap_sum['correct']
     heatmap_stats.rename(columns={'correct': 'average_accuracy'}, inplace=True)
     heatmap_stats.to_json(stats_path, orient='records', indent=2)
     print(f"Stats saved to {stats_path}")
 
+    # Determine Method Name
+    parent_dir = os.path.basename(script_dir)
+    method_map = {
+        "1_pred": "Näive",
+        "2_bug_local": "Diagnostic",
+        "3_bug_report": "Rationale-Guided"
+    }
+    method_name = method_map.get(parent_dir, parent_dir)
+    
     # Plotting
     plt.figure(figsize=(12, 10))
     
@@ -169,11 +196,11 @@ def main():
     # Invert Y axis to have 0.0 at bottom
     ax.invert_yaxis()
     
-    plt.title("LLM Accuracy Heatmap\n(X: Test Case Pass Rate, Y: Task Pass Rate)")
+    plt.title(f"LLM Accuracy Heatmap ({model_name} - {method_name})\n(X: Test Case Pass Rate, Y: Task Pass Rate)")
     plt.xlabel("Test Case Pass Rate (0.0=Hardest -> 1.0=Easiest)")
     plt.ylabel("Task Pass Rate (0.0=Hardest -> 1.0=Easiest)")
     
-    output_img_path = os.path.join(script_dir, "heatmap_3_level.png")
+    output_img_path = os.path.join(output_dir, "heatmap_2d.png")
     plt.savefig(output_img_path, bbox_inches='tight')
     print(f"Heatmap saved to {output_img_path}")
 
