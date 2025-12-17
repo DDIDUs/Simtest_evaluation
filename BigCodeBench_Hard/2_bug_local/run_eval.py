@@ -16,6 +16,7 @@ env_path = Path(__file__).resolve().parent.parent / '.env'
 load_dotenv(dotenv_path=env_path, override=True)
 
 from openai import AsyncOpenAI
+from anthropic import AsyncAnthropic
 from tqdm.asyncio import tqdm
 
 from utils import load_generated_codes, split_test_cases, construct_prompt, load_bigcodebench_hard
@@ -38,22 +39,23 @@ MODEL_CONFIGS = {
         "api_key": "EMPTY",
         "base_url": "http://129.254.222.36:8000/v1",
         "extra_body": {"repetition_penalty": 1.05},
-        "max_tokens": 2048,
-        "temperature": 0.2, # As per template, maybe 0.2? Or low temp for deterministic eval. 1_pred used 0.2
+        "max_tokens": 8192,
+        "temperature": 0.0,
     },
     "gpt-5-mini-2025-08-07": {
         "api_model": "gpt-5-mini-2025-08-07",
         "api_key": os.getenv("OPENAI_API_KEY"),
         "base_url": None,  # Use default OpenAI URL
-        "max_completion_tokens": 2048,
+        "max_completion_tokens": 8192,
         "temperature": 1,
     },
     "claude-haiku-4-5-20251001": {
         "api_model": "claude-haiku-4-5-20251001",
         "api_key": os.getenv("CLAUDE_API_KEY"),
         "base_url": None,
-        "max_tokens": 2048,
-        "temperature": 0.2,
+        "max_tokens": 8192,
+        "temperature": 0.0,
+        "client_type": "anthropic"
     }
 }
 
@@ -61,7 +63,7 @@ MAX_CONCURRENT_REQUESTS = 3
 TIMEOUT_SECONDS = 120
 
 async def call_llm(
-    client: AsyncOpenAI,
+    client: any,
     prompt: str,
     semaphore: asyncio.Semaphore,
     model_config: Dict
@@ -70,25 +72,49 @@ async def call_llm(
         for attempt in range(3):
             try:
                 start_time = time.time()
-                kwargs = {
-                    "model": model_config["api_model"],
-                    "messages": [{"role": "user", "content": prompt}],
-                    "temperature": model_config["temperature"],
-                    "extra_body": model_config.get("extra_body"),
-                }
-                if "max_completion_tokens" in model_config:
-                    kwargs["max_completion_tokens"] = model_config["max_completion_tokens"]
-                else:
-                    kwargs["max_tokens"] = model_config["max_tokens"]
+                if model_config.get("client_type") == "anthropic":
+                    # Claude: support top_p or temperature
+                    kwargs = {
+                        "model": model_config["api_model"],
+                        "messages": [{"role": "user", "content": prompt}],
+                        "max_tokens": model_config.get("max_tokens", 1024),
+                    }
+                    if "top_p" in model_config and model_config["top_p"] is not None:
+                        kwargs["top_p"] = model_config["top_p"]
+                    
+                    if "temperature" in model_config and model_config["temperature"] is not None:
+                        kwargs["temperature"] = model_config["temperature"]
 
-                response = await asyncio.wait_for(
-                    client.chat.completions.create(**kwargs),
-                    timeout=TIMEOUT_SECONDS
-                )
-                latency = time.time() - start_time
-                content = response.choices[0].message.content
-                logging.info(f"LLM call successful for prompt length {len(prompt)}")
-                return content, latency
+                    response = await asyncio.wait_for(
+                        client.messages.create(**kwargs),
+                        timeout=TIMEOUT_SECONDS
+                    )
+                    latency = time.time() - start_time
+
+                    content = response.content[0].text if response.content else ""
+                    logging.info(f"Anthropic call finished in {latency:.2f}s")
+                    return content, latency
+                else:
+                    # OpenAI style
+                    kwargs = {
+                        "model": model_config["api_model"],
+                        "messages": [{"role": "user", "content": prompt}],
+                        "temperature": model_config["temperature"],
+                        "extra_body": model_config.get("extra_body"),
+                    }
+                    if "max_completion_tokens" in model_config:
+                        kwargs["max_completion_tokens"] = model_config["max_completion_tokens"]
+                    else:
+                        kwargs["max_tokens"] = model_config["max_tokens"]
+
+                    response = await asyncio.wait_for(
+                        client.chat.completions.create(**kwargs),
+                        timeout=TIMEOUT_SECONDS
+                    )
+                    latency = time.time() - start_time
+                    content = response.choices[0].message.content
+                    logging.info(f"LLM call successful for prompt length {len(prompt)}")
+                    return content, latency
             except asyncio.TimeoutError:
                  logging.warning(f"Attempt {attempt + 1} timed out after {TIMEOUT_SECONDS}s")
             except Exception as e:
@@ -99,48 +125,56 @@ async def call_llm(
 def parse_result(response: Optional[str]) -> str:
     if response is None:
         return "NULL"
-    
+
     if not response.strip():
         return "NULL"
 
-    # Pattern: [Result] followed by ```plaintext ... ``` containing PASS or FAIL
-    # Case insensitive for robustness. 
-    # [Result] tag might be missing, so we look for the code block anywhere.
-    match = re.search(r"```plaintext\s*(PASS|FAIL|\[PASS\]|\[FAIL\])\s*```", response, re.DOTALL | re.IGNORECASE)
+    # Normalize
+    response_upper = response.upper()
+
+    # 1. Targeted Extraction: [Result] ... [Bug Localization] or end
+    # Regex captures content starting from [Result] until [Bug Localization] or End of String
+    # handling possible [Results] or [Result] and formatting.
+    targeted_match = re.search(r"\[RESULTS?\]([\s\S]*?)(?:\[BUG LOCALIZATION\]|\[EXPLANATION\]|$)", response_upper)
+    if targeted_match:
+        section_content = targeted_match.group(1)
+        # Check for explicit tags first in this section
+        if "[PASS]" in section_content: return "PASS"
+        if "[FAIL]" in section_content: return "FAIL"
+        
+        # Check for independent PASS/FAIL words
+        # Use regex to avoid matching "COMPASS" or "FAILURE" if strict word boundary needed, 
+        # but usually PASS/FAIL are standalone.
+        if re.search(r"\bPASS\b", section_content): return "PASS"
+        if re.search(r"\bFAIL\b", section_content): return "FAIL"
+
+    # 2. Code Block fallback (common in 1_pred, maybe mixed here)
+    match = re.search(r"```(?:plaintext|text)?\s*[\r\n]+(.*?)(?:```|$)", response, re.DOTALL | re.IGNORECASE)
     if match:
-        result = match.group(1).upper()
-        if "PASS" in result:
+        block_content = match.group(1).upper()
+        if "[PASS]" in block_content or "PASS" in block_content.split():
             return "PASS"
-        if "FAIL" in result:
+        if "[FAIL]" in block_content or "FAIL" in block_content.split():
             return "FAIL"
 
-    # Fallback: Look for [Result] section if code block missing
-    if "[Result]" in response:
-        part = response.split("[Result]")[1]
-        # Look for the next section header e.g. [Bug Localization] or end of string
-        end_idx = part.find("[Bug Localization]")
-        if end_idx != -1:
-            part = part[:end_idx]
-        
-        if "PASS" in part and "FAIL" not in part:
-            return "PASS"
-        if "FAIL" in part and "PASS" not in part:
-            return "FAIL"
-    
-    # Ultimate fallback: if just "PASS" or "FAIL" is the entire content (trimmed)
-    cleaned = response.strip().upper()
-    if cleaned in ["PASS", "[PASS]"]:
+    # 3. Global explicit tags (high confidence)
+    if "[PASS]" in response_upper:
         return "PASS"
-    if cleaned in ["FAIL", "[FAIL]"]:
+    if "[FAIL]" in response_upper:
         return "FAIL"
-            
+
+    # 4. Fallback: last occurrence of PASS/FAIL (risky but needed if structure fails)
+    candidates = re.findall(r"\b(PASS|FAIL)\b", response_upper)
+    if candidates:
+        return candidates[-1]
+
     return "NULL"
 
 async def evaluate_task(
     task_id: str,
     code: str,
     test_cases: List[tuple], # (name, code) tuples
-    client: AsyncOpenAI,
+    client: any,
     semaphore: asyncio.Semaphore,
     model_config: Dict,
     code_index: int = 0
@@ -252,18 +286,30 @@ async def main(
     logging.info(f"Evaluating {len(problems)} problems...")
     
     # LLM Client
-    api_key = model_config.get("api_key")
-    if not api_key or api_key == "EMPTY":
-        # Check env if not EMPTY (EMPTY is for vllm typically)
-        if model_config["api_model"] != "Qwen/Qwen3-Coder-30B-A3B-Instruct": 
-             env_key = os.getenv("OPENAI_API_KEY")
-             if env_key:
-                 api_key = env_key
+    # LLM Client
+    client_type = model_config.get("client_type", "openai")
+    
+    if client_type == "anthropic":
+        api_key = model_config.get("api_key")
+        if not api_key:
+             logging.error(f"API Key for Anthropic model {model_name} is missing. Checked 'CLAUDE_API_KEY' in env.")
+             raise ValueError("API Key missing")
+        client = AsyncAnthropic(
+            api_key=api_key,
+        )
+    else: 
+        api_key = model_config.get("api_key")
+        if not api_key or api_key == "EMPTY":
+            # Check env if not EMPTY (EMPTY is for vllm typically)
+            if model_config["api_model"] != "Qwen/Qwen3-Coder-30B-A3B-Instruct": 
+                 env_key = os.getenv("OPENAI_API_KEY")
+                 if env_key:
+                     api_key = env_key
 
-    client = AsyncOpenAI(
-        api_key=api_key if api_key else "EMPTY",
-        base_url=model_config["base_url"]
-    )
+        client = AsyncOpenAI(
+            api_key=api_key if api_key else "EMPTY",
+            base_url=model_config["base_url"]
+        )
     semaphore = asyncio.Semaphore(MAX_CONCURRENT_REQUESTS)
     
     # Output Setup

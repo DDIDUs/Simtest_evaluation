@@ -139,6 +139,10 @@ def load_bigcodebench_hard(dataset_path: Optional[str] = None) -> List[Dict[str,
     for idx, item in enumerate(records):
         norm = normalize_problem(item, idx)
         if norm:
+            if norm["task_id"] == "BigCodeBench/1006":
+                 # Fix duplicate test case name in BigCodeBench/1006
+                 # There are two `test_non_zip_content` methods. The first one should be `test_valid_zip_url`.
+                 norm["test"] = norm["test"].replace("def test_non_zip_content(self, mock_get):", "def test_valid_zip_url(self, mock_get):", 1)
             normalized.append(norm)
         else:
             logging.warning("Skip record without prompt: %s", item)

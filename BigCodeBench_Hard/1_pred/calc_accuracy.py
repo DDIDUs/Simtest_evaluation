@@ -74,7 +74,7 @@ def main():
     print(f"Loading Level Index from {level_dir}...")
     task_level_map = load_levels(level_dir)
 
-    print("Loading Dataset Registry (Total 853 TCs)...")
+    print("Loading Dataset Registry (Total 854 TCs)...")
     dataset = load_bigcodebench_hard()
     
     total_tasks = 0

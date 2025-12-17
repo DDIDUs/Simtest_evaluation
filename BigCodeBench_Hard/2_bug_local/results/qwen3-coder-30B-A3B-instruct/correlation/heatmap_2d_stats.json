@@ -275,8 +275,8 @@
   {
     "task_bin":"0.3-0.4",
     "tc_bin":"0.9-1.0",
-    "average_accuracy":0.625,
-    "count":16,
+    "average_accuracy":0.5555555556,
+    "count":18,
     "correct_count":10
   },
   {

@@ -1,5 +1,5 @@
 {
-  "count": 520,
+  "count": 521,
   "ids": [
     "BigCodeBench/13#test_case_2",
     "BigCodeBench/13#test_case_3",
@@ -476,8 +476,9 @@
     "BigCodeBench/1003#test_invalid_url",
     "BigCodeBench/1003#test_non_xml_data",
     "BigCodeBench/1004#test_non_text_file",
-    "BigCodeBench/1006#test_non_zip_content",
+    "BigCodeBench/1006#test_valid_zip_url",
     "BigCodeBench/1006#test_invalid_url",
+    "BigCodeBench/1006#test_non_zip_content",
     "BigCodeBench/1006#test_general_error",
     "BigCodeBench/1008#test_network_error",
     "BigCodeBench/1008#test_http_error",

@@ -8989,32 +8989,37 @@
       6
     ]
   },
-  "BigCodeBench/1006#test_non_zip_content": {
-    "count": 20,
+  "BigCodeBench/1006#test_valid_zip_url": {
+    "count": 10,
     "code_index": [
       0,
-      0,
-      1,
       1,
       2,
-      2,
-      3,
       3,
       4,
-      4,
-      5,
       5,
       6,
-      6,
-      7,
       7,
       8,
-      8,
-      9,
       9
     ]
   },
   "BigCodeBench/1006#test_invalid_url": {
+    "count": 10,
+    "code_index": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  "BigCodeBench/1006#test_non_zip_content": {
     "count": 10,
     "code_index": [
       0,
