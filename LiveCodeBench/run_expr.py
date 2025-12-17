@@ -3,7 +3,7 @@ import asyncio
 from openai import AsyncOpenAI
 from anthropic import AsyncAnthropic
 
-from generation import eval_codes_from_json
+from src.generation import eval_codes_from_json
 
 def main():
     parser = argparse.ArgumentParser()
