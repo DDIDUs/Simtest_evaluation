@@ -1,0 +1,65 @@
+[
+  {
+    "task_bin":"Low (0-0.33)",
+    "tc_bin":"Low (0-0.33)",
+    "average_accuracy":0.6882591093,
+    "count":247,
+    "correct_count":170
+  },
+  {
+    "task_bin":"Low (0-0.33)",
+    "tc_bin":"Medium (0.33-0.67)",
+    "average_accuracy":0.375,
+    "count":16,
+    "correct_count":6
+  },
+  {
+    "task_bin":"Low (0-0.33)",
+    "tc_bin":"High (0.67-1.0)",
+    "average_accuracy":0.3441295547,
+    "count":247,
+    "correct_count":85
+  },
+  {
+    "task_bin":"Medium (0.33-0.67)",
+    "tc_bin":"Low (0-0.33)",
+    "average_accuracy":null,
+    "count":0,
+    "correct_count":0
+  },
+  {
+    "task_bin":"Medium (0.33-0.67)",
+    "tc_bin":"Medium (0.33-0.67)",
+    "average_accuracy":0.5454545455,
+    "count":11,
+    "correct_count":6
+  },
+  {
+    "task_bin":"Medium (0.33-0.67)",
+    "tc_bin":"High (0.67-1.0)",
+    "average_accuracy":0.3414634146,
+    "count":41,
+    "correct_count":14
+  },
+  {
+    "task_bin":"High (0.67-1.0)",
+    "tc_bin":"Low (0-0.33)",
+    "average_accuracy":null,
+    "count":0,
+    "correct_count":0
+  },
+  {
+    "task_bin":"High (0.67-1.0)",
+    "tc_bin":"Medium (0.33-0.67)",
+    "average_accuracy":null,
+    "count":0,
+    "correct_count":0
+  },
+  {
+    "task_bin":"High (0.67-1.0)",
+    "tc_bin":"High (0.67-1.0)",
+    "average_accuracy":0.301369863,
+    "count":292,
+    "correct_count":88
+  }
+]
