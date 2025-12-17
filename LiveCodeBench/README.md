@@ -5,10 +5,7 @@ This directory contains scripts to generate code predictions and evaluate them u
 ## Structure
 
 - **`run_expr.py`**: The main entry point for running evaluations. It orchestrates the process of generating code using LLMs and saving the results.
-- **`generation.py`**: Handles the interaction with LLMs (OpenAI, Anthropic) to generate code or evaluate test cases. It loads problems, manages concurrency, and saves results incrementally.
 - **`evaluation.py`**: Compares the generated predictions against ground truth (GT) to calculate accuracy metrics and generate reports.
-- **`template.py`**: Contains prompt templates for different tasks (`pred`, `bug_local`, `bug_report`).
-- **`utils.py`**: Helper functions for text extraction, JSON handling, and decoding private test cases (which are stored as compressed and pickled data).
 
 ## Prerequisites
 
