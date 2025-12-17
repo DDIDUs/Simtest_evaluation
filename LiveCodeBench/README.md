@@ -4,7 +4,7 @@ This directory contains scripts to generate code predictions and evaluate them u
 
 ## Structure
 
-- **`run_eval.py`**: The main entry point for running evaluations. It orchestrates the process of generating code using LLMs and saving the results.
+- **`run_expr.py`**: The main entry point for running evaluations. It orchestrates the process of generating code using LLMs and saving the results.
 - **`generation.py`**: Handles the interaction with LLMs (OpenAI, Anthropic) to generate code or evaluate test cases. It loads problems, manages concurrency, and saves results incrementally.
 - **`evaluation.py`**: Compares the generated predictions against ground truth (GT) to calculate accuracy metrics and generate reports.
 - **`template.py`**: Contains prompt templates for different tasks (`pred`, `bug_local`, `bug_report`).
@@ -24,12 +24,12 @@ Set up your API keys as environment variables or pass them as arguments:
 
 ## Usage
 
-### 1. Generation & Execution (`run_eval.py`)
+### 1. Generation & Execution (`run_expr.py`)
 
 Run the evaluation script to generate predictions or evaluate code validation tasks.
 
 ```bash
-python run_eval.py \
+python run_expr.py \
   --problems <path_to_problem_json> \
   --out <output_results_json> \
   --model <model_name> \
