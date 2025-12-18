@@ -16,7 +16,10 @@ from dotenv import load_dotenv
 env_path = Path(__file__).resolve().parent.parent / '.env'
 load_dotenv(dotenv_path=env_path, override=True)
 
-from utils import load_generated_codes, split_test_cases, load_bigcodebench_hard
+import sys
+sys.path.append(str(Path(__file__).resolve().parent.parent))
+
+from lib.utils import load_generated_codes, split_test_cases, load_bigcodebench_hard
 from template import BUG_REPORT_PROMPT_TMPL
 
 from openai import AsyncOpenAI

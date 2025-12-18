@@ -20,7 +20,14 @@ from anthropic import AsyncAnthropic
 from datasets import load_dataset
 from tqdm.asyncio import tqdm
 
-from utils import load_generated_codes, split_test_cases, construct_prompt, load_bigcodebench_hard
+import sys
+sys.path.append(str(Path(__file__).resolve().parent.parent))
+
+from template import PRED_PROMPT_TMPL
+from lib.utils import load_generated_codes, split_test_cases, load_bigcodebench_hard
+
+def construct_prompt(code, test_case):
+    return PRED_PROMPT_TMPL.format(code=code, testcase=test_case)
 
 # Configure Logging
 logging.basicConfig(

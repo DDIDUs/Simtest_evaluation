@@ -5,7 +5,6 @@ import logging
 from typing import List, Dict, Any, Optional
 from pathlib import Path
 from datasets import load_dataset
-from template import BUG_LOCAL_PROMPT_TMPL
 
 DEFAULT_DATASET_ID = "bigcode/bigcodebench-hard"
 DEFAULT_SPLIT = "v0.1.4"
@@ -47,13 +46,10 @@ def load_generated_codes(file_path):
         data = json.load(f)
     return data
 
-def construct_prompt(code, test_case):
-    return BUG_LOCAL_PROMPT_TMPL.format(code=code, testcase=test_case)
-
 def load_bigcodebench_hard(dataset_path: Optional[str] = None) -> List[Dict[str, str]]:
     """
     Load BigCodeBench-Hard style problems.
-    Adapted from actual_exec/utils.py but preserves 'test' field for evaluation.
+    adapted from actual_exec/utils.py but preserves 'test' field for evaluation.
     """
     records: List[Dict[str, Any]] = []
 
@@ -84,12 +80,12 @@ def load_bigcodebench_hard(dataset_path: Optional[str] = None) -> List[Dict[str,
         if not test_code:
             logging.warning("Skip record without test code: %s", task_id)
             continue
-            
+
         if task_id == "BigCodeBench/1006":
              # Fix duplicate test case name in BigCodeBench/1006
              # There are two `test_non_zip_content` methods. The first one should be `test_valid_zip_url`.
              test_code = test_code.replace("def test_non_zip_content(self, mock_get):", "def test_valid_zip_url(self, mock_get):", 1)
-
+            
         normalized.append({
             "task_id": str(task_id),
             "test": str(test_code)

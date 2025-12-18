@@ -19,7 +19,14 @@ from openai import AsyncOpenAI
 from anthropic import AsyncAnthropic
 from tqdm.asyncio import tqdm
 
-from utils import load_generated_codes, split_test_cases, construct_prompt, load_bigcodebench_hard
+import sys
+sys.path.append(str(Path(__file__).resolve().parent.parent))
+
+from template import BUG_LOCAL_PROMPT_TMPL
+from lib.utils import load_generated_codes, split_test_cases, load_bigcodebench_hard
+
+def construct_prompt(code, test_case):
+    return BUG_LOCAL_PROMPT_TMPL.format(code=code, testcase=test_case)
 
 # Configure Logging
 log_file_path = Path(__file__).resolve().parent / "log_bug_local_eval.txt"
