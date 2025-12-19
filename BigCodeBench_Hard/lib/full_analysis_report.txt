@@ -1,0 +1,86 @@
+============================================================
+Full Dataset Confusion Analysis
+Benchmark: BigCodeBench_Hard
+============================================================
+
+############################################################
+Model: claude-haiku-4-5-20251001
+############################################################
+
+Scanning Strategy: 1_no_reasoning
+Precision: 0.9186
+               Prediction
+             PASS  |  FAIL
+----------------------------
+Actual PASS | 350   | 245  
+       FAIL | 31    | 228  
+
+Scanning Strategy: 2_non_code_specific
+Precision: 0.8995
+               Prediction
+             PASS  |  FAIL
+----------------------------
+Actual PASS | 573   | 22   
+       FAIL | 64    | 195  
+
+Scanning Strategy: 3_code_specific
+Precision: 0.8785
+               Prediction
+             PASS  |  FAIL
+----------------------------
+Actual PASS | 441   | 154  
+       FAIL | 61    | 198  
+############################################################
+Model: gpt-5-mini-2025-08-07
+############################################################
+
+Scanning Strategy: 1_no_reasoning
+Precision: 0.9377
+               Prediction
+             PASS  |  FAIL
+----------------------------
+Actual PASS | 557   | 38   
+       FAIL | 37    | 222  
+
+Scanning Strategy: 2_non_code_specific
+Precision: 0.9468
+               Prediction
+             PASS  |  FAIL
+----------------------------
+Actual PASS | 552   | 43   
+       FAIL | 31    | 228  
+
+Scanning Strategy: 3_code_specific
+Precision: 0.9564
+               Prediction
+             PASS  |  FAIL
+----------------------------
+Actual PASS | 549   | 46   
+       FAIL | 25    | 234  
+############################################################
+Model: qwen3-coder-30B-A3B-instruct
+############################################################
+
+Scanning Strategy: 1_no_reasoning
+Precision: 0.8240
+               Prediction
+             PASS  |  FAIL
+----------------------------
+Actual PASS | 398   | 197  
+       FAIL | 85    | 174  
+
+Scanning Strategy: 2_non_code_specific
+Precision: 0.8201
+               Prediction
+             PASS  |  FAIL
+----------------------------
+Actual PASS | 556   | 39   
+       FAIL | 122   | 137  
+
+Scanning Strategy: 3_code_specific
+Precision: 0.9149
+               Prediction
+             PASS  |  FAIL
+----------------------------
+Actual PASS | 215   | 380  
+       FAIL | 20    | 239  
