@@ -84,14 +84,17 @@ def main():
     import argparse
     parser = argparse.ArgumentParser(description="Generate Heatmap (3 Levels) for a specific model.")
     parser.add_argument("--model", required=True, help="Model name (e.g., gpt-5-mini-2025-08-07)")
+    parser.add_argument("--dir", default="1_no_reasoning", help="Target directory (e.g., 1_no_reasoning)")
     args = parser.parse_args()
     model_name = args.model
+    target_dir = args.dir
 
     # Dynamic Path Resolution
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Script is in .../BigCodeBench_Hard/1_pred/heatmap_3_level.py
+    # Script is in .../BigCodeBench_Hard/lib/heatmap_3_level.py
     
-    # Root Dir resolution (assuming script is in BigCodeBench_Hard/1_pred)
+    # Root Dir resolution
+    # Assumes script is in <Root>/BigCodeBench_Hard/lib
     path_parts = script_dir.split(os.sep)
     try:
         idx = path_parts.index("BigCodeBench_Hard")
@@ -106,15 +109,18 @@ def main():
     task_eval_path = os.path.join(root_dir, "BigCodeBench_Hard/actual_exec/results/qwen3-coder-30B-A3B-instruct/nucleus_eval_all.json")
     
     # Model Specific Data
-    # Input: results/{model_name}/accuracy_raw.jsonl
-    model_dir = os.path.join(script_dir, "results", model_name)
+    # Input: BigCodeBench_Hard/{target_dir}/results/{model_name}/accuracy_raw.jsonl
+    base_dir = os.path.join(root_dir, "BigCodeBench_Hard", target_dir)
+    model_dir = os.path.join(base_dir, "results", model_name)
     accuracy_jsonl_path = os.path.join(model_dir, "accuracy_raw.jsonl")
 
     # Output: results/{model_name}/correlation/
+    # We save output in the SAME directory as input results
     output_dir = os.path.join(model_dir, "correlation")
     os.makedirs(output_dir, exist_ok=True)
 
     print(f"Root Dir: {root_dir}")
+    print(f"Base Dir: {base_dir}")
     print(f"Model Dir: {model_dir}")
     print(f"Output Dir: {output_dir}")
 
@@ -134,13 +140,12 @@ def main():
     df = pd.DataFrame(data)
     
     # Determine Method Name
-    parent_dir = os.path.basename(script_dir)
     method_map = {
-        "1_pred": "Näive",
-        "2_bug_local": "Diagnostic",
-        "3_bug_report": "Rationale-Guided"
+        "1_no_reasoning": "No Reasoning",
+        "2_non_code_specific": "Non-Code Specific",
+        "3_code_specific": "Code Specific"
     }
-    method_name = method_map.get(parent_dir, parent_dir)
+    method_name = method_map.get(target_dir, target_dir)
 
     # Configs (Target: Combo 2 Logic)
     

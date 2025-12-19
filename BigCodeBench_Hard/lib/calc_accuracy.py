@@ -131,8 +131,8 @@ def main():
             if target_code_idx < len(metadata_list):
                 meta = metadata_list[target_code_idx]
                 if meta:
-                    times_map = meta.get('times', {})
-                    failures_map = meta.get('failures', {})
+                    times_map = meta.get('time_breakdown', {})
+                    failures_map = meta.get('details', {})
                     
                     for tc in expected_tcs:
                         # Check signatures

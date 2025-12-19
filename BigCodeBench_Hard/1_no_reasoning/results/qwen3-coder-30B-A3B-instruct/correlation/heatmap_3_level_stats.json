@@ -2,9 +2,9 @@
   {
     "task_bin":"Low (0.0)",
     "tc_bin":"Hard (0.0-0.1)",
-    "average_accuracy":0.7163461538,
+    "average_accuracy":0.7115384615,
     "count":208,
-    "correct_count":149
+    "correct_count":148
   },
   {
     "task_bin":"Low (0.0)",
@@ -16,9 +16,9 @@
   {
     "task_bin":"Low (0.0)",
     "tc_bin":"Easy (0.9-1.0)",
-    "average_accuracy":0.2886597938,
+    "average_accuracy":0.7113402062,
     "count":194,
-    "correct_count":56
+    "correct_count":138
   },
   {
     "task_bin":"Medium (0.0 < x < 1.0)",
@@ -30,16 +30,16 @@
   {
     "task_bin":"Medium (0.0 < x < 1.0)",
     "tc_bin":"Medium (0.1-0.9)",
-    "average_accuracy":0.3376623377,
+    "average_accuracy":0.6103896104,
     "count":77,
-    "correct_count":26
+    "correct_count":47
   },
   {
     "task_bin":"Medium (0.0 < x < 1.0)",
     "tc_bin":"Easy (0.9-1.0)",
-    "average_accuracy":0.4835164835,
+    "average_accuracy":0.5054945055,
     "count":91,
-    "correct_count":44
+    "correct_count":46
   },
   {
     "task_bin":"High (1.0)",
@@ -58,8 +58,8 @@
   {
     "task_bin":"High (1.0)",
     "tc_bin":"Easy (0.9-1.0)",
-    "average_accuracy":0.2923728814,
+    "average_accuracy":0.7076271186,
     "count":236,
-    "correct_count":69
+    "correct_count":167
   }
 ]
