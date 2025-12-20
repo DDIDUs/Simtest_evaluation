@@ -26,7 +26,8 @@ def load_tc_pass_rate_data(filepath):
 
 def load_task_pass_rate_data(filepath):
     """
-    Loads Task pass rate from nucleus_eval_all.json (Qwen Data).
+    Loads Task pass rate from nucleus_eval_all.json (Fixed Reference).
+    Uses Code Index 0's pass rate.
     Returns: dict { 'task_id': float_pass_rate }
     """
     if not os.path.exists(filepath):
@@ -39,16 +40,40 @@ def load_task_pass_rate_data(filepath):
     task_pass_rate_map = {}
     for item in data:
         task_id = item.get("question_id")
-        graded = item.get("graded_list", [])
-        # Pass rate logic
-        p_rate = sum(graded) / len(graded) if graded else 0.0
+        metadata = item.get("metadata", [])
+        
+        if not metadata:
+            task_pass_rate_map[task_id] = 0.0
+            continue
+            
+        # User requested "Code Index 0"
+        sample_0 = metadata[0]
+        status = sample_0.get("status", "fail")
+        
+        if status == "pass":
+            p_rate = 1.0
+        else:
+            # Infer partial pass rate
+            # details contains failed TCs. time_breakdown contains ALL TCs.
+            details = sample_0.get("details", {})
+            time_breakdown = sample_0.get("time_breakdown", {})
+            
+            total_tcs = len(time_breakdown)
+            failed_tcs = len(details)
+            
+            if total_tcs == 0:
+                p_rate = 0.0
+            else:
+                passed_tcs = total_tcs - failed_tcs
+                p_rate = passed_tcs / total_tcs if total_tcs > 0 else 0.0
+                
         task_pass_rate_map[task_id] = p_rate
         
     return task_pass_rate_map
 
 def load_accuracy_data(filepath, tc_map, task_map):
     """
-    Joins accuracy data with TC pass rate and Task pass rate.
+    Joins accuracy data with TC pass rate and Task pass rate (from Fixed Reference).
     Returns list of dicts.
     """
     if not os.path.exists(filepath):
@@ -62,6 +87,7 @@ def load_accuracy_data(filepath, tc_map, task_map):
             task_id = entry['task_id']
             test_cases = entry.get('test_cases', {})
             
+            # Use Fixed Reference for Code Quality (Y-axis)
             task_pass_rate = task_map.get(task_id)
             if task_pass_rate is None:
                 continue
@@ -105,7 +131,7 @@ def main():
 
     # Fixed Paths (Standard of Truth)
     count_json_path = os.path.join(root_dir, "BigCodeBench_Hard/actual_exec/tc_level_index/count.json")
-    # ALWAYS use Qwen's eval data for Task Difficulty
+    # ALWAYS use Qwen's eval data for Task Difficulty (Y-axis Reference)
     task_eval_path = os.path.join(root_dir, "BigCodeBench_Hard/actual_exec/results/qwen3-coder-30B-A3B-instruct/nucleus_eval_all.json")
     
     # Model Specific Data
@@ -151,7 +177,7 @@ def main():
     
     # Task: Hard (0.0), Medium (0.0 < x < 1.0), Easy (1.0) -> Label as Low, Medium, High
     task_bins = [-0.1, 0.0001, 0.9999, 1.1]
-    task_labels = ["Low (0.0)", "Medium (0.0 < x < 1.0)", "High (1.0)"]
+    task_labels = ["Low Quality", "Medium Quality", "High Quality"]
     
     # TC: Hard (0.0-0.1), Medium (0.1-0.9), Easy (0.9-1.0) -> Label as Hard, Medium, Easy
     tc_bins = [0.0, 0.1, 0.9, 1.0]
