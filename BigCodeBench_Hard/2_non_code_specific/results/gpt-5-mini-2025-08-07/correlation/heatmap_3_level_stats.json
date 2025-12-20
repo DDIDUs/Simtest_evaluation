@@ -1,63 +1,63 @@
 [
   {
-    "task_bin":"Low Quality",
-    "tc_bin":"Hard (0.0-0.1)",
-    "average_accuracy":0.9714285714,
-    "count":70,
-    "correct_count":68
+    "task_bin":"Incorrect",
+    "tc_bin":"All-F",
+    "average_accuracy":0.9710144928,
+    "count":69,
+    "correct_count":67
   },
   {
-    "task_bin":"Low Quality",
-    "tc_bin":"Medium (0.1-0.9)",
-    "average_accuracy":0.5,
-    "count":6,
-    "correct_count":3
+    "task_bin":"Incorrect",
+    "tc_bin":"Mix",
+    "average_accuracy":0.5714285714,
+    "count":7,
+    "correct_count":4
   },
   {
-    "task_bin":"Low Quality",
-    "tc_bin":"Easy (0.9-1.0)",
+    "task_bin":"Incorrect",
+    "tc_bin":"All-P",
     "average_accuracy":null,
     "count":0,
     "correct_count":0
   },
   {
-    "task_bin":"Medium Quality",
-    "tc_bin":"Hard (0.0-0.1)",
-    "average_accuracy":0.865248227,
-    "count":141,
-    "correct_count":122
+    "task_bin":"Partially Correct",
+    "tc_bin":"All-F",
+    "average_accuracy":0.873015873,
+    "count":126,
+    "correct_count":110
   },
   {
-    "task_bin":"Medium Quality",
-    "tc_bin":"Medium (0.1-0.9)",
-    "average_accuracy":0.8705882353,
-    "count":85,
-    "correct_count":74
+    "task_bin":"Partially Correct",
+    "tc_bin":"Mix",
+    "average_accuracy":0.86,
+    "count":100,
+    "correct_count":86
   },
   {
-    "task_bin":"Medium Quality",
-    "tc_bin":"Easy (0.9-1.0)",
+    "task_bin":"Partially Correct",
+    "tc_bin":"All-P",
     "average_accuracy":0.9253112033,
     "count":241,
     "correct_count":223
   },
   {
-    "task_bin":"High Quality",
-    "tc_bin":"Hard (0.0-0.1)",
+    "task_bin":"Fully Correct",
+    "tc_bin":"All-F",
     "average_accuracy":null,
     "count":0,
     "correct_count":0
   },
   {
-    "task_bin":"High Quality",
-    "tc_bin":"Medium (0.1-0.9)",
+    "task_bin":"Fully Correct",
+    "tc_bin":"Mix",
     "average_accuracy":0.935483871,
     "count":31,
     "correct_count":29
   },
   {
-    "task_bin":"High Quality",
-    "tc_bin":"Easy (0.9-1.0)",
+    "task_bin":"Fully Correct",
+    "tc_bin":"All-P",
     "average_accuracy":0.9321428571,
     "count":280,
     "correct_count":261

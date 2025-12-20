@@ -6,14 +6,18 @@ Metric                    | Total      | Correct    | Accuracy
 Overall Task              | 148        | 98         | 66.22%
 Overall Test Case         | 854        | 571        | 66.86%
 ------------------------------------------------------------
-[Easy] Task               | 40         | 10         | 25.00%
-[Easy] Test Case          | 236        | 167        | 70.76%
+TC [All-P]                | 521        | 351        | 67.37%
+TC [Mix]                  | 138        | 78         | 56.52%
+TC [All-F]                | 195        | 142        | 72.82%
 ------------------------------------------------------------
-[Medium] Task             | 28         | 17         | 60.71%
-[Medium] Test Case        | 171        | 96         | 56.14%
+Code [Fully Correct] Task | 52         | 12         | 23.08%
+Code [Fully Correct] TC   | 311        | 217        | 69.77%
 ------------------------------------------------------------
-[Hard] Task               | 80         | 71         | 88.75%
-[Hard] Test Case          | 447        | 308        | 68.90%
+Code [Partially Correct] Task | 81         | 71         | 87.65%
+Code [Partially Correct] TC | 467        | 301        | 64.45%
+------------------------------------------------------------
+Code [Incorrect] Task     | 15         | 15         | 100.00%
+Code [Incorrect] TC       | 76         | 53         | 69.74%
 ------------------------------------------------------------
 Prediction Distribution:
   Tasks: PASS 22/148 (14.9%), FAIL 126/148 (85.1%)

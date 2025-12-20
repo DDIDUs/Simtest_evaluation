@@ -175,13 +175,13 @@ def main():
 
     # Configs (Target: Combo 2 Logic)
     
-    # Task: Hard (0.0), Medium (0.0 < x < 1.0), Easy (1.0) -> Label as Low, Medium, High
+    # Task: Hard (0.0), Medium (0.0 < x < 1.0), Easy (1.0) -> Label as Incorrect, Partially Correct, Fully Correct
     task_bins = [-0.1, 0.0001, 0.9999, 1.1]
-    task_labels = ["Low Quality", "Medium Quality", "High Quality"]
+    task_labels = ["Incorrect", "Partially Correct", "Fully Correct"]
     
-    # TC: Hard (0.0-0.1), Medium (0.1-0.9), Easy (0.9-1.0) -> Label as Hard, Medium, Easy
-    tc_bins = [0.0, 0.1, 0.9, 1.0]
-    tc_labels = ["Hard (0.0-0.1)", "Medium (0.1-0.9)", "Easy (0.9-1.0)"]
+    # TC: Hard (0.0), Medium (0.0 < x < 1.0), Easy (1.0) -> Label as All-F, Mix, All-P
+    tc_bins = [-0.1, 0.0001, 0.9999, 1.1]
+    tc_labels = ["All-F", "Mix", "All-P"]
     
     # Binning
     df['tc_bin'] = pd.cut(df['tc_pass_rate'], bins=tc_bins, labels=tc_labels, include_lowest=True, right=True)
@@ -197,12 +197,29 @@ def main():
     pivot_total = heatmap_counts.pivot(index='task_bin', columns='tc_bin', values='correct')
     pivot_correct = heatmap_sum.pivot(index='task_bin', columns='tc_bin', values='correct')
 
-    # Reorder Columns (Easy -> Hard) as requested
-    # Labels must match exactly defined above
-    column_order = ["Easy (0.9-1.0)", "Medium (0.1-0.9)", "Hard (0.0-0.1)"]
-    pivot_accuracy = pivot_accuracy.reindex(columns=column_order)
-    pivot_total = pivot_total.reindex(columns=column_order)
-    pivot_correct = pivot_correct.reindex(columns=column_order)
+    # Reorder Columns (All-P -> Mix -> All-F) and Rows (Fully Correct -> Partially Correct -> Incorrect) for logical display
+    # Request: (1,2), (1,3), (3,1), (3,2) empty. 
+    # Row 1 (Fully Correct): All-P, [Mix, All-F Masked]
+    # Row 2 (Partially Correct): All-P, Mix, All-F
+    # Row 3 (Incorrect): [All-P, Mix Masked], All-F
+    
+    column_order = ["All-P", "Mix", "All-F"]
+    row_order = ["Fully Correct", "Partially Correct", "Incorrect"]
+    
+    pivot_accuracy = pivot_accuracy.reindex(index=row_order, columns=column_order)
+    pivot_total = pivot_total.reindex(index=row_order, columns=column_order)
+    pivot_correct = pivot_correct.reindex(index=row_order, columns=column_order)
+    
+    # Masking Logic
+    # Mask Mix and All-F for High (Row "Fully Correct")
+    pivot_accuracy.loc["Fully Correct", ["Mix", "All-F"]] = np.nan
+    pivot_total.loc["Fully Correct", ["Mix", "All-F"]] = 0
+    pivot_correct.loc["Fully Correct", ["Mix", "All-F"]] = 0
+    
+    # Mask All-P and Mix for Low (Row "Incorrect")
+    pivot_accuracy.loc["Incorrect", ["All-P", "Mix"]] = np.nan
+    pivot_total.loc["Incorrect", ["All-P", "Mix"]] = 0
+    pivot_correct.loc["Incorrect", ["All-P", "Mix"]] = 0
 
     # Annotations
     annotations = pd.DataFrame(index=pivot_accuracy.index, columns=pivot_accuracy.columns)
@@ -237,7 +254,7 @@ def main():
     cbar.ax.yaxis.label.set_size(16)
     cbar.ax.tick_params(labelsize=14)
 
-    ax.invert_yaxis()
+    # ax.invert_yaxis()
     
     # plt.title(f"LLM Accuracy Heatmap ({model_name} - {method_name})\n(X: Testcase Difficulty, Y: Code Quality)")
     plt.xlabel("Testcase Difficulty", fontsize=18)

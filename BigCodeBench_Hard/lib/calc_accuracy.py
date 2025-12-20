@@ -1,7 +1,9 @@
 import json
 import argparse
+import os
 from pathlib import Path
 from collections import defaultdict
+from utils import load_bigcodebench_hard, split_test_cases
 
 def load_jsonl(path):
     data = []
@@ -19,31 +21,39 @@ def load_json(path):
     with open(path, 'r', encoding='utf-8') as f:
         return json.load(f)
 
-def load_levels(level_dir):
+def load_tc_pass_rates(count_path):
     """
-    Load level indices from the given directory.
-    Returns a dict: task_id -> level ("Easy", "Medium", "Hard")
+    Load TC pass rates from count.json.
+    Returns: dict { 'task_id#tc_name': pass_rate }
     """
-    level_map = {}
-    level_dir = Path(level_dir)
+    if not os.path.exists(count_path):
+        print(f"Error: Count file not found at {count_path}")
+        return {}
+        
+    with open(count_path, 'r') as f:
+        data = json.load(f)
     
-    for level_name in ["easy", "medium", "hard"]:
-        file_path = level_dir / f"{level_name}.json"
-        if file_path.exists():
-            data = load_json(file_path)
-            # data['ids'] should contain the list of task_ids
-            for task_id in data.get('ids', []):
-                level_map[task_id] = level_name.capitalize()
-    
-    return level_map
+    tc_pass_rate_map = {}
+    for key, value in data.items():
+        count = value.get('count', 0)
+        pass_rate = count / 10.0
+        tc_pass_rate_map[key] = pass_rate
+    return tc_pass_rate_map
 
-from utils import load_bigcodebench_hard, split_test_cases
+def get_tc_category(pass_rate):
+    if pass_rate >= 0.999: # 1.0
+        return "All-P"
+    elif pass_rate <= 0.001: # 0.0
+        return "All-F"
+    else:
+        return "Mix"
 
 def main():
     parser = argparse.ArgumentParser(description="Calculate prediction accuracy against ground truth.")
     parser.add_argument("--pred_file", type=str, required=True, help="Path to test.jsonl")
     parser.add_argument("--truth_file", type=str, required=True, help="Path to nucleus_eval_all.json")
-    parser.add_argument("--level_dir", type=str, default=None, help="Directory containing level index files (easy.json, etc.)")
+    # level_dir is no longer needed but kept for backward compatibility if scripts call it
+    parser.add_argument("--level_dir", type=str, default=None, help="[Deprecated] Directory containing level index files")
     
     args = parser.parse_args()
     
@@ -60,19 +70,19 @@ def main():
         if t_id:
             exec_map[t_id] = item
 
-    # Determine Level Directory
-    if args.level_dir:
-        level_dir = Path(args.level_dir)
-    else:
-        # Default assumption: ../actual_exec/problem_level_index relative to this script?
-        # Or relative to pred_file? Let's try relative to this script.
-        # Script is at BigCodeBench_Hard/1_pred/calc_accuracy.py
-        # Level dir is at BigCodeBench_Hard/actual_exec/problem_level_index
-        base_dir = Path(__file__).resolve().parent.parent 
-        level_dir = base_dir / "actual_exec" / "problem_level_index"
-
-    print(f"Loading Level Index from {level_dir}...")
-    task_level_map = load_levels(level_dir)
+    # Determine count.json path
+    # Script is likely at BigCodeBench_Hard/lib/calc_accuracy.py or similar
+    # We assume valid structure relative to this script or handle it dynamically
+    # Plan assumption: BigCodeBench_Hard/lib/calc_accuracy.py
+    # count.json: BigCodeBench_Hard/actual_exec/tc_level_index/count.json
+    
+    base_dir = Path(__file__).resolve().parent.parent 
+    count_json_path = base_dir / "actual_exec" / "tc_level_index" / "count.json"
+    
+    print(f"Loading TC Pass Rates from {count_json_path}...")
+    tc_pass_map = load_tc_pass_rates(count_json_path)
+    if not tc_pass_map:
+        print("Warning: No pass rate data found. Categorization will fail.")
 
     print("Loading Dataset Registry (Total 854 TCs)...")
     dataset = load_bigcodebench_hard()
@@ -85,9 +95,13 @@ def main():
     
     missing_tasks_in_pred = 0
     
-    # Level-based aggregations
-    # Structure: { "Easy": {"total_tasks": 0, "correct_tasks": 0, "total_tcs": 0, "correct_tcs": 0}, ... }
-    level_stats = defaultdict(lambda: {"total_tasks": 0, "correct_tasks": 0, "total_tcs": 0, "correct_tcs": 0})
+    # Category-based aggregations for Test Cases
+    # Structure: { "All-P": {"total_tcs": 0, "correct_tcs": 0}, ... }
+    cat_tc_stats = defaultdict(lambda: {"total_tcs": 0, "correct_tcs": 0})
+
+    # Category-based aggregations for Tasks (Code Quality)
+    # Structure: { "Fully Correct": {"total_tasks": 0, "correct_tasks": 0, "total_tcs": 0, "correct_tcs": 0}, ...}
+    cat_code_stats = defaultdict(lambda: {"total_tasks": 0, "correct_tasks": 0, "total_tcs": 0, "correct_tcs": 0})
 
     results = []
     
@@ -95,20 +109,15 @@ def main():
     for item in dataset:
         task_id = item.get('task_id')
         test_code = item.get('test', '')
-        level = task_level_map.get(task_id, "Unknown")
         
         total_tasks += 1
-        level_stats[level]["total_tasks"] += 1
         
         # 1. Determine Actual Outcome (PASS/FAIL) from Execution
-        # If task failed to run (missing in exec_map), it's a FAIL.
         exec_item = exec_map.get(task_id)
         
         # We need the specific code index results. 
-        # Usually prediction is for code_index 0 (first sample).
         target_code_idx = 0 
         
-        # Check Task Level Pass/Fail (Greedy/First sample)
         actual_task_pass = False
         actual_tc_outcomes = {} # {test_name: "PASS"|"FAIL"}
         
@@ -136,13 +145,6 @@ def main():
                     
                     for tc in expected_tcs:
                         # Check signatures
-                        # times_map might contain: "candidate.TestCases.test_case_1"
-                        # expected_tcs: "test_case_1"
-                        
-                        # A test passed ONLY IF:
-                        # 1. It is in times_map (it ran)
-                        # 2. It is NOT in failures_map
-                        
                         ran = False
                         failed = False
                         
@@ -160,6 +162,25 @@ def main():
                         if ran and not failed:
                             actual_tc_outcomes[tc] = "PASS"
         
+        # Calculate Code Quality Category
+        # Based on Actual TC Pass Rate for this task
+        num_expected = len(expected_tcs)
+        num_passed_actual = sum(1 for status in actual_tc_outcomes.values() if status == "PASS")
+        
+        if num_expected > 0:
+            pass_ratio = num_passed_actual / num_expected
+        else:
+            pass_ratio = 0.0 # Should not happen typically
+            
+        if pass_ratio >= 0.999:
+            code_category = "Fully Correct"
+        elif pass_ratio <= 0.001:
+            code_category = "Incorrect"
+        else:
+            code_category = "Partially Correct"
+
+        cat_code_stats[code_category]["total_tasks"] += 1
+
         # 2. Compare with Prediction
         pred_item = pred_map_by_id.get(task_id)
         
@@ -172,39 +193,49 @@ def main():
         
         if pred_task_pass == actual_task_pass:
             correct_tasks += 1
-            level_stats[level]["correct_tasks"] += 1
+            cat_code_stats[code_category]["correct_tasks"] += 1
             
         # TC Level Comparison
         pred_tc_list = pred_item.get('pass_fail_list', {}) if pred_item else {}
         
         for tc in expected_tcs:
             total_tcs += 1
-            level_stats[level]["total_tcs"] += 1
+            cat_code_stats[code_category]["total_tcs"] += 1
+            
+            # Determine Category
+            unique_id = f"{task_id}#{tc}"
+            pass_rate = tc_pass_map.get(unique_id, -1) # Default to -1 if unknown
+            if pass_rate == -1:
+                # Fallback or unknown
+                category = "Unknown"
+            else:
+                category = get_tc_category(pass_rate)
+            
+            cat_tc_stats[category]["total_tcs"] += 1
             
             actual_status = actual_tc_outcomes[tc]
-            
-            # Prediction status
-            # If prediction missing, default to FAIL (or we could say 'NULL' != 'PASS'/'FAIL' -> Incorrect)
-            # Actually if prediction is missing, it's NOT correct.
             pred_status = pred_tc_list.get(tc, "NULL")
             
-            if pred_status == actual_status:
+            is_correct = (pred_status == actual_status)
+            if is_correct:
                 correct_tcs += 1
-                level_stats[level]["correct_tcs"] += 1
+                cat_tc_stats[category]["correct_tcs"] += 1
+                cat_code_stats[code_category]["correct_tcs"] += 1
                 
-            # Log detailed result for this test case
+            # Log detailed result (optional, sticking to requested changes)
             actual_tc_outcomes[tc] = {
                 "status": actual_status, 
                 "pred": pred_status, 
-                "correct": pred_status == actual_status
+                "correct": is_correct,
+                "category": category
             }
 
         results.append({
             "task_id": task_id,
-            "level": level,
             "overall_correct": pred_task_pass == actual_task_pass,
             "gt_overall": "PASS" if actual_task_pass else "FAIL",
             "pred_overall": "PASS" if pred_task_pass else "FAIL",
+            "code_category": code_category,
             "test_cases": actual_tc_outcomes
         })
 
@@ -223,21 +254,41 @@ def main():
         "-" * 60,
     ]
 
-    # Append Level Reports
-    for level in ["Easy", "Medium", "Hard", "Unknown"]:
-        stats = level_stats.get(level)
-        if not stats: continue
+    # Append TC Category Reports
+    # Order: All-P, Mix, All-F
+    for category in ["All-P", "Mix", "All-F"]:
+        stats = cat_tc_stats.get(category)
+        if not stats: 
+            # Print row even if 0 to show structure
+            l_total_tcs = 0
+            l_correct_tcs = 0
+            l_tc_acc = 0.0
+        else:
+            l_total_tcs = stats["total_tcs"]
+            l_correct_tcs = stats["correct_tcs"]
+            l_tc_acc = (l_correct_tcs / l_total_tcs * 100) if l_total_tcs else 0
         
-        l_total_tasks = stats["total_tasks"]
-        l_correct_tasks = stats["correct_tasks"]
-        l_task_acc = (l_correct_tasks / l_total_tasks * 100) if l_total_tasks else 0
+        report_lines.append(f"{f'TC [{category}]':<25} | {l_total_tcs:<10} | {l_correct_tcs:<10} | {l_tc_acc:.2f}%")
+    
+    report_lines.append("-" * 60)
+    
+    # Append Code Category Reports
+    # Order: Fully Correct, Partially Correct, Incorrect
+    for category in ["Fully Correct", "Partially Correct", "Incorrect"]:
+        stats = cat_code_stats.get(category)
+        if not stats:
+            stats = {"total_tasks": 0, "correct_tasks": 0, "total_tcs": 0, "correct_tcs": 0}
+            
+        c_total_tasks = stats["total_tasks"]
+        c_correct_tasks = stats["correct_tasks"]
+        c_task_acc = (c_correct_tasks / c_total_tasks * 100) if c_total_tasks else 0
         
-        l_total_tcs = stats["total_tcs"]
-        l_correct_tcs = stats["correct_tcs"]
-        l_tc_acc = (l_correct_tcs / l_total_tcs * 100) if l_total_tcs else 0
+        c_total_tcs = stats["total_tcs"]
+        c_correct_tcs = stats["correct_tcs"]
+        c_tc_acc = (c_correct_tcs / c_total_tcs * 100) if c_total_tcs else 0
         
-        report_lines.append(f"{f'[{level}] Task':<25} | {l_total_tasks:<10} | {l_correct_tasks:<10} | {l_task_acc:.2f}%")
-        report_lines.append(f"{f'[{level}] Test Case':<25} | {l_total_tcs:<10} | {l_correct_tcs:<10} | {l_tc_acc:.2f}%")
+        report_lines.append(f"{f'Code [{category}] Task':<25} | {c_total_tasks:<10} | {c_correct_tasks:<10} | {c_task_acc:.2f}%")
+        report_lines.append(f"{f'Code [{category}] TC':<25} | {c_total_tcs:<10} | {c_correct_tcs:<10} | {c_tc_acc:.2f}%")
         report_lines.append("-" * 60)
 
     # Calculate Prediction Stats
