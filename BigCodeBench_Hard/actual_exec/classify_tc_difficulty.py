@@ -123,9 +123,9 @@ def main():
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
     # 5) Existing: classify and save histogram + jsons
-    easy_tcs = []
-    medium_tcs = []
-    hard_tcs = []
+    all_p_tcs = []
+    mix_tcs = []
+    all_f_tcs = []
     all_pass_rates = []
 
     # Pass Rate Bucket Counts: 0/10 (0%), 1/10 (10%), ..., 10/10 (100%)
@@ -138,13 +138,13 @@ def main():
         rate = 0.0 if total == 0 else pass_count / total
         all_pass_rates.append(rate)
 
-        # Classify Easy/Medium/Hard
+        # Classify All-P/Mix/All-F
         if rate == 1.0:
-            easy_tcs.append(unique_id)
+            all_p_tcs.append(unique_id)
         elif rate == 0.0:
-            hard_tcs.append(unique_id)
+            all_f_tcs.append(unique_id)
         else:
-            medium_tcs.append(unique_id)
+            mix_tcs.append(unique_id)
 
         # Bucket count for plotting
         # If total=10, pass_count is 0..10 -> direct index
@@ -160,12 +160,23 @@ def main():
     x_indices = range(11) # 0 to 10
     bars = plt.bar(x_indices, bucket_counts, color='skyblue', edgecolor='black')
     
-    plt.title(f'Test Case Pass Rate Distribution (N={len(all_pass_rates)})')
+    plt.title(f'Test Case Difficulty Distribution (N={len(all_pass_rates)}) on BigCodeBench-Hard')
     plt.xlabel('Pass Rate')
     plt.ylabel('Number of Test Cases')
     
     # X-axis labels: 0%, 10%, ..., 100%
-    xtick_labels = [f"{i*10}%" for i in x_indices]
+    # Add All-F, Mix, All-P annotations
+    xtick_labels = []
+    for i in x_indices:
+        label = f"{i*10}%"
+        if i == 0:
+            label += "\n(All-F)"
+        elif i == 10:
+            label += "\n(All-P)"
+        elif i == 5:
+             label += "\n(Mix)"
+        xtick_labels.append(label)
+        
     plt.xticks(x_indices, xtick_labels)
     
     # Add value labels on top of bars
@@ -187,9 +198,9 @@ def main():
         with open(path, "w") as f:
             json.dump({"count": len(tc_list), "ids": tc_list}, f, indent=2)
 
-    save_category("easy", easy_tcs)
-    save_category("medium", medium_tcs)
-    save_category("hard", hard_tcs)
+    save_category("all_p", all_p_tcs)
+    save_category("mix", mix_tcs)
+    save_category("all_f", all_f_tcs)
 
     # Save detailed counts
     count_data = {}
@@ -204,10 +215,10 @@ def main():
 
     print("-" * 30, flush=True)
     print("TC Level Classification Complete:", flush=True)
-    print(f"Easy (100% pass): {len(easy_tcs)}", flush=True)
-    print(f"Medium (Mixed):   {len(medium_tcs)}", flush=True)
-    print(f"Hard (0% pass):   {len(hard_tcs)}", flush=True)
-    print(f"Total Test Cases: {len(all_pass_rates)}", flush=True)
+    print(f"All-P (100% pass): {len(all_p_tcs)}", flush=True)
+    print(f"Mix (Mixed):       {len(mix_tcs)}", flush=True)
+    print(f"All-F (0% pass):   {len(all_f_tcs)}", flush=True)
+    print(f"Total Test Cases:  {len(all_pass_rates)}", flush=True)
     print(f"Saved to {OUTPUT_DIR}", flush=True)
 
 
