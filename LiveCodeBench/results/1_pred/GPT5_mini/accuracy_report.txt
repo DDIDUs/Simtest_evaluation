@@ -1,5 +1,5 @@
 ======================================================================
-ACCURACY REPORT (pred=results_f.jsonl, gt=filtered_output.json)
+                ACCURACY REPORT (question_id aligned)               
 ======================================================================
 Metric                    | Total      | Correct    | Accuracy  
 ----------------------------------------------------------------------
